@@ -9,10 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-/**
-*
-* @author Admin
-*/
 public class Main {
 
 	static int diasemana(String d){
@@ -74,7 +70,7 @@ public static void main(String[] args) {
 				Date date = new Date();
 				c.setTime(date);
 				for (Usuario i : users){
-					if(i.hayUser(id,ps)){
+					if(i.encontrarUsuario(id, ps)){
 						login = i;
 						System.out.println("Iniciaste sesion");
 						break;
@@ -87,7 +83,6 @@ public static void main(String[] args) {
 					int horaAct = c.get(Calendar.HOUR);
 					int hashDiaHora = (diaAct * 24) + horaAct;
 					Objetivo objetivoARealizar = null;
-					TreeNode temp;
 					if (hashDiaHora != hashDiaHoraAnterior) {
 						hashDiaHoraAnterior = hashDiaHora - 1;
 					}
@@ -119,27 +114,25 @@ public static void main(String[] args) {
 							for (int i=0;i<horaArr.length;i++){
 								horaArrInt[i]= Integer.parseInt(horaArr[i]);
 								int hash=((diasemana(diasArr[i]))*24)+ horaArrInt[i];
-								obj.getIde().insertarCol(hash);
+								obj.getIde().encolar(hash);
 							}
 							obj.programarBloque();
 							//vaciarArbol(obj);
 							break;
 						case 2:
-							if (login.hayObjetivos(login) == false) {
-								System.out.println("No hay objetivos");
+							if (login.encontrarObjetivos(login) == false) {
+								System.out.println("No hay objetivos creados");
 							} else {
 								System.out.println("Inserte el nombre del objetivo");
 								String nomObj = sc.nextLine();
-								Objetivo tempo = new Objetivo();
 								for (Objetivo j : login.objetivos) {
 									if (nomObj.equals(j.nombre)) {
-										tempo = j;
 										System.out.println("Nombre: " + j.nombre);
 										System.out.println("Descripcion: " + j.descripcion);
 										System.out.println("Tecnica: " + j.tecnica);
 										System.out.println("Horas totales: " + j.horasTotales);
 										System.out.println("Horas dedicadas: " + j.horasDedicadas);
-										System.out.println("Horas restantes: " + j.horasaDedicar);
+										System.out.println("Horas restantes: " + j.horasADedicar);
 										break;
 									} else {
 										System.out.println("El objetivo no existe");
@@ -149,12 +142,11 @@ public static void main(String[] args) {
 							
 							break;
 						case 3:
-							System.out.println("Escriba el nombre objetivo");
+							System.out.println("Escriba el nombre del objetivo");
 							String nombreDeObjetivoE=sc.nextLine();
 							for (Objetivo j : login.objetivos ){
-								if(!j.hayObjetivo(nombreDeObjetivoE)){
-									System.out.println("Entra a eliminar");
-									Objetivo objetivoRemover=j;
+								if(!j.encontrarObjetivo(nombreDeObjetivoE)){
+									Objetivo objetivoRemover = j;
 									login.objetivos.remove(objetivoRemover);
 									break;
 								}
@@ -165,15 +157,15 @@ public static void main(String[] args) {
 						do {
 							if (!login.objetivos.isEmpty()) {
 								for (Objetivo j : login.objetivos ){
-									if(j.existeObjetivo(hashDiaHora)){
+									if(j.encontrarBloqueTiempo(hashDiaHora)){
 										objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo actual? 1 para si, 0 para no");
 										int reali = sc.nextInt();
 										sc.nextLine();
 										if (reali == 1){
 											objetivoARealizar.programarBloque();
-											temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
-											//objetivoARealizar.reencolarBloque(temp);
+											TreeNode temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
+											objetivoARealizar.reencolarBloque(temp.key);
 											objetivoARealizar.horasDedicadas = objetivoARealizar.horasDedicadas + 1;
 											hashDiaHoraAnterior = hashDiaHora;
 										}

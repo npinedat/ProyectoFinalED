@@ -2,41 +2,41 @@
 package Clases.listClasses;
 
 public class Cola {  
-    private Nodo raiz,fondo;
+    private Nodo cabeza, cola;
     public Cola() {
-        raiz=null;
-        fondo=null;
+        cabeza = null;
+        cola = null;
     }
 
-    public boolean vaciaCol (){
-        if (raiz == null)
+    public boolean colaVacia(){
+        if (cabeza == null)
             return true;
         else
             return false;
     }
 
-    public void insertarCol (int info) {
+    public void encolar(int info) {
         Nodo nuevo;
         nuevo = new Nodo ();
         nuevo.setValor(info) ;
         nuevo.setSiguiente(null);
-        if (vaciaCol ()) {
-            raiz = nuevo;
-            fondo = nuevo;
+        if (colaVacia()) {
+            cabeza = nuevo;
+            cola = nuevo;
         } else {
-            fondo.setSiguiente(nuevo);
-            fondo = nuevo;
+            cola.setSiguiente(nuevo);
+            cola = nuevo;
         }
     }
 
-    public Object extraerCol () {
-        if (!vaciaCol ()){
-            Object informacion = raiz.getValor();
-            if (raiz == fondo){
-                raiz = null;
-                fondo = null;
+    public Object desencolar() {
+        if (!colaVacia()){
+            Object informacion = cabeza.getValor();
+            if (cabeza == cola){
+                cabeza = null;
+                cola = null;
             } else {
-                raiz = raiz.getSiguiente();
+                cabeza = cabeza.getSiguiente();
             }
             return informacion;
         } else
@@ -44,6 +44,6 @@ public class Cola {
     }
 
     public int getRaiz() {
-        return this.raiz.valor;
+        return this.cabeza.getValor();
     }
 }

@@ -2,7 +2,7 @@ package Clases.listClasses;
 
 public class Nodo {
     // Variable en la cual se va a guardar el valor.
-    public int valor;
+    private int valor;
     // Variable para enlazar los nodos.
     private Nodo siguiente;
     /**
@@ -13,7 +13,7 @@ public class Nodo {
         this.siguiente = null;
     }
     
-    // M�todos get y set para los atributos.
+    // Métodos get y set para los atributos.
     
     public int getValor() {
         return valor;

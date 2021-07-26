@@ -4,14 +4,14 @@ package Clases.listClasses;
 public class Pila {
     // Puntero que indica el inicio de la pila o tambein conocida como el
     // tope de la pila.
-    private Nodo inicio;
+    private Nodo tope;
     // Variable para registrar el tama�o de la pila.
     public int tamanio;
     /**
      * Constructor por defecto.
      */
     public Pila(){
-        inicio = null;
+        tope = null;
         tamanio = 0;
     }
     /**
@@ -19,7 +19,7 @@ public class Pila {
      * @return true si el primer nodo (inicio), no apunta a otro nodo.
      */
     public boolean esVacia(){
-        return inicio == null;
+        return tope == null;
     }
     /**
      * Consulta cuantos elementos (nodos) tiene la pila.
@@ -41,12 +41,12 @@ public class Pila {
         // Consulta si la pila esta vacia.
         if (esVacia()) {
             // Inicializa la pila con el nuevo valor.
-            inicio = nuevo;
+            tope = nuevo;
         }
         // Caso contrario agrega el nuevo nodo al inicio de la pila.
         else{
-            nuevo.setSiguiente(inicio);
-            inicio = nuevo;
+            nuevo.setSiguiente(tope);
+            tope = nuevo;
         }
         // Incrementa el contador del tama�o.
         tamanio++;
@@ -57,7 +57,7 @@ public class Pila {
     public void retirar(){
         if (!esVacia()) {
             // Asigna como primer nodo al siguiente de la pila.
-            inicio = inicio.getSiguiente();
+            tope = tope.getSiguiente();
             // Decrementa el contador del tama�o de la pila
             tamanio--;
         }
@@ -68,7 +68,7 @@ public class Pila {
      */
     public Nodo cima() {
         if(!esVacia()){
-            return inicio;
+            return tope;
         } else {
             return null;
         }
@@ -80,7 +80,7 @@ public class Pila {
      */
     public boolean buscar(int referencia){
         // Crea una copia de la pila.
-        Nodo aux = inicio;
+        Nodo aux = tope;
         // Bandera para verificar si existe el elemento a buscar.
         boolean existe = false;
         // Recorre la pila hasta llegar encontrar el nodo o llegar al final
@@ -111,11 +111,11 @@ public class Pila {
             Nodo pilaAux = null;
             // Recoore la pila hasta llegar al nodo que tenga el valor
             // igual que el de referencia.
-            while(referencia != inicio.getValor()){
+            while(referencia != tope.getValor()){
                 // Crea un nodo temporal para agregarlos a la pila auxiliar.
                 Nodo temp = new Nodo();
                 // Ingresa el valor al nodo temporal.
-                temp.setValor(inicio.getValor());
+                temp.setValor(tope.getValor());
                 // Consulta si la pila auxiliar no a sido inicializada.
                 if(pilaAux == null){
                     // Inicializa la pila auxiliar.
@@ -158,11 +158,11 @@ public class Pila {
             Nodo pilaAux = null;
             // Recoore la pila hasta llegar al nodo que tenga el valor
             // igual que el de referencia.
-            while(referencia != inicio.getValor()){
+            while(referencia != tope.getValor()){
                 // Crea un nodo temporal para agregarlos a la pila auxiliar.
                 Nodo temp = new Nodo();
                 // Ingresa el valor al nodo temporal.
-                temp.setValor(inicio.getValor());
+                temp.setValor(tope.getValor());
                 // Consulta si la pila auxiliar no a sido inicializada.
                 if(pilaAux == null){
                     // Inicializa la pila auxiliar.
@@ -179,7 +179,7 @@ public class Pila {
                 retirar();
             }
             // Actualiza el valor del nodo.
-            inicio.setValor(valor);
+            tope.setValor(valor);
             // Regresa los valores de la pila auxiliar a la pila original
             // mientras la pila auxiliar tenga elementos.
             while(pilaAux != null){
@@ -198,7 +198,7 @@ public class Pila {
      */
     public void eliminar(){
         // Elimina el valor y la referencia a los demas nodos.
-        inicio = null;
+        tope = null;
         // Reinicia el contador a 0.
         tamanio = 0;
     }
@@ -207,7 +207,7 @@ public class Pila {
      */
     public void listar(){
         // Crea una copia de la pila.
-        Nodo aux = inicio;
+        Nodo aux = tope;
         // Recorre la pila hasta el ultimo nodo.
         while(aux != null){
             System.out.println("|\t" + aux.getValor() + "\t|");

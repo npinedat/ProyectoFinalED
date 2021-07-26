@@ -117,43 +117,6 @@ public class AVLTree {
 
         return balance(node, key);
     }
-
-    /* public void remove (int key) {
-        if (root == null) {
-            return;
-        }
-        if (key == root.key) {
-            removeRoot();
-        } else {
-            remove(key, root);
-        }
-    }
-
-    public void removeRoot() {
-        if (root.leftSubtree == null && root.rightSubtree == null){
-            root = null;
-        } else if (root.leftSubtree == null || root.rightSubtree == null) {
-            if (root.leftSubtree == null) {
-                root = root.rightSubtree;
-            } else {
-                root = root.leftSubtree;
-            } 
-        } else {
-            remove(root.key, root);
-        }
-    }
-
-    private boolean remove(int key, AVLTree node){
-        if (node == null) {
-            return false;
-        }
-        if (key < node.key){
-            return remove(key, node.leftSubtree);
-        }
-        if (key > node.key){
-            return remove(key, node.rightSubtree);
-        }
-    }*/
     
     public TreeNode delete(TreeNode node, int key) {
         if(node == null) {

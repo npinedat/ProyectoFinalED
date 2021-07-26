@@ -2,25 +2,19 @@ package Clases.appClasses;
 import java.util.ArrayList;
 
 public class Usuario {
-    public String user;
+    public String usuario;
     public String contrasena;
     public ArrayList<Objetivo> objetivos;
 
     public Usuario(String user, String contrasena) {
-        this.user = user;
+        this.usuario = user;
         this.contrasena = contrasena;
         this.objetivos = new ArrayList<>();
 
     }
 
-    public Usuario(String user, String contrasena, ArrayList<Objetivo> objetivos) {
-        this.user = user;
-        this.contrasena = contrasena;
-        this.objetivos = objetivos;
-    }
-
-    public Boolean hayUser(String us, String contra){
-        if((contra.equals(contrasena)) && (us.equals(user))){
+    public Boolean encontrarUsuario(String usuario, String contrasena){
+        if((contrasena.equals(contrasena)) && (usuario.equals(usuario))){
             //Usuario id = new Usuario(user,contrasena,objetivos); 
             return true;
         } else {
@@ -28,7 +22,7 @@ public class Usuario {
         }
     }
 
-    public Boolean hayObjetivos (Usuario usuario){
+    public Boolean encontrarObjetivos(Usuario usuario) {
         if (usuario.objetivos.size() == 0) {
             return false;
         } else {
