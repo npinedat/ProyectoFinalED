@@ -61,6 +61,7 @@ public static void main(String[] args) {
 	do {
 		System.out.println("si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 0");
 		log=sc.nextInt();
+		sc.nextLine();
 		switch(log){
 			case 1 :
 				System.out.println("Inserte Usario,contraseña");
@@ -91,26 +92,28 @@ public static void main(String[] args) {
 						hashDiaHoraAnterior = hashDiaHora - 1;
 					}
 					ob2=sc.nextInt();
+					sc.nextLine();
 					switch(ob2){
 						case 1 :
 							System.out.println("Escriba el nombre del objetivo:");
-							String nombreDeObjetivo=sc.next();
+							String nombreDeObjetivo=sc.nextLine();
 							System.out.println("Escriba la describcion del objetivo:");
-							String descripcionDelObjetivo=sc.next();
+							String descripcionDelObjetivo=sc.nextLine();
 							System.out.println("Escriba el numero de horas que le quiere dedicar");
 							int hora=sc.nextInt();
+							sc.nextLine();
 							System.out.println("Escriba la tecnica,Pomodoro,POSEC,Matriz");
-							String metodo=sc.next();
+							String metodo=sc.nextLine();
 							Objetivo obj = new Objetivo(nombreDeObjetivo,descripcionDelObjetivo,metodo,hora);
 							obj.llenarBloquesRestantes();
 							login.objetivos.add(obj);
 							System.out.println("ahora seleccione los dias de la semana que va a dedicar:");
 							System.out.println("Para esto escriba los dias separados por comas por ejemplo: martes,jueves,domingo :");
-							String dias=sc.next();
+							String dias=sc.nextLine();
 							String[] diasArr=dias.split(",");
 							System.out.println("ahora seleccione la hora de inicio que le va a dedicar cada dia");
 							System.out.println("Para esto escriba las horas de cada dia separadas por comas por ejemplo: 12,5,12:");
-							String horas=sc.next();
+							String horas=sc.nextLine();
 							String[] horaArr=horas.split(",");
 							int[] horaArrInt= new int[horaArr.length];
 							for (int i=0;i<horaArr.length;i++){
@@ -119,14 +122,14 @@ public static void main(String[] args) {
 								obj.getIde().insertarCol(hash);
 							}
 							obj.programarBloque();
-							vaciarArbol(obj);
+							//vaciarArbol(obj);
 							break;
 						case 2:
 							if (login.hayObjetivos(login) == false) {
 								System.out.println("No hay objetivos");
 							} else {
 								System.out.println("Inserte el nombre del objetivo");
-								String nomObj = sc.next();
+								String nomObj = sc.nextLine();
 								Objetivo tempo = new Objetivo();
 								for (Objetivo j : login.objetivos) {
 									if (nomObj.equals(j.nombre)) {
@@ -147,7 +150,7 @@ public static void main(String[] args) {
 							break;
 						case 3:
 							System.out.println("Escriba el nombre objetivo");
-							String nombreDeObjetivoE=sc.next();
+							String nombreDeObjetivoE=sc.nextLine();
 							for (Objetivo j : login.objetivos ){
 								if(!j.hayObjetivo(nombreDeObjetivoE)){
 									System.out.println("Entra a eliminar");
@@ -166,6 +169,7 @@ public static void main(String[] args) {
 										objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo actual? 1 para si, 0 para no");
 										int reali = sc.nextInt();
+										sc.nextLine();
 										if (reali == 1){
 											objetivoARealizar.programarBloque();
 											temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
