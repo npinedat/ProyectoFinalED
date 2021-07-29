@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.io.File;
 
 public class FileHandler {
@@ -26,10 +25,10 @@ public class FileHandler {
         }
     }
 
-    public void writeFile(FileOutputStream file, ArrayList <Usuario> usuarios) {
+    public void writeFile(FileOutputStream file, Object object) {
         try{
             objectWriter = new ObjectOutputStream(file);
-            objectWriter.writeObject(usuarios);
+            objectWriter.writeObject(object);
             objectWriter.close();
             System.out.println("Archivo escrito con éxito");
         }catch(IOException e){
@@ -37,15 +36,14 @@ public class FileHandler {
         }
     }
 
-    public ArrayList <Usuario> readFile(String fileName) {
+    public Object readFile(String fileName) {
         try{
             fileReader = new FileInputStream(fileName);
             objectReader = new ObjectInputStream(fileReader);
-            @SuppressWarnings("unchecked")
-            ArrayList <Usuario> arrayList = (ArrayList <Usuario>) objectReader.readObject();
+            Object object = objectReader.readObject();
             objectReader.close();
             System.out.println("Archivo leido con éxito");
-            return arrayList;
+            return object;
         }catch(IOException | ClassNotFoundException e){
             System.out.println("No se pudo leer el archivo " + e);
             return null;

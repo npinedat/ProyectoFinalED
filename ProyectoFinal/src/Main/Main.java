@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+@SuppressWarnings("unchecked")
 public class Main {
 
 	static int diasemana(String d){
@@ -55,7 +56,7 @@ public static void main(String[] args) {
 	FileHandler fileHandler = new FileHandler();
 	ArrayList <Usuario> users;
 	if(fileHandler.findFile("data.txt")){
-		users = fileHandler.readFile("data.txt");
+		users = (ArrayList <Usuario>) fileHandler.readFile("data.txt");
 	}else{
 		users= new ArrayList<Usuario>();
 	}
