@@ -1,4 +1,6 @@
-- Persistencia de los datos
+- Persistencia de los datos(implementado)
 - Interfaz de usuario
 - Comportamiento de las métodologias
 - Comprobar funcionalidad de confirmación de realización del objetivo
+- Implementar arboles para usuarios
+- Implementar hash
