@@ -1,7 +1,9 @@
 
 package Main;
 
+import java.io.FileOutputStream;
 import Clases.AVLTreesClasses.TreeNode;
+import Clases.appClasses.FileHandler;
 import Clases.appClasses.Objetivo;
 import Clases.appClasses.Usuario;
 import java.util.ArrayList;
@@ -50,16 +52,26 @@ public class Main {
 * @param args the command line arguments
 */
 public static void main(String[] args) {
-	ArrayList<Usuario> users= new ArrayList<Usuario>();
+	FileHandler fileHandler = new FileHandler();
+	ArrayList <Usuario> users;
+	if(fileHandler.findFile("data.txt")){
+		users = fileHandler.readFile("data.txt");
+	}else{
+		users= new ArrayList<Usuario>();
+	}
 	Scanner sc =new Scanner(System.in);
 	int hashDiaHoraAnterior = 0;
 	int log;
 	do {
-		System.out.println("si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 0");
+		System.out.println("si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 3");
 		log=sc.nextInt();
 		sc.nextLine();
 		switch(log){
 			case 1 :
+				if(users.isEmpty()){
+					System.out.println("No hay usuarios registrados");
+					break;
+				}
 				System.out.println("Inserte Usario,contraseña");
 				String user=sc.next();
 				String[] dt=user.split(",");  
@@ -74,6 +86,8 @@ public static void main(String[] args) {
 						login = i;
 						System.out.println("Iniciaste sesion");
 						break;
+					}else{
+						System.out.println("El usuario no existe");
 					}
 				}
 				int ob2;
@@ -176,6 +190,7 @@ public static void main(String[] args) {
 							break;
 						} while (hashDiaHoraAnterior != hashDiaHora);
 				} while (ob2 != 0);
+				break;
 	
 			case 2 :
 				System.out.println("Para registrarse inserte un nuevo usuario,contraseña");
@@ -187,7 +202,20 @@ public static void main(String[] args) {
 				users.add(usr);
 				System.out.println("Ya estas registrado");
 				break;
-			}     
+			case 3:
+				FileOutputStream file;
+				if(fileHandler.findFile("data.txt")) {
+					fileHandler.deleteFile("data.txt");
+					file = fileHandler.createFile("data.txt");
+					fileHandler.writeFile(file, users);
+				}else{
+					file = fileHandler.createFile("data.txt");
+					fileHandler.writeFile(file, users); 
+				}
+				log = 0;
+				break;
+			}
 		} while (log != 0);
+		sc.close();
 	} 
 }

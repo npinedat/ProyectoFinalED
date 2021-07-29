@@ -1,6 +1,8 @@
 package Clases.listClasses;
 
-public class Nodo {
+import java.io.Serializable;
+
+public class Nodo implements Serializable{
     // Variable en la cual se va a guardar el valor.
     private int valor;
     // Variable para enlazar los nodos.

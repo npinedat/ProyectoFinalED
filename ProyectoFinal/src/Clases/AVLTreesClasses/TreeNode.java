@@ -1,6 +1,7 @@
 package Clases.AVLTreesClasses;
 
-public class TreeNode {
+import java.io.Serializable;
+public class TreeNode implements Serializable{
     public int key, height;
     TreeNode leftSubtree, rightSubtree;
     

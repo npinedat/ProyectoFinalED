@@ -1,7 +1,8 @@
 
 package Clases.listClasses;
 
-public class Cola {  
+import java.io.Serializable;
+public class Cola implements Serializable{  
     private Nodo cabeza, cola;
     public Cola() {
         cabeza = null;

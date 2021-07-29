@@ -1,7 +1,8 @@
 package Clases.appClasses;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Usuario {
+public class Usuario implements Serializable{
     public String usuario;
     public String contrasena;
     public ArrayList<Objetivo> objetivos;

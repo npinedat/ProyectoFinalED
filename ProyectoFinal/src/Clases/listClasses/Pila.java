@@ -1,7 +1,9 @@
 
 package Clases.listClasses;
 
-public class Pila {
+import java.io.Serializable;
+
+public class Pila implements Serializable{
     // Puntero que indica el inicio de la pila o tambein conocida como el
     // tope de la pila.
     private Nodo tope;

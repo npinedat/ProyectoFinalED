@@ -1,6 +1,8 @@
 package Clases.AVLTreesClasses;
 
-public class AVLTree {
+import java.io.Serializable;
+
+public class AVLTree implements Serializable{
     public TreeNode root;
 
     public boolean empty() {

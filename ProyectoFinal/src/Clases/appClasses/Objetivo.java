@@ -1,10 +1,12 @@
 package Clases.appClasses;
 
+import java.io.Serializable;
+
 import Clases.AVLTreesClasses.*;
 import Clases.listClasses.*;
 
 
-public class Objetivo {
+public class Objetivo implements Serializable{
     public String nombre;
     public String descripcion;
     public String tecnica;
