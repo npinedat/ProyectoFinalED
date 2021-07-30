@@ -53,7 +53,6 @@ public class Objetivo {
 
     }
     
-    
     public Boolean hayObjetivo(String us){
         if(nombre==us){ 
             return true;
@@ -79,15 +78,15 @@ public class Objetivo {
     }
 
     public void programarBloque() {
-        while(!ide.vaciaCol()) {
+        while(!ide.colaVacia()) {
             bloquesRestantes.retirar();
             bloquesProgramados.root = bloquesProgramados.insert(bloquesProgramados.root, ide.getRaiz());
-            ide.extraerCol();
+            ide.desencolar();
         }
     }
 
     public void reencolarBloque(int key) {
-        ide.insertarCol(key);
+        ide.encolar(key);
         bloquesProgramados.root = bloquesProgramados.delete(bloquesProgramados.root, key);
     }
 }

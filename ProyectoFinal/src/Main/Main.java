@@ -80,6 +80,10 @@ public static void main(String[] args) {
 						break;
 					}
 				}
+				if (login == null) {
+					System.out.println("Usuario no encontrado, registrese");
+					break;
+				}
 				int ob2;
 				do {
 					System.out.println("Inserte: 1 si se quiere añadir objetivo, 2 para consultar objetivo, 3 Eliminar, 0 para cerrar sesión");
