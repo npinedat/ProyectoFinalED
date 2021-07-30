@@ -103,21 +103,21 @@ public static void main(String[] args) {
 						case 1 :
 							System.out.println("Escriba el nombre del objetivo:");
 							String nombreDeObjetivo=sc.nextLine();
-							System.out.println("Escriba la describcion del objetivo:");
+							System.out.println("Escriba la descripción del objetivo:");
 							String descripcionDelObjetivo=sc.nextLine();
-							System.out.println("Escriba el numero de horas que le quiere dedicar");
+							System.out.println("Escriba el número de horas que le quiere dedicar");
 							int hora=sc.nextInt();
 							sc.nextLine();
-							System.out.println("Escriba la tecnica,Pomodoro,POSEC,Matriz");
+							System.out.println("Escriba la tecnica: Pomodoro,POSEC,Matriz");
 							String metodo=sc.nextLine();
 							Objetivo obj = new Objetivo(nombreDeObjetivo,descripcionDelObjetivo,metodo,hora);
 							obj.llenarBloquesRestantes();
 							login.objetivos.add(obj);
-							System.out.println("ahora seleccione los dias de la semana que va a dedicar:");
+							System.out.println("Ahora seleccione los dias de la semana que va a dedicar:");
 							System.out.println("Para esto escriba los dias separados por comas por ejemplo: martes,jueves,domingo :");
 							String dias=sc.nextLine();
 							String[] diasArr=dias.split(",");
-							System.out.println("ahora seleccione la hora de inicio que le va a dedicar cada dia");
+							System.out.println("Ahora seleccione la hora de inicio que le va a dedicar cada dia");
 							System.out.println("Para esto escriba las horas de cada dia separadas por comas por ejemplo: 12,5,12:");
 							String horas=sc.nextLine();
 							String[] horaArr=horas.split(",");
@@ -189,7 +189,7 @@ public static void main(String[] args) {
 								}
 							}
 							break;
-						} while ((hashDiaHoraAnterior != hashDiaHora) && (horaHecha == false));
+						} while ((hashDiaHoraAnterior != hashDiaHora) && (!horaHecha));
 				} while (ob2 != 0);
 				break;
 	
