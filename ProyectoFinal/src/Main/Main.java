@@ -95,6 +95,7 @@ public static void main(String[] args) {
 					TreeNode temp;
 					if (hashDiaHora != hashDiaHoraAnterior) {
 						hashDiaHoraAnterior = hashDiaHora - 1;
+						horaHecha = false;
 					}
 					ob2=sc.nextInt();
 					sc.nextLine();
@@ -181,14 +182,16 @@ public static void main(String[] args) {
 											//objetivoARealizar.reencolarBloque(temp);
 											objetivoARealizar.horasDedicadas = objetivoARealizar.horasDedicadas + 1;
 											hashDiaHoraAnterior = hashDiaHora;
+											horaHecha = true;
 										}
 										break;
 									}
 								}
 							}
 							break;
-						} while (hashDiaHoraAnterior != hashDiaHora);
+						} while ((hashDiaHoraAnterior != hashDiaHora) && (horaHecha == false));
 				} while (ob2 != 0);
+				break;
 	
 			case 2 :
 				System.out.println("Para registrarse inserte un nuevo usuario,contraseña");

@@ -15,7 +15,7 @@ public class Usuario implements Serializable{
     }
 
     public Boolean encontrarUsuario(String usuario, String contrasena){
-        if((contrasena.equals(contrasena)) && (usuario.equals(usuario))){
+        if((contrasena.equals(this.contrasena)) && (usuario.equals(this.usuario))){
             //Usuario id = new Usuario(user,contrasena,objetivos); 
             return true;
         } else {
