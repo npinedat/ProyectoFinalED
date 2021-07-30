@@ -1,9 +1,7 @@
 
 package Main;
 
-import java.io.FileOutputStream;
 import Clases.AVLTreesClasses.TreeNode;
-import Clases.appClasses.FileHandler;
 import Clases.appClasses.Objetivo;
 import Clases.appClasses.Usuario;
 import java.util.ArrayList;
@@ -11,7 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
-@SuppressWarnings("unchecked")
+/**
+*
+* @author Admin
+*/
 public class Main {
 
 	static int diasemana(String d){
@@ -53,26 +54,16 @@ public class Main {
 * @param args the command line arguments
 */
 public static void main(String[] args) {
-	FileHandler fileHandler = new FileHandler();
-	ArrayList <Usuario> users;
-	if(fileHandler.findFile("data.txt")){
-		users = (ArrayList <Usuario>) fileHandler.readFile("data.txt");
-	}else{
-		users= new ArrayList<Usuario>();
-	}
+	ArrayList<Usuario> users= new ArrayList<Usuario>();
 	Scanner sc =new Scanner(System.in);
 	int hashDiaHoraAnterior = 0;
 	int log;
 	do {
-		System.out.println("si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 3");
+		System.out.println("si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 0");
 		log=sc.nextInt();
 		sc.nextLine();
 		switch(log){
 			case 1 :
-				if(users.isEmpty()){
-					System.out.println("No hay usuarios registrados");
-					break;
-				}
 				System.out.println("Inserte Usario,contraseña");
 				String user=sc.next();
 				String[] dt=user.split(",");  
@@ -83,12 +74,10 @@ public static void main(String[] args) {
 				Date date = new Date();
 				c.setTime(date);
 				for (Usuario i : users){
-					if(i.encontrarUsuario(id, ps)){
+					if(i.encontrarUsuario(id,ps)){
 						login = i;
 						System.out.println("Iniciaste sesion");
 						break;
-					}else{
-						System.out.println("El usuario no existe");
 					}
 				}
 				int ob2;
@@ -98,6 +87,8 @@ public static void main(String[] args) {
 					int horaAct = c.get(Calendar.HOUR);
 					int hashDiaHora = (diaAct * 24) + horaAct;
 					Objetivo objetivoARealizar = null;
+					Boolean horaHecha;
+					TreeNode temp;
 					if (hashDiaHora != hashDiaHoraAnterior) {
 						hashDiaHoraAnterior = hashDiaHora - 1;
 					}
@@ -136,18 +127,20 @@ public static void main(String[] args) {
 							break;
 						case 2:
 							if (login.encontrarObjetivos(login) == false) {
-								System.out.println("No hay objetivos creados");
+								System.out.println("No hay objetivos");
 							} else {
 								System.out.println("Inserte el nombre del objetivo");
 								String nomObj = sc.nextLine();
+								Objetivo tempo = new Objetivo();
 								for (Objetivo j : login.objetivos) {
 									if (nomObj.equals(j.nombre)) {
+										tempo = j;
 										System.out.println("Nombre: " + j.nombre);
 										System.out.println("Descripcion: " + j.descripcion);
 										System.out.println("Tecnica: " + j.tecnica);
 										System.out.println("Horas totales: " + j.horasTotales);
 										System.out.println("Horas dedicadas: " + j.horasDedicadas);
-										System.out.println("Horas restantes: " + j.horasADedicar);
+										System.out.println("Horas restantes: " + j.horasaDedicar);
 										break;
 									} else {
 										System.out.println("El objetivo no existe");
@@ -157,11 +150,12 @@ public static void main(String[] args) {
 							
 							break;
 						case 3:
-							System.out.println("Escriba el nombre del objetivo");
+							System.out.println("Escriba el nombre objetivo");
 							String nombreDeObjetivoE=sc.nextLine();
 							for (Objetivo j : login.objetivos ){
-								if(!j.encontrarObjetivo(nombreDeObjetivoE)){
-									Objetivo objetivoRemover = j;
+								if(!j.hayObjetivo(nombreDeObjetivoE)){
+									System.out.println("Entra a eliminar");
+									Objetivo objetivoRemover=j;
 									login.objetivos.remove(objetivoRemover);
 									break;
 								}
@@ -172,15 +166,15 @@ public static void main(String[] args) {
 						do {
 							if (!login.objetivos.isEmpty()) {
 								for (Objetivo j : login.objetivos ){
-									if(j.encontrarBloqueTiempo(hashDiaHora)){
+									if(j.existeObjetivo(hashDiaHora)){
 										objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo actual? 1 para si, 0 para no");
 										int reali = sc.nextInt();
 										sc.nextLine();
 										if (reali == 1){
 											objetivoARealizar.programarBloque();
-											TreeNode temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
-											objetivoARealizar.reencolarBloque(temp.key);
+											temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
+											//objetivoARealizar.reencolarBloque(temp);
 											objetivoARealizar.horasDedicadas = objetivoARealizar.horasDedicadas + 1;
 											hashDiaHoraAnterior = hashDiaHora;
 										}
@@ -191,7 +185,6 @@ public static void main(String[] args) {
 							break;
 						} while (hashDiaHoraAnterior != hashDiaHora);
 				} while (ob2 != 0);
-				break;
 	
 			case 2 :
 				System.out.println("Para registrarse inserte un nuevo usuario,contraseña");
@@ -203,20 +196,7 @@ public static void main(String[] args) {
 				users.add(usr);
 				System.out.println("Ya estas registrado");
 				break;
-			case 3:
-				FileOutputStream file;
-				if(fileHandler.findFile("data.txt")) {
-					fileHandler.deleteFile("data.txt");
-					file = fileHandler.createFile("data.txt");
-					fileHandler.writeFile(file, users);
-				}else{
-					file = fileHandler.createFile("data.txt");
-					fileHandler.writeFile(file, users); 
-				}
-				log = 0;
-				break;
-			}
+			}     
 		} while (log != 0);
-		sc.close();
 	} 
 }
