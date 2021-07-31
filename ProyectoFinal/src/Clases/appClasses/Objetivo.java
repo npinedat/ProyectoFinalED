@@ -1,10 +1,12 @@
 package Clases.appClasses;
 
+import java.io.Serializable;
+
 import Clases.AVLTreesClasses.*;
 import Clases.listClasses.*;
 
 
-public class Objetivo {
+public class Objetivo implements Serializable {
     public int id;
     public String nombre;
     public String descripcion;
@@ -15,18 +17,6 @@ public class Objetivo {
     public Pila bloquesRestantes;
     public AVLTree bloquesProgramados;
     Cola ide;
-
-    public Objetivo(){
-        this.nombre = null;
-        this.descripcion = null;
-        this.tecnica = null;
-        this.horasTotales = 0;
-        this.horasDedicadas = 0;
-        this.bloquesRestantes = null;
-        this.bloquesRestantes = null;
-        this.ide = null;
-        recalcularHorasADedicar();
-    }
 
     public Objetivo(String nombre, String descripcion, String tecnica, int horasTotales) {
         this.nombre = nombre;
@@ -56,15 +46,15 @@ public class Objetivo {
 
     }
     
-    public Boolean hayObjetivo(String us){
-        if(nombre==us){ 
+    public Boolean encontrarObjetivo(String user){
+        if(nombre == user){ 
             return true;
         }else {
             return false;
         }
     }
 
-    public Boolean existeObjetivo(int us) {
+    public Boolean encontrarBloqueTiempo(int us) {
         if (bloquesProgramados.find(us) != null){
             return true;
         } else {
