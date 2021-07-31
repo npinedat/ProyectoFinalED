@@ -2,5 +2,6 @@
 - Interfaz de usuario
 - Comportamiento de las métodologias
 - Comprobar funcionalidad de confirmación de realización del objetivo
-- Implementar arboles para usuarios
+- Implementar arboles para usuarios(Implementado)
 - Implementar hash
+- Mover procesos de main a métodos

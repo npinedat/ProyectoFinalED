@@ -1,8 +1,8 @@
 
 package Main;
 
+import Clases.AVLTreesClasses.*;
 import java.io.FileOutputStream;
-import Clases.AVLTreesClasses.TreeNode;
 import Clases.appClasses.FileHandler;
 import Clases.appClasses.Objetivo;
 import Clases.appClasses.Usuario;
@@ -176,8 +176,8 @@ public static void main(String[] args) {
 						}
 
 						/*do {
-							if (!login.objetivos.isEmpty()) {
-								for (Objetivo j : login.objetivos ){
+							if (!login.arbolObjetivos.empty()) {
+								for (Objetivo j : login.arbolObjetivos){
 									if(j.encontrarBloqueTiempo(hashDiaHora)){
 										objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo actual? 1 para si, 0 para no");
