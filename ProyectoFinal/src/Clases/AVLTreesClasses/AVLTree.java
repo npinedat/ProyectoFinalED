@@ -1,6 +1,8 @@
 package Clases.AVLTreesClasses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import Clases.appClasses.Objetivo;
 
 public class AVLTree implements Serializable{
@@ -156,5 +158,14 @@ public class AVLTree implements Serializable{
         }
         node.height = Math.max(getHeight(node.leftSubtree), getHeight(node.rightSubtree));
         return balance(node, key);
+    }
+
+    public ArrayList <Objetivo> toArray(TreeNode node) {
+        ArrayList <Objetivo> objetivos;
+        if(node != null){
+            objetivos.add(node.objetivo);
+            toArray(node.leftSubtree);
+            toArray(node.rightSubtree);
+        }
     }
 }

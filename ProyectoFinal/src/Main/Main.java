@@ -175,7 +175,7 @@ public static void main(String[] args) {
 							break;
 						}
 
-						/*do {
+						do {
 							if (!login.arbolObjetivos.empty()) {
 								for (Objetivo j : login.arbolObjetivos){
 									if(j.encontrarBloqueTiempo(hashDiaHora)){
