@@ -175,8 +175,8 @@ public static void main(String[] args) {
 							break;
 						}
 
-						/*do {
-							if (!login.objetivos.isEmpty()) {
+						do {
+							if (!login.arbolObjetivos.empty()) {
 								for (Objetivo j : login.objetivos ){
 									if(j.encontrarBloqueTiempo(hashDiaHora)){
 										objetivoARealizar = j;
@@ -184,12 +184,17 @@ public static void main(String[] args) {
 										int reali = sc.nextInt();
 										sc.nextLine();
 										if (reali == 1){
-											objetivoARealizar.programarBloque();
+											/*objetivoARealizar.programarBloque();
 											TreeNode temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
-											objetivoARealizar.reencolarBloque(temp.key);
-											objetivoARealizar.horasDedicadas = objetivoARealizar.horasDedicadas + 1;
-											hashDiaHoraAnterior = hashDiaHora;
+											objetivoARealizar.reencolarBloque(temp.key);*/
+											if(j.hs.list[hashDiaHora].getSiguiente()==null){
+												j.hs.list[hashDiaHora]=null;
+											}else if(!(j.hs.list[hashDiaHora].getSiguiente()==null)){
+												j.hs.list[hashDiaHora]=j.hs.list[hashDiaHora].getSiguiente();
+											}
 											horaHecha = true;
+											j.horasDedicadas++;
+											j.recalcularHorasADedicar();
 										}
 										break;
 									}

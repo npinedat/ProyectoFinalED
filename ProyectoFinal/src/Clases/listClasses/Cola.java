@@ -30,9 +30,9 @@ public class Cola implements Serializable{
         }
     }
 
-    public Object desencolar() {
+    public int desencolar() {
         if (!colaVacia()){
-            Object informacion = cabeza.getValor();
+            int informacion = cabeza.getValor();
             if (cabeza == cola){
                 cabeza = null;
                 cola = null;
