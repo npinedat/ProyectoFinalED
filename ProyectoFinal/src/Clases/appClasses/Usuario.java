@@ -1,17 +1,19 @@
 package Clases.appClasses;
-import java.util.ArrayList;
+
+import Clases.AVLTreesClasses.AVLTree;
+import Clases.AVLTreesClasses.TreeNode;
+
 import java.io.Serializable;
 
 public class Usuario implements Serializable{
     public String usuario;
     public String contrasena;
-    public ArrayList<Objetivo> objetivos;
+    public AVLTree arbolObjetivos = new AVLTree();
+    public int id;
 
     public Usuario(String user, String contrasena) {
         this.usuario = user;
         this.contrasena = contrasena;
-        this.objetivos = new ArrayList<>();
-
     }
 
     public Boolean encontrarUsuario(String usuario, String contrasena){
@@ -23,11 +25,19 @@ public class Usuario implements Serializable{
         }
     }
 
-    public Boolean encontrarObjetivos(Usuario usuario) {
-        if (usuario.objetivos.size() == 0) {
+    public Boolean objetivosVacio() {
+        if (arbolObjetivos.empty()) {
             return false;
         } else {
             return true;
         }
+    }
+
+    public TreeNode encontrarObjetivo(String nombre) {
+        int id = 0;
+        for(char i: nombre.toCharArray()){
+            id += (int)i;
+        }
+        return arbolObjetivos.find(id);
     }
 }

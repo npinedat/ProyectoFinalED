@@ -1,9 +1,10 @@
 package Clases.AVLTreesClasses;
 
 import java.io.Serializable;
+import Clases.appClasses.Objetivo;
 
 public class AVLTree implements Serializable{
-    public TreeNode root;
+    public TreeNode root = null;
 
     public boolean empty() {
         if(root == null) {
@@ -13,14 +14,14 @@ public class AVLTree implements Serializable{
         }
     }
 
-    public boolean find(int nodeKey){
+    public TreeNode find(int nodeKey){
         TreeNode temporal = root;
         if (nodeKey == root.key) {
-            return true;
+            return root;
         }else {
             while(root != null) {
                 if(root.key == nodeKey) {
-                    return true;
+                    return root;
                 }
                 if(nodeKey < root.key) {
                     root = root.leftSubtree;
@@ -29,7 +30,7 @@ public class AVLTree implements Serializable{
                 }
             }
             root = temporal;
-            return false;
+            return null;
         }
     }
     
@@ -102,16 +103,17 @@ public class AVLTree implements Serializable{
         return leftSubtree;
     }
     
-    public TreeNode insert(TreeNode node, int key) {
+    public TreeNode insert(TreeNode node, int key, Objetivo objetivo) {
         if(node == null){
-            node = new TreeNode(key);
+            node = new TreeNode(key, objetivo);
             return node;
         }
         if(key < node.key) {
-            node.leftSubtree = insert(node.leftSubtree, key);
+            node.leftSubtree = insert(node.leftSubtree, key, objetivo);
         }else if(key > node.key){
-            node.rightSubtree = insert(node.rightSubtree, key);
+            node.rightSubtree = insert(node.rightSubtree, key, objetivo);
         }else {
+            System.out.println("Ya existe un elemento con este nombre");
             return node;
         }
         

@@ -5,7 +5,7 @@ import Clases.listClasses.*;
 
 
 public class Objetivo {
-    private int contador = 1;
+    public int id;
     public String nombre;
     public String descripcion;
     public String tecnica;
@@ -38,6 +38,9 @@ public class Objetivo {
         this.bloquesProgramados = new AVLTree();
         this.ide = new Cola();
         recalcularHorasADedicar();
+        for(char i: nombre.toCharArray()){
+            id+=(int)i;
+        }
     }
 
     public void setIde(Cola ide) {
@@ -62,7 +65,7 @@ public class Objetivo {
     }
 
     public Boolean existeObjetivo(int us) {
-        if (bloquesProgramados.find(us)){
+        if (bloquesProgramados.find(us) != null){
             return true;
         } else {
             return false;
@@ -77,13 +80,13 @@ public class Objetivo {
         }
     }
 
-    public void programarBloque() {
+    /*public void programarBloque() {
         while(!ide.colaVacia()) {
             bloquesRestantes.retirar();
             bloquesProgramados.root = bloquesProgramados.insert(bloquesProgramados.root, ide.getRaiz());
             ide.desencolar();
         }
-    }
+    }*/
 
     public void reencolarBloque(int key) {
         ide.encolar(key);

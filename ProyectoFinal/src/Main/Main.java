@@ -34,7 +34,7 @@ public class Main {
     return 50;
     }
 	
-	static void vaciarArbol(Objetivo obj) {
+	/*static void vaciarArbol(Objetivo obj) {
 		//Toca buscarlo para mirarlo
 		int i = 0;
 		while (!obj.bloquesRestantes.esVacia()) {
@@ -49,7 +49,8 @@ public class Main {
 		}
 		System.out.println("Pila vacia");
 	}
-   
+   */
+
 /**
 * @param args the command line arguments
 */
@@ -112,7 +113,7 @@ public static void main(String[] args) {
 							String metodo=sc.nextLine();
 							Objetivo obj = new Objetivo(nombreDeObjetivo,descripcionDelObjetivo,metodo,hora);
 							obj.llenarBloquesRestantes();
-							login.objetivos.add(obj);
+							login.arbolObjetivos.root = login.arbolObjetivos.insert(login.arbolObjetivos.root, obj.id, obj);
 							System.out.println("Ahora seleccione los dias de la semana que va a dedicar:");
 							System.out.println("Para esto escriba los dias separados por comas por ejemplo: martes,jueves,domingo :");
 							String dias=sc.nextLine();
@@ -127,48 +128,41 @@ public static void main(String[] args) {
 								int hash=((diasemana(diasArr[i]))*24)+ horaArrInt[i];
 								obj.getIde().encolar(hash);
 							}
-							obj.programarBloque();
+							//obj.programarBloque();
 							//vaciarArbol(obj);
 							break;
 						case 2:
-							if (login.encontrarObjetivos(login) == false) {
+							if (login.objetivosVacio() == false) {
 								System.out.println("No hay objetivos");
 							} else {
 								System.out.println("Inserte el nombre del objetivo");
 								String nomObj = sc.nextLine();
-								Objetivo tempo = new Objetivo();
-								for (Objetivo j : login.objetivos) {
-									if (nomObj.equals(j.nombre)) {
-										tempo = j;
-										System.out.println("Nombre: " + j.nombre);
-										System.out.println("Descripcion: " + j.descripcion);
-										System.out.println("Tecnica: " + j.tecnica);
-										System.out.println("Horas totales: " + j.horasTotales);
-										System.out.println("Horas dedicadas: " + j.horasDedicadas);
-										System.out.println("Horas restantes: " + j.horasaDedicar);
-										break;
-									} else {
-										System.out.println("El objetivo no existe");
-									}
+								System.out.println(login.arbolObjetivos.root.key);
+								if(login.encontrarObjetivo(nomObj) != null){
+									Objetivo j = login.encontrarObjetivo(nomObj).objetivo;
+									System.out.println("Nombre: " + j.nombre);
+									System.out.println("Descripcion: " + j.descripcion);
+									System.out.println("Tecnica: " + j.tecnica);
+									System.out.println("Horas totales: " + j.horasTotales);
+									System.out.println("Horas dedicadas: " + j.horasDedicadas);
+									System.out.println("Horas restantes: " + j.horasaDedicar);
+									break;
+								}else{
+									System.out.println("No existe el objetivo");
 								}
 							}
-							
 							break;
 						case 3:
 							System.out.println("Escriba el nombre objetivo");
 							String nombreDeObjetivoE=sc.nextLine();
-							for (Objetivo j : login.objetivos ){
-								if(!j.hayObjetivo(nombreDeObjetivoE)){
-									System.out.println("Entra a eliminar");
-									Objetivo objetivoRemover=j;
-									login.objetivos.remove(objetivoRemover);
-									break;
-								}
+							if(login.encontrarObjetivo(nombreDeObjetivoE) != null){
+								login.arbolObjetivos.root = login.arbolObjetivos.delete(login.arbolObjetivos.root, login.encontrarObjetivo(nombreDeObjetivoE).key);
+								System.out.println("Objetivo eliminado");
 							}
 							break;
 						}
 
-						do {
+						/*do {
 							if (!login.objetivos.isEmpty()) {
 								for (Objetivo j : login.objetivos ){
 									if(j.existeObjetivo(hashDiaHora)){
@@ -189,7 +183,7 @@ public static void main(String[] args) {
 								}
 							}
 							break;
-						} while ((hashDiaHoraAnterior != hashDiaHora) && (!horaHecha));
+						} while ((hashDiaHoraAnterior != hashDiaHora) && (!horaHecha));*/
 				} while (ob2 != 0);
 				break;
 	
