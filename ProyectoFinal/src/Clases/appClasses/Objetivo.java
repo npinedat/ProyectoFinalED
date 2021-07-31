@@ -17,6 +17,7 @@ public class Objetivo implements Serializable {
     public Pila bloquesRestantes;
     public AVLTree bloquesProgramados;
     Cola ide;
+    public Hash hs;
 
     public Objetivo(String nombre, String descripcion, String tecnica, int horasTotales) {
         this.nombre = nombre;
@@ -55,7 +56,7 @@ public class Objetivo implements Serializable {
     }
 
     public Boolean encontrarBloqueTiempo(int us) {
-        if (bloquesProgramados.find(us) != null){
+        if (hs.list[us] != null){
             return true;
         } else {
             return false;
@@ -70,13 +71,21 @@ public class Objetivo implements Serializable {
         }
     }
 
-    /*public void programarBloque() {
-        while(!ide.colaVacia()) {
+ 
+    public void programarBloque() {
+        while(!bloquesRestantes.esVacia()) {
+            int c= ide.desencolar();
+            Nodo aux=hs.list[c];
+            if(hs.list[c]==null){
+            hs.list[c]=bloquesRestantes.cima();
+            }else{
+                hs.list[c]=bloquesRestantes.cima();
+                hs.list[c].setSiguiente(aux);
+            }
+            ide.encolar(c);
             bloquesRestantes.retirar();
-            bloquesProgramados.root = bloquesProgramados.insert(bloquesProgramados.root, ide.getRaiz());
-            ide.desencolar();
         }
-    }*/
+ }
 
     public void reencolarBloque(int key) {
         ide.encolar(key);

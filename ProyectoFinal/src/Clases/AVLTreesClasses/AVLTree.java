@@ -161,11 +161,12 @@ public class AVLTree implements Serializable{
     }
 
     public ArrayList <Objetivo> toArray(TreeNode node) {
-        ArrayList <Objetivo> objetivos;
+        ArrayList <Objetivo> objetivos = new ArrayList <Objetivo>();
         if(node != null){
             objetivos.add(node.objetivo);
             toArray(node.leftSubtree);
             toArray(node.rightSubtree);
         }
+        return objetivos;
     }
 }

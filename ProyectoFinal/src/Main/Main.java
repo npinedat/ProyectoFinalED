@@ -150,7 +150,7 @@ public static void main(String[] args) {
 							} else {
 								System.out.println("Inserte el nombre del objetivo");
 								String nomObj = sc.nextLine();
-								System.out.println(login.arbolObjetivos.root.key);
+								System.out.println("Id del objetivo: " + login.arbolObjetivos.root.key);
 								if(login.encontrarObjetivo(nomObj) != null){
 									Objetivo j = login.encontrarObjetivo(nomObj).objetivo;
 									System.out.println("Nombre: " + j.nombre);
@@ -177,26 +177,32 @@ public static void main(String[] args) {
 
 						do {
 							if (!login.arbolObjetivos.empty()) {
-								for (Objetivo j : login.arbolObjetivos){
+								for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)){
+									System.out.println(j.nombre);
 									if(j.encontrarBloqueTiempo(hashDiaHora)){
 										objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo actual? 1 para si, 0 para no");
 										int reali = sc.nextInt();
 										sc.nextLine();
 										if (reali == 1){
-											objetivoARealizar.programarBloque();
+											/*objetivoARealizar.programarBloque();
 											TreeNode temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
-											objetivoARealizar.reencolarBloque(temp.key);
-											objetivoARealizar.horasDedicadas = objetivoARealizar.horasDedicadas + 1;
-											hashDiaHoraAnterior = hashDiaHora;
+											objetivoARealizar.reencolarBloque(temp.key);*/
+											if(j.hs.list[hashDiaHora].getSiguiente()==null){
+												j.hs.list[hashDiaHora]=null;
+											}else if(!(j.hs.list[hashDiaHora].getSiguiente()==null)){
+												j.hs.list[hashDiaHora]=j.hs.list[hashDiaHora].getSiguiente();
+											}
 											horaHecha = true;
+											j.horasDedicadas++;
+											j.recalcularHorasADedicar();
 										}
 										break;
 									}
 								}
 							}
 							break;
-						} while ((hashDiaHoraAnterior != hashDiaHora) && (!horaHecha));*/
+						} while ((hashDiaHoraAnterior != hashDiaHora) && (!horaHecha));
 				} while (ob2 != 0);
 				break;
 	
