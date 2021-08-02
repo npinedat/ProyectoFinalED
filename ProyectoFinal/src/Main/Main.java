@@ -1,6 +1,5 @@
 package Main;
 
-import Clases.AVLTreesClasses.*;
 import java.io.FileOutputStream;
 import Clases.appClasses.FileHandler;
 import Clases.appClasses.Objetivo;
@@ -68,7 +67,6 @@ public class Main {
 			users = new ArrayList<Usuario>();
 		}
 		Scanner sc =new Scanner(System.in);
-		int hashDiaHoraAnterior = 0;
 		int horaPreguntada = -1;
 		int log;
 		do {
@@ -108,9 +106,7 @@ public class Main {
 						int diaAct = c.get(Calendar.DAY_OF_WEEK);
 						int horaAct = c.get(Calendar.HOUR_OF_DAY);
 						int hashDiaHora = (diaAct * 24) + horaAct;
-						//Objetivo objetivoARealizar = null;
 						if ((horaHecha == true) && (horaPreguntada != hashDiaHora)) {
-							//hashDiaHoraAnterior = hashDiaHora - 1;
 							horaPreguntada = hashDiaHora;
 							horaHecha = false;
 						}
@@ -177,36 +173,27 @@ public class Main {
 								}
 								break;
 						}
-
-						//do {
-							if (!login.arbolObjetivos.empty()) {
-								for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)){
-									if(j.encontrarBloqueTiempo(hashDiaHora) && (!horaHecha)){
-										//objetivoARealizar = j;
-										System.out.println("¿Estas realizando el objetivo " + j.nombre + "? 1 para si, 0 para no");
-										int reali = sc.nextInt();
-										sc.nextLine();
-										if (reali == 1){
-											/*objetivoARealizar.programarBloque();
-											TreeNode temp = objetivoARealizar.bloquesProgramados.delete(objetivoARealizar.bloquesProgramados.root, hashDiaHora);
-											objetivoARealizar.reencolarBloque(temp.key);*/
-											if(j.hs.list[hashDiaHora].getSiguiente() == null){
-												j.hs.list[hashDiaHora] = null;
-											}else if(!(j.hs.list[hashDiaHora].getSiguiente() == null)){
-												j.hs.list[hashDiaHora] = j.hs.list[hashDiaHora].getSiguiente();
-											}
-											horaPreguntada = hashDiaHora;
-											horaHecha = true;
-											j.horasDedicadas++;
-											j.recalcularHorasADedicar();
-											//hashDiaHoraAnterior = hashDiaHora;
+						if (!login.arbolObjetivos.empty()) {
+							for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)){									
+								if(j.encontrarBloqueTiempo(hashDiaHora) && (!horaHecha)){
+									System.out.println("¿Estas realizando el objetivo " + j.nombre + "? 1 para si, 0 para no");
+									int reali = sc.nextInt();
+									sc.nextLine();
+									if (reali == 1){
+										if(j.hs.list[hashDiaHora].getSiguiente() == null){
+											j.hs.list[hashDiaHora] = null;
+										}else if(!(j.hs.list[hashDiaHora].getSiguiente() == null)){
+											j.hs.list[hashDiaHora] = j.hs.list[hashDiaHora].getSiguiente();
 										}
-										break;
+										horaPreguntada = hashDiaHora;											
+										horaHecha = true;
+										j.horasDedicadas++;
+										j.recalcularHorasADedicar();
 									}
+									break;
 								}
 							}
-							//break;
-						//} while ((horaPreguntada != hashDiaHora) && (!horaHecha));
+						}
 					} while (ob2 != 0);
 					break;
 	
