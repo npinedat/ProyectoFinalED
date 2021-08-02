@@ -16,12 +16,17 @@ public class Pila implements Serializable{
         tope = null;
         tamanio = 0;
     }
+    
     /**
      * Consulta si la pila esta vacia.
      * @return true si el primer nodo (inicio), no apunta a otro nodo.
      */
     public boolean esVacia(){
-        return tope == null;
+        if (tope == null){
+            return true;
+        } else {
+            return false;
+        }
     }
     /**
      * Consulta cuantos elementos (nodos) tiene la pila.

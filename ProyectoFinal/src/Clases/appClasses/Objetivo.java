@@ -28,6 +28,7 @@ public class Objetivo implements Serializable {
         this.bloquesRestantes = new Pila();
         this.bloquesProgramados = new AVLTree();
         this.ide = new Cola();
+        this.hs = new Hash();
         recalcularHorasADedicar();
         for(char i: nombre.toCharArray()){
             id+=(int)i;
@@ -73,13 +74,13 @@ public class Objetivo implements Serializable {
 
  
     public void programarBloque() {
-        while(!bloquesRestantes.esVacia()) {
-            int c= ide.desencolar();
-            Nodo aux=hs.list[c];
-            if(hs.list[c]==null){
-            hs.list[c]=bloquesRestantes.cima();
-            }else{
-                hs.list[c]=bloquesRestantes.cima();
+        while(bloquesRestantes.tamanio > 0) {
+            int c = ide.desencolar();
+            if(hs.list[c] == null){
+                hs.list[c] = bloquesRestantes.cima();
+            } else {
+                Nodo aux = hs.list[c];
+                hs.list[c] = bloquesRestantes.cima();
                 hs.list[c].setSiguiente(aux);
             }
             ide.encolar(c);
