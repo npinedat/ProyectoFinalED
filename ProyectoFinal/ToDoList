@@ -1,7 +1,7 @@
 - Persistencia de los datos(implementado)
 - Interfaz de usuario
 - Comportamiento de las métodologias
-- Comprobar funcionalidad de confirmación de realización del objetivo(Probar)
+- Comprobar funcionalidad de confirmación de realización del objetivo(Implementado)
 - Implementar arboles para usuarios(Implementado)
 - Implementar hash(Implementado)
 - Mover procesos de main a métodos

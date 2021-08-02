@@ -181,9 +181,6 @@ public class Main {
 						//do {
 							if (!login.arbolObjetivos.empty()) {
 								for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)){
-									System.out.println(j.nombre);
-									System.out.println(hashDiaHora);
-									System.out.println(j.hs.list[hashDiaHora]);
 									if(j.encontrarBloqueTiempo(hashDiaHora) && (!horaHecha)){
 										//objetivoARealizar = j;
 										System.out.println("¿Estas realizando el objetivo " + j.nombre + "? 1 para si, 0 para no");
