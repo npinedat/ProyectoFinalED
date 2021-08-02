@@ -5,3 +5,4 @@
 - Implementar arboles para usuarios(Implementado)
 - Implementar hash(Implementado)
 - Mover procesos de main a métodos
+- Pruebas de grandes cantidades de datos eliminar y consultar
