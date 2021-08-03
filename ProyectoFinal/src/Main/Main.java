@@ -2,6 +2,7 @@ package Main;
 
 import java.io.FileOutputStream;
 import Clases.appClasses.FileHandler;
+import Clases.appClasses.InterfazUsuario;
 import Clases.appClasses.Objetivo;
 import Clases.appClasses.Usuario;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class Main {
 * @param args the command line arguments
 */
 	public static void main(String[] args) {
+		InterfazUsuario interfaz = new InterfazUsuario();
 		FileHandler fileHandler = new FileHandler();
 		ArrayList<Usuario> users;
 		if (fileHandler.findFile("data.txt")){
