@@ -9,11 +9,14 @@ import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -27,10 +30,10 @@ public class InterfazUsuario {
     Font fuentePequeña = new Font("Arial", Font.PLAIN, 12);
 
     public InterfazUsuario() {
-        //paginaPrincipal = new PaginaPrincipal();
-        paginaInicioSesion = new PaginaInicioSesion();
-        paginaCreacion = new PaginaCreacion();
-        paginaConsulta = new PaginaConsulta();
+        paginaPrincipal = new PaginaPrincipal();
+        //paginaInicioSesion = new PaginaInicioSesion();
+        //paginaCreacion = new PaginaCreacion();
+        //paginaConsulta = new PaginaConsulta();
     }
     public class PaginaPrincipal extends JFrame{
         JPanel panelCalendario;
@@ -38,29 +41,18 @@ public class InterfazUsuario {
         JPanel panelSur;
         JPanel panelOeste;
         JPanel panelEste;
-        JPanel contenedoresBloque;
         JButton botonCreacion;
         JButton botonConsulta;
         JButton botonEliminar;
-        JLabel etiquetaTitulo;
-        JLabel etiquetaDiasHoras;
-        JLabel etiquetaLunes;
-        JLabel etiquetaMartes;
-        JLabel etiquetaMiercoles;
-        JLabel etiquetaJueves;
-        JLabel etiquetaViernes;
-        JLabel etiquetaSabado;
-        JLabel etiquetaDomingo;
+        JLabel etiqueta;
         PaginaPrincipal() {
             panelCalendario = new JPanel();
             panelCalendario.setBackground(Color.red);
 
             panelNorte = new JPanel();
-            //panelNorte.setLayout(null);
             panelNorte.setBackground(Color.pink);
 
             panelSur = new JPanel();
-            //panelSur.setLayout();
             panelSur.setBackground(Color.BLUE);
 
             panelOeste = new JPanel();
@@ -74,49 +66,43 @@ public class InterfazUsuario {
             panelCalendario.setBackground(Color.GREEN);
 
             botonCreacion = new JButton("Crear objetivo");
-            //botonCreacion.setSize(100, 50);
             panelSur.add(botonCreacion);
 
             botonConsulta = new JButton("Consultar objetivo");
-            //botonConsulta.setSize(100, 50);
             panelSur.add(botonConsulta);
 
             botonEliminar = new JButton("Eliminar objetivo");
-            //botonEliminar.setSize(100, 50);
             panelSur.add(botonEliminar);
 
-            etiquetaTitulo = new JLabel("TimeHero", SwingConstants.CENTER);
-            etiquetaTitulo.setFont(fuenteGrande);
-            //etiquetaTitulo.setSize(30,30);
-            //etiquetaTitulo.setBackground(Color.CYAN);
-            panelNorte.add(etiquetaTitulo);
+            etiqueta = new JLabel("TimeHero", SwingConstants.CENTER);
+            etiqueta.setFont(fuenteGrande);
+            panelNorte.add(etiqueta);
 
-            etiquetaDiasHoras = new JLabel("Horas/Días");
-            etiquetaDiasHoras.setBorder(new LineBorder(Color.BLACK));
-            panelCalendario.add(etiquetaDiasHoras);
+            etiqueta = new JLabel("Horas/Días");
+            panelCalendario.add(etiqueta);
 
-            etiquetaLunes = new JLabel("Lunes");
-            panelCalendario.add(etiquetaLunes);
+            etiqueta = new JLabel("Lunes");
+            panelCalendario.add(etiqueta);
 
-            etiquetaMartes = new JLabel("Martes");
-            panelCalendario.add(etiquetaMartes);
+            etiqueta = new JLabel("Martes");
+            panelCalendario.add(etiqueta);
 
-            etiquetaMiercoles = new JLabel("Miercoles");
-            panelCalendario.add(etiquetaMiercoles);
+            etiqueta = new JLabel("Miercoles");
+            panelCalendario.add(etiqueta);
 
-            etiquetaJueves = new JLabel("Jueves");
-            panelCalendario.add(etiquetaJueves);
+            etiqueta = new JLabel("Jueves");
+            panelCalendario.add(etiqueta);
 
-            etiquetaViernes = new JLabel("Viernes");
-            panelCalendario.add(etiquetaViernes);
+            etiqueta = new JLabel("Viernes");
+            panelCalendario.add(etiqueta);
 
-            etiquetaSabado = new JLabel("Sabado");
-            panelCalendario.add(etiquetaSabado);
+            etiqueta = new JLabel("Sabado");
+            panelCalendario.add(etiqueta);
 
-            etiquetaDomingo = new JLabel("Domingo");
-            panelCalendario.add(etiquetaDomingo);
+            etiqueta = new JLabel("Domingo");
+            panelCalendario.add(etiqueta);
 
-            for(int i = 1; i <= 24; i++) {
+            for(int i = 0; i <= 23; i++) {
                 JLabel hora = new JLabel(i + ":" + (i+1));
                 panelCalendario.add(hora);
                 for(int j = 1; j <= 7; j++) {
@@ -139,12 +125,10 @@ public class InterfazUsuario {
         }
     }
 
-    public class PaginaInicioSesion extends JFrame{
+    public class PaginaInicioSesion extends JFrame {
         JPanel panelNorte;
         JPanel panelCentro;
-        JLabel etiquetaTitulo;
-        JLabel etiquetaUsuario;
-        JLabel etiquetaContrasena;
+        JLabel etiqueta;
         JTextField campoUsuario;
         JPasswordField campoContrasena;
         JButton botonIngreso;
@@ -157,26 +141,26 @@ public class InterfazUsuario {
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(Color.GREEN);
 
-            etiquetaTitulo = new JLabel("Inicio sesion");
-            etiquetaTitulo.setFont(fuenteGrande);
-            panelNorte.add(etiquetaTitulo);
+            etiqueta = new JLabel("Inicio sesion");
+            etiqueta.setFont(fuenteGrande);
+            panelNorte.add(etiqueta);
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 100)));
 
-            etiquetaUsuario = new JLabel("Usuario:", SwingConstants.CENTER);
-            etiquetaUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
-            etiquetaUsuario.setMaximumSize(new Dimension(200, 30));
-            panelCentro.add(etiquetaUsuario);
+            etiqueta = new JLabel("Usuario:", SwingConstants.CENTER);
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiqueta.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(etiqueta);
 
             campoUsuario = new JTextField();
             campoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
             campoUsuario.setMaximumSize(new Dimension(200, 30));
             panelCentro.add(campoUsuario);
 
-            etiquetaContrasena = new JLabel("Contraseña:", SwingConstants.CENTER);
-            etiquetaContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
-            etiquetaContrasena.setMaximumSize(new Dimension(200, 30));
-            panelCentro.add(etiquetaContrasena);
+            etiqueta = new JLabel("Contraseña:", SwingConstants.CENTER);
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiqueta.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(etiqueta);
 
             campoContrasena = new JPasswordField();
             campoContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -199,9 +183,127 @@ public class InterfazUsuario {
         }
     }
 
-    public class PaginaCreacion {
-        PaginaCreacion() {
+    public class PaginaCreacion extends JFrame{
+        JPanel panelNorte;
+        JPanel panelCentro;
+        JPanel panelOeste;
+        JPanel panelEste;
+        JPanel panelSur;
+        JLabel etiqueta;
+        JTextArea descripcionMetodologia;
+        JTextField campoNombre;
+        JTextArea campoDescripcion;
+        JTextField campoHoras;
+        ButtonGroup metodologias;
+        JRadioButton pomodoro;
+        JRadioButton posec;
+        JRadioButton eissenhower;
+        
 
+        PaginaCreacion() {
+            panelNorte = new JPanel();
+            panelNorte.setBackground(Color.BLUE);
+
+            panelCentro = new JPanel();
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.GREEN);
+
+            panelOeste = new JPanel();
+            panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
+            panelOeste.setFont(fuentePequeña);
+            panelOeste.setBackground(Color.MAGENTA);
+
+            panelEste = new JPanel();
+            panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
+            panelEste.setFont(fuentePequeña);
+            panelEste.setBackground(Color.ORANGE);
+
+            panelSur = new JPanel();
+            panelSur.setBackground(Color.RED);
+
+            etiqueta = new JLabel("Creación de objetivo", SwingConstants.CENTER);
+            etiqueta.setFont(fuenteGrande);
+            panelNorte.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            etiqueta = new JLabel("Nombre del objetivo:");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoNombre = new JTextField();
+            campoNombre.setMaximumSize(new Dimension(350, 30));
+            panelOeste.add(campoNombre);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Descripción del objetivo:");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoDescripcion = new JTextArea();
+            campoDescripcion.setMaximumSize(new Dimension(350, 400));
+            panelOeste.add(campoDescripcion);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            etiqueta = new JLabel("Escoja una metodología:");
+            panelEste.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            metodologias = new ButtonGroup();
+
+            pomodoro = new JRadioButton("Pomodoro");
+            posec = new JRadioButton("POSEC");
+            eissenhower = new JRadioButton("Eissenhower");
+            metodologias.add(pomodoro);
+            panelEste.add(pomodoro);
+            metodologias.add(posec);
+            panelEste.add(posec);
+            metodologias.add(eissenhower);
+            panelEste.add(eissenhower);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Defina las horas que va a dedicar:");
+            panelEste.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoHoras = new JTextField();
+            campoHoras.setFont(fuentePequeña);
+            campoHoras.setMaximumSize(new Dimension(350, 30));
+            panelEste.add(campoHoras);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            descripcionMetodologia = new JTextArea("La técnica pomodoro busca fragmentar " + 
+            "\nnuestros esfuerzos en pequeños lapsos de 25 " +
+            "\nminutos con 5 minutos de descanso, así podemos " +
+            "\nser más productivos sin desgastarnos.");
+            descripcionMetodologia.setBorder(new LineBorder(Color.BLACK));
+            descripcionMetodologia.setMaximumSize(new Dimension(350, 100));
+            descripcionMetodologia.setBackground(Color.GREEN);
+            descripcionMetodologia.setAlignmentX(Component.CENTER_ALIGNMENT);
+            descripcionMetodologia.setEditable(false);
+            panelCentro.add(descripcionMetodologia);
+
+            setLayout(new BorderLayout());
+            setBounds(200, 200, 800, 600);
+            getContentPane().setBackground(Color.CYAN);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setVisible(true);
+            setResizable(false);
+            add(panelNorte, BorderLayout.NORTH);
+            add(panelCentro, BorderLayout.CENTER);
+            add(panelOeste, BorderLayout.WEST);
+            add(panelEste, BorderLayout.EAST);
+            add(panelSur, BorderLayout.SOUTH);
         }
     }
 
