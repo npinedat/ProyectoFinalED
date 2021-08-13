@@ -57,22 +57,22 @@ public class Main {
 	}
 
 	static int diasemana(String d){
-    if ("lunes".equals(d)){
-    return 2;
-    }   if ("martes".equals(d)){
-    return 3;
-    }   if ("miercoles".equals(d)){
-    return 4;
-    }   if ("jueves".equals(d)){
-    return 5;
-    }   if ("viernes".equals(d)){
-    return 6;
-    }   if ("sabado".equals(d)){
-    	return 7;
-    } else   if ("domingo".equals(d)){
-    	return 1;
-    }
-    	return 50;
+		if ("lunes".equals(d)){
+		return 2;
+		}   if ("martes".equals(d)){
+		return 3;
+		}   if ("miercoles".equals(d)){
+		return 4;
+		}   if ("jueves".equals(d)){
+		return 5;
+		}   if ("viernes".equals(d)){
+		return 6;
+		}   if ("sabado".equals(d)){
+			return 7;
+		} else   if ("domingo".equals(d)){
+			return 1;
+		}
+		return 50;
     }
 
 	static void agregarObjetivo(Usuario login) {
@@ -160,7 +160,7 @@ public class Main {
 * @param args the command line arguments
 */
 	public static void main(String[] args) {
-		//InterfazUsuario interfaz = new InterfazUsuario();
+		InterfazUsuario interfaz = new InterfazUsuario();
 		FileHandler fileHandler = new FileHandler();
 		ArrayList<Usuario> users;
 		if (fileHandler.findFile("data.txt")){
