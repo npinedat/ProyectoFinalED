@@ -10,7 +10,9 @@ import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,7 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 public class InterfazUsuario {
 
     PaginaPrincipal paginaPrincipal;
@@ -30,25 +31,25 @@ public class InterfazUsuario {
     Font fuentePequeña = new Font("Arial", Font.PLAIN, 12);
 
     public InterfazUsuario() {
-        paginaPrincipal = new PaginaPrincipal();
+        //paginaPrincipal = new PaginaPrincipal();
         //paginaInicioSesion = new PaginaInicioSesion();
         //paginaCreacion = new PaginaCreacion();
         //paginaConsulta = new PaginaConsulta();
+        //paginaEliminacion = new PaginaEliminacion();
     }
     public class PaginaPrincipal extends JFrame{
-        JPanel panelCalendario;
+        JPanel panelCentro;
         JPanel panelNorte;
         JPanel panelSur;
         JPanel panelOeste;
         JPanel panelEste;
+        ImageIcon imagenPlay;
+        JButton botonPlay;
         JButton botonCreacion;
         JButton botonConsulta;
         JButton botonEliminar;
         JLabel etiqueta;
         PaginaPrincipal() {
-            panelCalendario = new JPanel();
-            panelCalendario.setBackground(Color.red);
-
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.pink);
 
@@ -56,14 +57,81 @@ public class InterfazUsuario {
             panelSur.setBackground(Color.BLUE);
 
             panelOeste = new JPanel();
+            panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
             panelOeste.setBackground(Color.CYAN);
 
             panelEste = new JPanel();
+            panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
             panelEste.setBackground(Color.MAGENTA);
 
-            panelCalendario = new JPanel();
-            panelCalendario.setLayout(new GridLayout(25, 8));
-            panelCalendario.setBackground(Color.GREEN);
+            panelCentro = new JPanel();
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.ORANGE);
+
+            etiqueta = new JLabel("Procastinator", SwingConstants.CENTER);
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
+            panelNorte.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            /*
+            etiqueta = new JLabel("Usuario123", SwingConstants.CENTER);
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+
+            etiqueta = new JLabel("Objetivo1");
+            panelOeste.add(etiqueta);
+            etiqueta = new JLabel("Horas restantes: x");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+
+            etiqueta = new JLabel("Objetivo2");
+            panelOeste.add(etiqueta);
+            etiqueta = new JLabel("Horas restantes: x");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+
+            etiqueta = new JLabel("Objetivo3");
+            panelOeste.add(etiqueta);
+            etiqueta = new JLabel("Horas restantes: x");
+            panelOeste.add(etiqueta);
+            */ 
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Bienvenido a Procastinator");
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 26));
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Su próxima sesión es: ");
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 40)));
+
+            etiqueta = new JLabel("Día x Mes x Hora x");
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 40)));
+
+            botonPlay = new JButton("Iniciar rutina");
+            //imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
+            //botonPlay.setIcon(imagenPlay);
+            //botonPlay.setMaximumSize(new Dimension(200, 200));
+            botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(botonPlay);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             botonCreacion = new JButton("Crear objetivo");
             panelSur.add(botonCreacion);
@@ -74,54 +142,17 @@ public class InterfazUsuario {
             botonEliminar = new JButton("Eliminar objetivo");
             panelSur.add(botonEliminar);
 
-            etiqueta = new JLabel("TimeHero", SwingConstants.CENTER);
-            etiqueta.setFont(fuenteGrande);
-            panelNorte.add(etiqueta);
-
-            etiqueta = new JLabel("Horas/Días");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Lunes");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Martes");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Miercoles");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Jueves");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Viernes");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Sabado");
-            panelCalendario.add(etiqueta);
-
-            etiqueta = new JLabel("Domingo");
-            panelCalendario.add(etiqueta);
-
-            for(int i = 0; i <= 23; i++) {
-                JLabel hora = new JLabel(i + ":" + (i+1));
-                panelCalendario.add(hora);
-                for(int j = 1; j <= 7; j++) {
-                    JButton bloque = new JButton(i + "/" + j);
-                    panelCalendario.add(bloque);
-                }
-            }
-
             setLayout(new BorderLayout());
             setBounds(200, 200, 800, 600);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
-            add(panelCalendario, BorderLayout.CENTER);
+            add(panelCentro, BorderLayout.CENTER);
             add(panelNorte, BorderLayout.NORTH);
             add(panelSur, BorderLayout.SOUTH);
             add(panelOeste, BorderLayout.WEST);
             add(panelEste, BorderLayout.EAST);
-            add(panelCalendario, BorderLayout.CENTER);
+            add(panelCentro, BorderLayout.CENTER);
         }
     }
 
@@ -141,7 +172,7 @@ public class InterfazUsuario {
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(Color.GREEN);
 
-            etiqueta = new JLabel("Inicio sesion");
+            etiqueta = new JLabel("Inicio sesion Procastinator");
             etiqueta.setFont(fuenteGrande);
             panelNorte.add(etiqueta);
 
@@ -198,24 +229,30 @@ public class InterfazUsuario {
         JRadioButton pomodoro;
         JRadioButton posec;
         JRadioButton eissenhower;
-        
+        JCheckBox lunes;
+        JCheckBox martes;
+        JCheckBox miercoles;
+        JCheckBox jueves;
+        JCheckBox viernes;
+        JCheckBox sabado;
+        JCheckBox domingo;
+        JButton botonAceptar;
+        JButton botonCancelar;      
 
         PaginaCreacion() {
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.BLUE);
 
             panelCentro = new JPanel();
-            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setLayout(new GridLayout(25, 8));
             panelCentro.setBackground(Color.GREEN);
 
             panelOeste = new JPanel();
             panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
-            panelOeste.setFont(fuentePequeña);
             panelOeste.setBackground(Color.MAGENTA);
 
             panelEste = new JPanel();
             panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
-            panelEste.setFont(fuentePequeña);
             panelEste.setBackground(Color.ORANGE);
 
             panelSur = new JPanel();
@@ -233,7 +270,7 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoNombre = new JTextField();
-            campoNombre.setMaximumSize(new Dimension(350, 30));
+            campoNombre.setMaximumSize(new Dimension(340, 30));
             panelOeste.add(campoNombre);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -244,7 +281,7 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
-            campoDescripcion.setMaximumSize(new Dimension(350, 400));
+            campoDescripcion.setMaximumSize(new Dimension(340, 400));
             panelOeste.add(campoDescripcion);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -259,14 +296,49 @@ public class InterfazUsuario {
             metodologias = new ButtonGroup();
 
             pomodoro = new JRadioButton("Pomodoro");
+            pomodoro.setBackground(Color.ORANGE);
             posec = new JRadioButton("POSEC");
+            posec.setBackground(Color.ORANGE);
             eissenhower = new JRadioButton("Eissenhower");
+            eissenhower.setBackground(Color.ORANGE);
             metodologias.add(pomodoro);
             panelEste.add(pomodoro);
             metodologias.add(posec);
             panelEste.add(posec);
             metodologias.add(eissenhower);
             panelEste.add(eissenhower);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+            
+            /*
+            etiqueta = new JLabel("Escoja los días que tiene disponibles:");
+            panelEste.add(etiqueta);
+
+            
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            lunes = new JCheckBox("Lunes");
+            lunes.setBackground(Color.ORANGE);
+            panelEste.add(lunes);
+            martes = new JCheckBox("Martes");
+            martes.setBackground(Color.ORANGE);
+            panelEste.add(martes);
+            miercoles = new JCheckBox("Miercoles");
+            miercoles.setBackground(Color.ORANGE);
+            panelEste.add(miercoles);
+            jueves = new JCheckBox("Jueves");
+            jueves.setBackground(Color.ORANGE);
+            panelEste.add(jueves);
+            viernes = new JCheckBox("Viernes");
+            viernes.setBackground(Color.ORANGE);
+            panelEste.add(viernes);
+            sabado = new JCheckBox("Sabado");
+            sabado.setBackground(Color.ORANGE);
+            panelEste.add(sabado);
+            domingo = new JCheckBox("Domingo");
+            domingo.setBackground(Color.ORANGE);
+            panelEste.add(domingo);
+            */
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -277,11 +349,10 @@ public class InterfazUsuario {
 
             campoHoras = new JTextField();
             campoHoras.setFont(fuentePequeña);
-            campoHoras.setMaximumSize(new Dimension(350, 30));
+            campoHoras.setMaximumSize(new Dimension(340, 30));
             panelEste.add(campoHoras);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
-
+            /*
             descripcionMetodologia = new JTextArea("La técnica pomodoro busca fragmentar " + 
             "\nnuestros esfuerzos en pequeños lapsos de 25 " +
             "\nminutos con 5 minutos de descanso, así podemos " +
@@ -292,13 +363,54 @@ public class InterfazUsuario {
             descripcionMetodologia.setAlignmentX(Component.CENTER_ALIGNMENT);
             descripcionMetodologia.setEditable(false);
             panelCentro.add(descripcionMetodologia);
+            */
+
+            etiqueta = new JLabel("Horas/Días");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Lunes");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Martes");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Miercoles");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Jueves");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Viernes");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Sabado");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Domingo");
+            panelCentro.add(etiqueta);
+
+            for(int i = 0; i <= 23; i++) {
+                JLabel hora = new JLabel(i + ":" + (i+1));
+                panelCentro.add(hora);
+                for(int j = 1; j <= 7; j++) {
+                    JButton bloque = new JButton(i + "/" + j);
+                    panelCentro.add(bloque);
+                }
+            }
+
+            botonAceptar = new JButton("Aceptar");
+            botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);;
+            panelSur.add(botonAceptar);
+            
+            botonCancelar = new JButton("Cancelar");
+            botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelSur.add(botonCancelar);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 800, 600);
+            setBounds(200, 200, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
-            setResizable(false);
             add(panelNorte, BorderLayout.NORTH);
             add(panelCentro, BorderLayout.CENTER);
             add(panelOeste, BorderLayout.WEST);
@@ -308,6 +420,14 @@ public class InterfazUsuario {
     }
 
     public class PaginaConsulta {
+        JPanel panelCentro;
+        JPanel panelOeste;
+        JPanel panelEste;
+        JPanel panelSur;
+        JLabel etiqueta;
+        JButton botonVolver;
+        JTextArea descripcion;
+        
         PaginaConsulta() {
             
         }
