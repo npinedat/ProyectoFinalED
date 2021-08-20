@@ -394,32 +394,30 @@ public class InterfazUsuario {
                 for (int j = 1; j <= 7; j++) {
                     JButton bloque = new JButton(i + "/" + j);
                     bloque.setFont(new Font("Arial", Font.BOLD, 0));
-                    ArrayList <Integer> listaHash= Main.consultaHash(login);
-                    System.out.println("Antes del for");
-                    for(Integer k : listaHash){
+                    bloque.setBackground(Color.GRAY);
+                    bloque.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (bloque.getBackground() == Color.RED) {
+                                bloque.setBackground(Color.GRAY);
+                                if (duplicado((JButton) e.getSource()) == 170) {
+                                    // Nada
+                                } else {
+                                    bloquesSeleccionados.remove(e.getSource());
+                                }
+                            } else {
+                                bloque.setBackground(Color.RED);
+                                bloquesSeleccionados.add((JButton) e.getSource());
+                            }
+                        }
+                    });
+                    ArrayList<Integer> listaHash = Main.consultaHash(login);
+                    //System.out.println("Antes del for");
+                    for(int k : listaHash) {
                         System.out.println("Entrada al for");
-                        if (k == (Integer)(j * 24 + i)) {
-                            System.out.println("Entrada al if 1");
+                        if (k == ((j - 1) * 24 + i)) {
+                            System.out.println("Entrada al if ");
                             bloque.setBackground(Color.MAGENTA);
                             bloque.setEnabled(false);
-                        } else {
-                            System.out.println("Entrada al else");
-                            bloque.setBackground(Color.GRAY);
-                            bloque.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                    if (bloque.getBackground() == Color.RED) {
-                                        bloque.setBackground(Color.GRAY);
-                                        if (duplicado((JButton) e.getSource()) == 170) {
-                                            // Nada
-                                        } else {
-                                            bloquesSeleccionados.remove(e.getSource());
-                                        }
-                                    } else {
-                                        bloque.setBackground(Color.RED);
-                                        bloquesSeleccionados.add((JButton) e.getSource());
-                                    }
-                                }
-                            });
                         }
                     }
                     panelCentro.add(bloque);
