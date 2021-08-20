@@ -5,6 +5,7 @@ import Clases.appClasses.FileHandler;
 import Clases.appClasses.InterfazUsuario;
 import Clases.appClasses.Objetivo;
 import Clases.appClasses.Usuario;
+import Clases.listClasses.Nodo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -70,6 +71,20 @@ public class Main {
 		}
 		return 50;
     }
+
+	public static ArrayList<Integer> consultaHash(Usuario login){
+		ArrayList<Integer> listaHash = new ArrayList<Integer>();
+		if (login.objetivosVacio()) {
+			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+				Nodo i = j.getIde().getNodoRaiz();
+				while (i != null){
+					listaHash.add(i.getValor());
+				}
+			}
+		}
+		System.out.println(listaHash);
+		return listaHash;
+	}
 
 	public static void agregarObjetivo(Usuario login, String nombreDeObjetivo, String descripcionDelObjetivo, 
 	String metodo, int horas, ArrayList <String> arregloDias, ArrayList <Integer> arregloHoras) {

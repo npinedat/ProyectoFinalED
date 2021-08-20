@@ -483,6 +483,7 @@ public class InterfazUsuario {
                         Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
                                 arregloDias, arregloHoras);
                         JOptionPane.showMessageDialog(paginaCreacion, "Objetivo creado con éxito");
+                        //Main.consultaHash(login);
                         paginaPrincipal = new PaginaPrincipal();
                         paginaCreacion.dispose();
                     }
