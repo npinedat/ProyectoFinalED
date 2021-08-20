@@ -44,6 +44,10 @@ public class Cola implements Serializable{
             return Integer.MAX_VALUE;
     }
 
+    public Nodo getNodoRaiz() {
+        return this.cabeza;
+    }
+
     public int getRaiz() {
         return this.cabeza.getValor();
     }
