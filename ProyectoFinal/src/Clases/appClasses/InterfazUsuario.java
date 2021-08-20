@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -133,7 +134,7 @@ public class InterfazUsuario {
             botonConsulta.addActionListener(this);
             panelSur.add(botonConsulta);
 
-            botonEliminar = new JButton("Eliminar objetivo");
+            botonEliminar = new JButton("Eliminar objetivos");
             botonEliminar.addActionListener(this);
             panelSur.add(botonEliminar);
 
@@ -264,6 +265,7 @@ public class InterfazUsuario {
         JLabel etiqueta;
         JTextArea descripcionMetodologia;
         JTextField campoNombre, campoHoras;
+        JScrollPane panelDescripcion;
         JTextArea campoDescripcion;
         ButtonGroup metodologias;
         JRadioButton pomodoro, posec, eissenhower;
@@ -301,7 +303,7 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoNombre = new JTextField();
-            campoNombre.setMaximumSize(new Dimension(340, 30));
+            campoNombre.setMaximumSize(new Dimension(330, 30));
             panelOeste.add(campoNombre);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -312,7 +314,11 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
-            panelOeste.add(campoDescripcion);
+            campoDescripcion.setLineWrap(true);
+            panelDescripcion = new JScrollPane(campoDescripcion);
+            panelDescripcion.setViewportView(campoDescripcion);
+            panelDescripcion.setMaximumSize(new Dimension(330, 500));
+            panelOeste.add(panelDescripcion);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -386,7 +392,6 @@ public class InterfazUsuario {
                     panelCentro.add(hora);
                 }
                 for (int j = 1; j <= 7; j++) {
-                    
                     JButton bloque = new JButton(i + "/" + j);
                     bloque.setFont(new Font("Arial", Font.BOLD, 0));
                     bloque.setBackground(Color.GRAY);
@@ -475,8 +480,6 @@ public class InterfazUsuario {
                         JOptionPane.showMessageDialog(paginaCreacion,
                                 "Por favor llene todos los campos y recuerde que su objetivo de horas no puede ser 0");
                     } else {
-                        System.out.println(arregloDias);
-                        System.out.println(arregloHoras);
                         Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
                                 arregloDias, arregloHoras);
                         JOptionPane.showMessageDialog(paginaCreacion, "Objetivo creado con éxito");
@@ -753,9 +756,17 @@ public class InterfazUsuario {
             if (e.getSource() == botonIngreso) {
                 String usuario = campoUsuario.getText();
                 String contrasena = new String(campoContrasena.getPassword());
-                Main.registrarse(usuario, contrasena);
-                paginaInicioSesion = new PaginaInicioSesion();
-                paginaRegistro.dispose();
+                if(usuario.equals("") || contrasena.equals("")){
+                    JOptionPane.showMessageDialog(paginaRegistro, "Por favor ingrese todos los campos");
+                }else {
+                    if(Main.registrarse(usuario, contrasena)){
+                        JOptionPane.showMessageDialog(paginaRegistro, "Usuario registrado con éxito");
+                        paginaInicioSesion = new PaginaInicioSesion();
+                        paginaRegistro.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(paginaRegistro, "Este nombre de usuario ya está registrado");
+                    }
+                }
             } else if (e.getSource() == botonVolver) {
                 paginaInicioSesion = new PaginaInicioSesion();
                 paginaRegistro.dispose();
