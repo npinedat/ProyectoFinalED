@@ -1,8 +1,13 @@
 - Persistencia de los datos(implementado)
-- Interfaz de usuario
+- Interfaz de usuario (implementado)
 - Comportamiento de las métodologias
 - Comprobar funcionalidad de confirmación de realización del objetivo(Implementado)
 - Implementar arboles para usuarios(Implementado)
 - Implementar hash(Implementado)
-- Mover procesos de main a métodos
-- Pruebas de grandes cantidades de datos eliminar y consultar
+- Mover procesos de main a métodos (Implementado)
+- Pruebas de grandes cantidades de datos eliminar y consultar (Realizado)
+- Poster
+- Documento
+- Video
+- Diapositivas
+- Validación de sesión

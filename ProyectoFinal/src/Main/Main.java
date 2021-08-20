@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 @SuppressWarnings("unchecked")
 
 /**
@@ -19,19 +21,12 @@ import java.util.Scanner;
 
 
 public class Main {
-	static Usuario iniciarSesion(ArrayList<Usuario>usua) {
-		Scanner reader =new Scanner(System.in);
-		if (usua.isEmpty()){
-			System.out.println("No hay usuarios registrados");
-			return null;
-		}
-		System.out.println("Inserte Usario,contraseña");
-		String user = reader.nextLine();
-		String[] dt=user.split(",");  
-		String id = dt[0];
-		String ps = dt[1];
+	static ArrayList <Usuario> usuarios;
+	public static Usuario iniciarSesion(String usuario, String contrasena) {
+		String id = usuario;
+		String ps = contrasena;
 		Usuario login = null;
-		for (Usuario i : usua){
+		for (Usuario i : usuarios){
 			if(i.encontrarUsuario(id,ps)){
 				login = i;
 				System.out.println("Iniciaste sesion");
@@ -44,63 +39,46 @@ public class Main {
 		}
 	}
 
-	static void registrarse(ArrayList<Usuario>usua) {
-		Scanner reader =new Scanner(System.in);
-		System.out.println("Para registrarse inserte un nuevo usuario,contraseña");
-		String usuario = reader.next();
-		String[] dato = usuario.split(",");
-		String nom = dato[0];
-		String con = dato[1];
+	public static boolean registrarse(String usuario, String contrasena) {
+		for(Usuario i : usuarios) {
+			if(i.usuario.equals(usuario)){
+				return false;
+			}
+		}
+		String nom = usuario;
+		String con = contrasena;
 		Usuario usr = new Usuario(nom, con);
-		usua.add(usr);
-		System.out.println("Ya estas registrado");
+		usuarios.add(usr);
+		return true;
 	}
 
 	static int diasemana(String d){
-		if ("lunes".equals(d)){
+		if ("Lunes".equals(d)){
+		return 1;
+		}   if ("Martes".equals(d)){
 		return 2;
-		}   if ("martes".equals(d)){
+		}   if ("Miercoles".equals(d)){
 		return 3;
-		}   if ("miercoles".equals(d)){
+		}   if ("Jueves".equals(d)){
 		return 4;
-		}   if ("jueves".equals(d)){
+		}   if ("Viernes".equals(d)){
 		return 5;
-		}   if ("viernes".equals(d)){
-		return 6;
-		}   if ("sabado".equals(d)){
-			return 7;
-		} else   if ("domingo".equals(d)){
-			return 1;
+		}   if ("Sabado".equals(d)){
+			return 6;
+		} else   if ("Domingo".equals(d)){
+			return 0;
 		}
 		return 50;
     }
 
-	static void agregarObjetivo(Usuario login) {
-		Scanner reader =new Scanner(System.in);
-		System.out.println("Escriba el nombre del objetivo:");
-		String nombreDeObjetivo=reader.nextLine();
-		System.out.println("Escriba la descripción del objetivo:");
-		String descripcionDelObjetivo=reader.nextLine();
-		System.out.println("Escriba el número de horas que le quiere dedicar");
-		int hora=reader.nextInt();
-		reader.nextLine();
-		System.out.println("Escriba la tecnica: Pomodoro,POSEC,Matriz");
-		String metodo=reader.nextLine();
-		Objetivo obj = new Objetivo(nombreDeObjetivo,descripcionDelObjetivo,metodo,hora);
+	public static void agregarObjetivo(Usuario login, String nombreDeObjetivo, String descripcionDelObjetivo, 
+	String metodo, int horas, ArrayList <String> arregloDias, ArrayList <Integer> arregloHoras) {
+		Objetivo obj = new Objetivo(nombreDeObjetivo, descripcionDelObjetivo, metodo, horas);
 		obj.llenarBloquesRestantes();
 		login.arbolObjetivos.root = login.arbolObjetivos.insert(login.arbolObjetivos.root, obj.id, obj);
-		System.out.println("Ahora seleccione los dias de la semana que va a dedicar:");
-		System.out.println("Para esto escriba los dias separados por comas por ejemplo: martes,jueves,domingo :");
-		String dias=reader.nextLine();
-		String[] diasArr=dias.split(",");
-		System.out.println("Ahora seleccione la hora de inicio que le va a dedicar cada dia");
-		System.out.println("Para esto escriba las horas de cada dia separadas por comas por ejemplo: 12,5,12:");
-		String horas=reader.nextLine();
-		String[] horaArr=horas.split(",");
-		int[] horaArrInt= new int[horaArr.length];
-		for (int i = 0; i < horaArr.length; i++){
-			horaArrInt[i]= Integer.parseInt(horaArr[i]);
-			int hash=((diasemana(diasArr[i]))*24)+ horaArrInt[i];
+		for (int i = 0; i < arregloHoras.size(); i++){
+			int hash=((diasemana(arregloDias.get(i)))*24) + arregloHoras.get(i);
+			System.out.println(hash);
 			obj.getIde().encolar(hash);
 		}
 		obj.programarBloque();
@@ -161,16 +139,17 @@ public class Main {
 */
 	public static void main(String[] args) {
 		InterfazUsuario interfaz = new InterfazUsuario();
+		interfaz.getPaginaInicioSesion();
 		FileHandler fileHandler = new FileHandler();
-		ArrayList<Usuario> users;
 		if (fileHandler.findFile("data.txt")){
-			users = (ArrayList <Usuario>) fileHandler.readFile("data.txt");
+			usuarios = (ArrayList <Usuario>) fileHandler.readFile("data.txt");
 		} else {
-			users = new ArrayList<Usuario>();
+			usuarios = new ArrayList<Usuario>();
 		}
 		Scanner sc =new Scanner(System.in);
 		int horaPreguntada = -1;
 		int log;
+		/*
 		do {
 			System.out.println("Si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 3");
 			log=sc.nextInt();
@@ -180,7 +159,7 @@ public class Main {
 					Calendar c = Calendar.getInstance();
 					Date date = new Date();
 					c.setTime(date);
-					Usuario login = iniciarSesion(users);
+					//Usuario login = iniciarSesion(users);
 					if (login == null){
 						break;
 					}
@@ -251,6 +230,6 @@ public class Main {
 					break;
 			}     
 		} while (log != 0);
-		sc.close();
+		sc.close();*/
 	} 
 }

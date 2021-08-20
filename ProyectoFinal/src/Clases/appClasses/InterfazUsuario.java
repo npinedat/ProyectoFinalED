@@ -6,6 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,40 +18,37 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import Main.Main;
+
 public class InterfazUsuario {
 
     PaginaPrincipal paginaPrincipal;
     PaginaInicioSesion paginaInicioSesion;
     PaginaCreacion paginaCreacion;
     PaginaConsulta paginaConsulta;
-    Font fuenteGrande = new Font("Arial", Font.PLAIN, 30);
-    Font fuentePequeña = new Font("Arial", Font.PLAIN, 12);
+    PaginaEliminacion paginaEliminacion;
+    PaginaRegistro paginaRegistro;
 
-    public InterfazUsuario() {
-        //paginaPrincipal = new PaginaPrincipal();
-        //paginaInicioSesion = new PaginaInicioSesion();
-        //paginaCreacion = new PaginaCreacion();
-        //paginaConsulta = new PaginaConsulta();
-        //paginaEliminacion = new PaginaEliminacion();
+    Usuario login;
+
+    public PaginaInicioSesion getPaginaInicioSesion() {
+        return paginaInicioSesion = new PaginaInicioSesion();
     }
-    public class PaginaPrincipal extends JFrame{
-        JPanel panelCentro;
-        JPanel panelNorte;
-        JPanel panelSur;
-        JPanel panelOeste;
-        JPanel panelEste;
+
+    public class PaginaPrincipal extends JFrame implements ActionListener {
+        JPanel panelCentro, panelNorte, panelSur, panelOeste, panelEste;
         ImageIcon imagenPlay;
-        JButton botonPlay;
-        JButton botonCreacion;
-        JButton botonConsulta;
-        JButton botonEliminar;
+        JButton botonPlay, botonCreacion, botonConsulta, botonEliminar, botonCerrarSesion;
         JLabel etiqueta;
+
         PaginaPrincipal() {
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.pink);
@@ -75,31 +75,24 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             /*
-            etiqueta = new JLabel("Usuario123", SwingConstants.CENTER);
-            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
-            panelOeste.add(etiqueta);
-
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-
-            etiqueta = new JLabel("Objetivo1");
-            panelOeste.add(etiqueta);
-            etiqueta = new JLabel("Horas restantes: x");
-            panelOeste.add(etiqueta);
-
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-
-            etiqueta = new JLabel("Objetivo2");
-            panelOeste.add(etiqueta);
-            etiqueta = new JLabel("Horas restantes: x");
-            panelOeste.add(etiqueta);
-
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-
-            etiqueta = new JLabel("Objetivo3");
-            panelOeste.add(etiqueta);
-            etiqueta = new JLabel("Horas restantes: x");
-            panelOeste.add(etiqueta);
-            */ 
+             * etiqueta = new JLabel("Usuario123", SwingConstants.CENTER);
+             * etiqueta.setFont(new Font("Arial", Font.BOLD, 24)); panelOeste.add(etiqueta);
+             * 
+             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+             * 
+             * etiqueta = new JLabel("Objetivo1"); panelOeste.add(etiqueta); etiqueta = new
+             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
+             * 
+             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+             * 
+             * etiqueta = new JLabel("Objetivo2"); panelOeste.add(etiqueta); etiqueta = new
+             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
+             * 
+             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
+             * 
+             * etiqueta = new JLabel("Objetivo3"); panelOeste.add(etiqueta); etiqueta = new
+             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
+             */
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -115,32 +108,38 @@ public class InterfazUsuario {
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 40)));
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             etiqueta = new JLabel("Día x Mes x Hora x");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 40)));
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonPlay = new JButton("Iniciar rutina");
-            //imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
-            //botonPlay.setIcon(imagenPlay);
-            //botonPlay.setMaximumSize(new Dimension(200, 200));
+            // imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
+            // botonPlay.setIcon(imagenPlay);
+            // botonPlay.setMaximumSize(new Dimension(200, 200));
             botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonPlay.addActionListener(this);
             panelCentro.add(botonPlay);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
-
             botonCreacion = new JButton("Crear objetivo");
+            botonCreacion.addActionListener(this);
             panelSur.add(botonCreacion);
 
             botonConsulta = new JButton("Consultar objetivo");
+            botonConsulta.addActionListener(this);
             panelSur.add(botonConsulta);
 
             botonEliminar = new JButton("Eliminar objetivo");
+            botonEliminar.addActionListener(this);
             panelSur.add(botonEliminar);
+
+            botonCerrarSesion = new JButton("Cerrar sesión");
+            botonCerrarSesion.addActionListener(this);
+            panelSur.add(botonCerrarSesion);
 
             setLayout(new BorderLayout());
             setBounds(200, 200, 800, 600);
@@ -154,26 +153,42 @@ public class InterfazUsuario {
             add(panelEste, BorderLayout.EAST);
             add(panelCentro, BorderLayout.CENTER);
         }
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonCreacion) {
+                paginaCreacion = new PaginaCreacion();
+                paginaPrincipal.dispose();
+            } else if (e.getSource() == botonConsulta) {
+                paginaConsulta = new PaginaConsulta();
+                paginaPrincipal.dispose();
+            } else if (e.getSource() == botonEliminar) {
+                paginaEliminacion = new PaginaEliminacion();
+                paginaPrincipal.dispose();
+            } else if (e.getSource() == botonCerrarSesion) {
+                paginaInicioSesion = new PaginaInicioSesion();
+                paginaPrincipal.dispose();
+            }
+        }
     }
 
-    public class PaginaInicioSesion extends JFrame {
-        JPanel panelNorte;
-        JPanel panelCentro;
+    public class PaginaInicioSesion extends JFrame implements ActionListener {
+        JPanel panelNorte, panelCentro;
         JLabel etiqueta;
         JTextField campoUsuario;
         JPasswordField campoContrasena;
-        JButton botonIngreso;
+        JButton botonIngreso, botonRegistro;
+
         PaginaInicioSesion() {
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.BLUE);
 
             panelCentro = new JPanel();
-            panelCentro.setFont(fuentePequeña);
+            panelCentro.setFont(new Font("Arial", Font.PLAIN, 12));
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(Color.GREEN);
 
             etiqueta = new JLabel("Inicio sesion Procastinator");
-            etiqueta.setFont(fuenteGrande);
+            etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
             panelNorte.add(etiqueta);
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 100)));
@@ -198,11 +213,19 @@ public class InterfazUsuario {
             campoContrasena.setMaximumSize(new Dimension(200, 30));
             panelCentro.add(campoContrasena);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonIngreso = new JButton("Ingresar");
             botonIngreso.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonIngreso.addActionListener(this);
             panelCentro.add(botonIngreso);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            botonRegistro = new JButton("Registrarse");
+            botonRegistro.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonRegistro.addActionListener(this);
+            panelCentro.add(botonRegistro);
 
             setLayout(new BorderLayout());
             setBounds(200, 200, 800, 600);
@@ -212,32 +235,40 @@ public class InterfazUsuario {
             add(panelNorte, BorderLayout.NORTH);
             add(panelCentro, BorderLayout.CENTER);
         }
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonIngreso) {
+                String usuario = campoUsuario.getText();
+                String contrasena = new String(campoContrasena.getPassword());
+                if (usuario.equals("") || contrasena.equals("")) {
+                    JOptionPane.showMessageDialog(paginaInicioSesion, "Debe ingresar todos los campos");
+                } else {
+                    login = Main.iniciarSesion(usuario, contrasena);
+                    if (login == null) {
+                        JOptionPane.showMessageDialog(paginaInicioSesion,
+                                "Los datos son incorrectos, intente de nuevo");
+                    } else {
+                        paginaPrincipal = new PaginaPrincipal();
+                        paginaInicioSesion.dispose();
+                    }
+                }
+            } else if (e.getSource() == botonRegistro) {
+                paginaRegistro = new PaginaRegistro();
+                paginaInicioSesion.dispose();
+            }
+        }
     }
 
-    public class PaginaCreacion extends JFrame{
-        JPanel panelNorte;
-        JPanel panelCentro;
-        JPanel panelOeste;
-        JPanel panelEste;
-        JPanel panelSur;
+    public class PaginaCreacion extends JFrame implements ActionListener {
+        JPanel panelNorte, panelCentro, panelOeste, panelEste, panelSur;
         JLabel etiqueta;
         JTextArea descripcionMetodologia;
-        JTextField campoNombre;
+        JTextField campoNombre, campoHoras;
         JTextArea campoDescripcion;
-        JTextField campoHoras;
         ButtonGroup metodologias;
-        JRadioButton pomodoro;
-        JRadioButton posec;
-        JRadioButton eissenhower;
-        JCheckBox lunes;
-        JCheckBox martes;
-        JCheckBox miercoles;
-        JCheckBox jueves;
-        JCheckBox viernes;
-        JCheckBox sabado;
-        JCheckBox domingo;
-        JButton botonAceptar;
-        JButton botonCancelar;      
+        JRadioButton pomodoro, posec, eissenhower;
+        JButton botonAceptar, botonCancelar;
+        ArrayList<JButton> bloquesSeleccionados = new ArrayList<JButton>();
 
         PaginaCreacion() {
             panelNorte = new JPanel();
@@ -259,7 +290,7 @@ public class InterfazUsuario {
             panelSur.setBackground(Color.RED);
 
             etiqueta = new JLabel("Creación de objetivo", SwingConstants.CENTER);
-            etiqueta.setFont(fuenteGrande);
+            etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
             panelNorte.add(etiqueta);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -281,7 +312,6 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
-            campoDescripcion.setMaximumSize(new Dimension(340, 400));
             panelOeste.add(campoDescripcion);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -297,6 +327,7 @@ public class InterfazUsuario {
 
             pomodoro = new JRadioButton("Pomodoro");
             pomodoro.setBackground(Color.ORANGE);
+            pomodoro.setSelected(true);
             posec = new JRadioButton("POSEC");
             posec.setBackground(Color.ORANGE);
             eissenhower = new JRadioButton("Eissenhower");
@@ -309,36 +340,6 @@ public class InterfazUsuario {
             panelEste.add(eissenhower);
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-            
-            /*
-            etiqueta = new JLabel("Escoja los días que tiene disponibles:");
-            panelEste.add(etiqueta);
-
-            
-            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            lunes = new JCheckBox("Lunes");
-            lunes.setBackground(Color.ORANGE);
-            panelEste.add(lunes);
-            martes = new JCheckBox("Martes");
-            martes.setBackground(Color.ORANGE);
-            panelEste.add(martes);
-            miercoles = new JCheckBox("Miercoles");
-            miercoles.setBackground(Color.ORANGE);
-            panelEste.add(miercoles);
-            jueves = new JCheckBox("Jueves");
-            jueves.setBackground(Color.ORANGE);
-            panelEste.add(jueves);
-            viernes = new JCheckBox("Viernes");
-            viernes.setBackground(Color.ORANGE);
-            panelEste.add(viernes);
-            sabado = new JCheckBox("Sabado");
-            sabado.setBackground(Color.ORANGE);
-            panelEste.add(sabado);
-            domingo = new JCheckBox("Domingo");
-            domingo.setBackground(Color.ORANGE);
-            panelEste.add(domingo);
-            */
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -348,24 +349,14 @@ public class InterfazUsuario {
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoHoras = new JTextField();
-            campoHoras.setFont(fuentePequeña);
+            campoHoras.setFont(new Font("Arial", Font.PLAIN, 12));
             campoHoras.setMaximumSize(new Dimension(340, 30));
             panelEste.add(campoHoras);
 
-            /*
-            descripcionMetodologia = new JTextArea("La técnica pomodoro busca fragmentar " + 
-            "\nnuestros esfuerzos en pequeños lapsos de 25 " +
-            "\nminutos con 5 minutos de descanso, así podemos " +
-            "\nser más productivos sin desgastarnos.");
-            descripcionMetodologia.setBorder(new LineBorder(Color.BLACK));
-            descripcionMetodologia.setMaximumSize(new Dimension(350, 100));
-            descripcionMetodologia.setBackground(Color.GREEN);
-            descripcionMetodologia.setAlignmentX(Component.CENTER_ALIGNMENT);
-            descripcionMetodologia.setEditable(false);
-            panelCentro.add(descripcionMetodologia);
-            */
-
             etiqueta = new JLabel("Horas/Días");
+            panelCentro.add(etiqueta);
+
+            etiqueta = new JLabel("Domingo");
             panelCentro.add(etiqueta);
 
             etiqueta = new JLabel("Lunes");
@@ -386,24 +377,46 @@ public class InterfazUsuario {
             etiqueta = new JLabel("Sabado");
             panelCentro.add(etiqueta);
 
-            etiqueta = new JLabel("Domingo");
-            panelCentro.add(etiqueta);
-
-            for(int i = 0; i <= 23; i++) {
-                JLabel hora = new JLabel(i + ":" + (i+1));
-                panelCentro.add(hora);
-                for(int j = 1; j <= 7; j++) {
+            for (int i = 0; i <= 23; i++) {
+                if (i < 12) {
+                    JLabel hora = new JLabel(i + ":" + (i + 1) + " Am");
+                    panelCentro.add(hora);
+                } else {
+                    JLabel hora = new JLabel(i + ":" + (i + 1) + " Pm");
+                    panelCentro.add(hora);
+                }
+                for (int j = 1; j <= 7; j++) {
+                    
                     JButton bloque = new JButton(i + "/" + j);
+                    bloque.setFont(new Font("Arial", Font.BOLD, 0));
+                    bloque.setBackground(Color.GRAY);
+                    bloque.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            if (bloque.getBackground() == Color.RED) {
+                                bloque.setBackground(Color.GRAY);
+                                if (duplicado((JButton) e.getSource()) == 170) {
+                                    // Nada
+                                } else {
+                                    bloquesSeleccionados.remove(e.getSource());
+                                }
+                            } else {
+                                bloque.setBackground(Color.RED);
+                                bloquesSeleccionados.add((JButton) e.getSource());
+                            }
+                        }
+                    });
                     panelCentro.add(bloque);
                 }
             }
 
             botonAceptar = new JButton("Aceptar");
-            botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);;
+            botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonAceptar.addActionListener(this);
             panelSur.add(botonAceptar);
-            
+
             botonCancelar = new JButton("Cancelar");
             botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonCancelar.addActionListener(this);
             panelSur.add(botonCancelar);
 
             setLayout(new BorderLayout());
@@ -417,19 +430,336 @@ public class InterfazUsuario {
             add(panelEste, BorderLayout.EAST);
             add(panelSur, BorderLayout.SOUTH);
         }
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonCancelar) {
+                paginaPrincipal = new PaginaPrincipal();
+                paginaCreacion.dispose();
+            } else if (e.getSource() == botonAceptar) {
+                int horas;
+                String nombreObjetivo = campoNombre.getText();
+                String descripcionObjetivo = campoDescripcion.getText();
+                String metodologia;
+                if (pomodoro.isSelected() == true) {
+                    metodologia = "Pomodoro";
+                } else if (eissenhower.isSelected() == true) {
+                    metodologia = "Eissenhower";
+                } else {
+                    metodologia = "POSEC";
+                }
+                if (campoHoras.getText().matches("[+-]?\\d*(\\.\\d+)?") && !campoHoras.getText().equals("")) {
+                    horas = Integer.parseInt(campoHoras.getText());
+                    ArrayList<String> arregloDias = new ArrayList<String>();
+                    ArrayList<Integer> arregloHoras = new ArrayList<Integer>();
+                    for (JButton i : bloquesSeleccionados) {
+                        String[] texto = i.getText().split("/");
+                        if (texto[1].equals("1")) {
+                            arregloDias.add("Domingo");
+                        } else if (texto[1].equals("2")) {
+                            arregloDias.add("Lunes");
+                        } else if (texto[1].equals("3")) {
+                            arregloDias.add("Martes");
+                        } else if (texto[1].equals("4")) {
+                            arregloDias.add("Miercoles");
+                        } else if (texto[1].equals("5")) {
+                            arregloDias.add("Jueves");
+                        } else if (texto[1].equals("6")) {
+                            arregloDias.add("Viernes");
+                        } else {
+                            arregloDias.add("Sabado");
+                        }
+                        arregloHoras.add(Integer.parseInt(texto[0]));
+                    }
+                    if (nombreObjetivo.equals("") || descripcionObjetivo.equals("") || horas == 0
+                            || bloquesSeleccionados.size() == 0) {
+                        JOptionPane.showMessageDialog(paginaCreacion,
+                                "Por favor llene todos los campos y recuerde que su objetivo de horas no puede ser 0");
+                    } else {
+                        System.out.println(arregloDias);
+                        System.out.println(arregloHoras);
+                        Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
+                                arregloDias, arregloHoras);
+                        JOptionPane.showMessageDialog(paginaCreacion, "Objetivo creado con éxito");
+                        paginaPrincipal = new PaginaPrincipal();
+                        paginaCreacion.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(paginaCreacion, "El campo de horas debe tener un entero");
+                }
+            }
+        }
+
+        public int duplicado(JButton boton) {
+            for (int i = 0; i <= bloquesSeleccionados.size(); i++) {
+                if (boton.getText() == bloquesSeleccionados.get(i).getText()) {
+                    return i;
+                }
+            }
+            return 170;
+        }
     }
 
-    public class PaginaConsulta {
-        JPanel panelCentro;
-        JPanel panelOeste;
-        JPanel panelEste;
-        JPanel panelSur;
+    public class PaginaConsulta extends JFrame implements ActionListener {
+        JPanel panelNorte, panelCentro, panelOeste, panelEste, panelSur;
+        JLabel etiqueta;
+        JTextField campoNombre, campoMetodologia, campoHoras;
+        JButton botonVolver;
+        JTextArea campoDescripcion;
+
+        PaginaConsulta() {
+            panelNorte = new JPanel();
+            panelNorte.setBackground(Color.BLUE);
+
+            panelCentro = new JPanel();
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.GREEN);
+
+            panelOeste = new JPanel();
+            panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
+            panelOeste.setBackground(Color.PINK);
+
+            panelEste = new JPanel();
+            panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
+            panelEste.setBackground(Color.CYAN);
+
+            panelSur = new JPanel();
+            panelSur.setBackground(Color.MAGENTA);
+
+            etiqueta = new JLabel("Consulta de objetivo");
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
+            panelNorte.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Objetivos: ");
+            panelEste.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            JButton boton1 = new JButton("Objetivo 1");
+            panelEste.add(boton1);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            JButton boton2 = new JButton("Objetivo 2");
+            panelEste.add(boton2);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            JButton boton3 = new JButton("Objetivo 3");
+            panelEste.add(boton3);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Nombre");
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoNombre = new JTextField("Nombre x");
+            campoNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoNombre.setMaximumSize(new Dimension(340, 30));
+            panelCentro.add(campoNombre);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Descripcion: ");
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoDescripcion = new JTextArea("Descripcion x");
+            campoDescripcion.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoDescripcion.setMaximumSize(new Dimension(340, 400));
+            panelCentro.add(campoDescripcion);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Horas a dedicar: ");
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoHoras = new JTextField("x");
+            campoHoras.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoHoras.setMaximumSize(new Dimension(340, 30));
+            panelCentro.add(campoHoras);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Metodología:  ");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoMetodologia = new JTextField("Pomodoro");
+            campoMetodologia.setMaximumSize(new Dimension(340, 30));
+            panelOeste.add(campoMetodologia);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Horarios: ");
+            panelOeste.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            botonVolver = new JButton("Volver");
+            botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonVolver.addActionListener(this);
+            panelSur.add(botonVolver);
+
+            setLayout(new BorderLayout());
+            setBounds(200, 200, 1200, 900);
+            getContentPane().setBackground(Color.CYAN);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setVisible(true);
+            add(panelNorte, BorderLayout.NORTH);
+            add(panelCentro, BorderLayout.CENTER);
+            add(panelOeste, BorderLayout.WEST);
+            add(panelEste, BorderLayout.EAST);
+            add(panelSur, BorderLayout.SOUTH);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            paginaPrincipal = new PaginaPrincipal();
+            paginaConsulta.dispose();
+        }
+    }
+
+    public class PaginaEliminacion extends JFrame implements ActionListener {
+        JPanel panelNorte, panelCentro, panelSur;
         JLabel etiqueta;
         JButton botonVolver;
-        JTextArea descripcion;
-        
-        PaginaConsulta() {
-            
+
+        PaginaEliminacion() {
+            panelNorte = new JPanel();
+            panelNorte.setBackground(Color.CYAN);
+
+            panelCentro = new JPanel();
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.GREEN);
+
+            panelSur = new JPanel();
+            panelSur.setBackground(Color.MAGENTA);
+
+            etiqueta = new JLabel("Eliminar objetivos");
+            etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
+            panelNorte.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            etiqueta = new JLabel("Seleccione los objetivos que desea eliminar: ");
+            etiqueta.setFont(new Font("", Font.PLAIN, 25));
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelCentro.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            JCheckBox lunes = new JCheckBox("Objetivo 1");
+            lunes.setAlignmentX(Component.CENTER_ALIGNMENT);
+            lunes.setFont(new Font("", Font.PLAIN, 18));
+            lunes.setBackground(Color.GREEN);
+            panelCentro.add(lunes);
+
+            botonVolver = new JButton("Eliminar y volver");
+            botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonVolver.addActionListener(this);
+            panelSur.add(botonVolver);
+
+            setLayout(new BorderLayout());
+            setBounds(200, 200, 1200, 900);
+            getContentPane().setBackground(Color.CYAN);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setVisible(true);
+            add(panelNorte, BorderLayout.NORTH);
+            add(panelCentro, BorderLayout.CENTER);
+            add(panelSur, BorderLayout.SOUTH);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    public class PaginaRegistro extends JFrame implements ActionListener {
+        JPanel panelNorte, panelCentro;
+        JLabel etiqueta;
+        JTextField campoUsuario;
+        JPasswordField campoContrasena;
+        JButton botonIngreso, botonVolver;
+
+        PaginaRegistro() {
+            panelNorte = new JPanel();
+            panelNorte.setBackground(Color.BLUE);
+
+            panelCentro = new JPanel();
+            panelCentro.setFont(new Font("Arial", Font.PLAIN, 12));
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.GREEN);
+
+            etiqueta = new JLabel("Registro Procastinator");
+            etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
+            panelNorte.add(etiqueta);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 100)));
+
+            etiqueta = new JLabel("Escriba un usuario:", SwingConstants.CENTER);
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiqueta.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(etiqueta);
+
+            campoUsuario = new JTextField();
+            campoUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoUsuario.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(campoUsuario);
+
+            etiqueta = new JLabel("Escriba una contraseña:", SwingConstants.CENTER);
+            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiqueta.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(etiqueta);
+
+            campoContrasena = new JPasswordField();
+            campoContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoContrasena.setMaximumSize(new Dimension(200, 30));
+            panelCentro.add(campoContrasena);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            botonIngreso = new JButton("Registrarse");
+            botonIngreso.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonIngreso.addActionListener(this);
+            panelCentro.add(botonIngreso);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+            botonVolver = new JButton("Vover");
+            botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonVolver.addActionListener(this);
+            panelCentro.add(botonVolver);
+
+            setLayout(new BorderLayout());
+            setBounds(200, 200, 800, 600);
+            getContentPane().setBackground(Color.CYAN);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setVisible(true);
+            add(panelNorte, BorderLayout.NORTH);
+            add(panelCentro, BorderLayout.CENTER);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonIngreso) {
+                String usuario = campoUsuario.getText();
+                String contrasena = new String(campoContrasena.getPassword());
+                Main.registrarse(usuario, contrasena);
+                paginaInicioSesion = new PaginaInicioSesion();
+                paginaRegistro.dispose();
+            } else if (e.getSource() == botonVolver) {
+                paginaInicioSesion = new PaginaInicioSesion();
+                paginaRegistro.dispose();
+            }
         }
     }
 }
