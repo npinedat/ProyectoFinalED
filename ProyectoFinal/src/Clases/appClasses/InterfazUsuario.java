@@ -394,22 +394,34 @@ public class InterfazUsuario {
                 for (int j = 1; j <= 7; j++) {
                     JButton bloque = new JButton(i + "/" + j);
                     bloque.setFont(new Font("Arial", Font.BOLD, 0));
-                    bloque.setBackground(Color.GRAY);
-                    bloque.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            if (bloque.getBackground() == Color.RED) {
-                                bloque.setBackground(Color.GRAY);
-                                if (duplicado((JButton) e.getSource()) == 170) {
-                                    // Nada
-                                } else {
-                                    bloquesSeleccionados.remove(e.getSource());
+                    ArrayList <Integer> listaHash= Main.consultaHash(login);
+                    System.out.println("Antes del for");
+                    for(Integer k : listaHash){
+                        System.out.println("Entrada al for");
+                        if (k == (Integer)(j * 24 + i)) {
+                            System.out.println("Entrada al if 1");
+                            bloque.setBackground(Color.MAGENTA);
+                            bloque.setEnabled(false);
+                        } else {
+                            System.out.println("Entrada al else");
+                            bloque.setBackground(Color.GRAY);
+                            bloque.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    if (bloque.getBackground() == Color.RED) {
+                                        bloque.setBackground(Color.GRAY);
+                                        if (duplicado((JButton) e.getSource()) == 170) {
+                                            // Nada
+                                        } else {
+                                            bloquesSeleccionados.remove(e.getSource());
+                                        }
+                                    } else {
+                                        bloque.setBackground(Color.RED);
+                                        bloquesSeleccionados.add((JButton) e.getSource());
+                                    }
                                 }
-                            } else {
-                                bloque.setBackground(Color.RED);
-                                bloquesSeleccionados.add((JButton) e.getSource());
-                            }
+                            });
                         }
-                    });
+                    }
                     panelCentro.add(bloque);
                 }
             }
@@ -477,18 +489,18 @@ public class InterfazUsuario {
                     }
                     if (nombreObjetivo.equals("") || descripcionObjetivo.equals("") || horas == 0
                             || bloquesSeleccionados.size() == 0) {
-                        JOptionPane.showMessageDialog(paginaCreacion,
-                                "Por favor llene todos los campos y recuerde que su objetivo de horas no puede ser 0");
+                        JOptionPane.showMessageDialog(paginaCreacion, "Por favor llene todos los campos");
                     } else {
                         Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
                                 arregloDias, arregloHoras);
                         JOptionPane.showMessageDialog(paginaCreacion, "Objetivo creado con éxito");
-                        //Main.consultaHash(login);
+                        // Main.consultaHash(login);
                         paginaPrincipal = new PaginaPrincipal();
                         paginaCreacion.dispose();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(paginaCreacion, "El campo de horas debe tener un entero");
+                    JOptionPane.showMessageDialog(paginaCreacion,
+                            "Datos no validos, el campo de horas debe tener un número entero y no puede ser 0");
                 }
             }
         }
@@ -757,14 +769,14 @@ public class InterfazUsuario {
             if (e.getSource() == botonIngreso) {
                 String usuario = campoUsuario.getText();
                 String contrasena = new String(campoContrasena.getPassword());
-                if(usuario.equals("") || contrasena.equals("")){
+                if (usuario.equals("") || contrasena.equals("")) {
                     JOptionPane.showMessageDialog(paginaRegistro, "Por favor ingrese todos los campos");
-                }else {
-                    if(Main.registrarse(usuario, contrasena)){
+                } else {
+                    if (Main.registrarse(usuario, contrasena)) {
                         JOptionPane.showMessageDialog(paginaRegistro, "Usuario registrado con éxito");
                         paginaInicioSesion = new PaginaInicioSesion();
                         paginaRegistro.dispose();
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(paginaRegistro, "Este nombre de usuario ya está registrado");
                     }
                 }

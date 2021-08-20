@@ -53,7 +53,7 @@ public class Main {
 		return true;
 	}
 
-	static int diasemana(String d){
+	public static int diasemana(String d){
 		if ("Lunes".equals(d)){
 		return 1;
 		}   if ("Martes".equals(d)){
@@ -79,10 +79,10 @@ public class Main {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null){
 					listaHash.add(i.getValor());
+					i = i.getSiguiente();
 				}
 			}
 		}
-		System.out.println(listaHash);
 		return listaHash;
 	}
 
