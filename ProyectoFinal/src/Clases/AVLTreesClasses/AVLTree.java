@@ -7,6 +7,7 @@ import Clases.appClasses.Objetivo;
 
 public class AVLTree implements Serializable{
     public TreeNode root = null;
+    public ArrayList <Objetivo> objetivos = new ArrayList <Objetivo>();
 
     public boolean empty() {
         if(root == null) {
@@ -18,20 +19,19 @@ public class AVLTree implements Serializable{
 
     public TreeNode find(int nodeKey){
         TreeNode temporal = root;
-        if (nodeKey == root.key) {
-            return root;
+        if (nodeKey == temporal.key) {
+            return temporal;
         }else {
-            while(root != null) {
-                if(root.key == nodeKey) {
-                    return root;
+            while(temporal != null) {
+                if(temporal.key == nodeKey) {
+                    return temporal;
                 }
-                if(nodeKey < root.key) {
-                    root = root.leftSubtree;
+                if(nodeKey < temporal.key) {
+                    temporal = temporal.leftSubtree;
                 }else {
-                    root = root.rightSubtree;
+                    temporal = temporal.rightSubtree;
                 }
             }
-            root = temporal;
             return null;
         }
     }
@@ -161,12 +161,12 @@ public class AVLTree implements Serializable{
     }
 
     public ArrayList <Objetivo> toArray(TreeNode node) {
-        ArrayList <Objetivo> objetivos = new ArrayList <Objetivo>();
-        if(node != null){
-            objetivos.add(node.objetivo);
-            toArray(node.leftSubtree);
-            toArray(node.rightSubtree);
+        if(node == null) {
+            return objetivos;
         }
+        objetivos.add(node.objetivo);
+        objetivos = toArray(node.leftSubtree);
+        objetivos = toArray(node.rightSubtree);
         return objetivos;
     }
 }

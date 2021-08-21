@@ -86,6 +86,19 @@ public class Main {
 		return listaHash;
 	}
 
+	public static ArrayList<Integer> consultaUnHash(Usuario login, String nomObj) {
+		ArrayList<Integer> listaHash = new ArrayList<Integer>();
+		if(login.encontrarObjetivo(nomObj) != null) {
+			Objetivo j = login.encontrarObjetivo(nomObj).objetivo;
+			Nodo i = j.getIde().getNodoRaiz();
+			while (i != null) {
+				listaHash.add(i.getValor());
+				i = i.getSiguiente();
+			}
+		}
+		return listaHash;
+	}
+
 	public static void agregarObjetivo(Usuario login, String nombreDeObjetivo, String descripcionDelObjetivo, 
 	String metodo, int horas, ArrayList <String> arregloDias, ArrayList <Integer> arregloHoras) {
 		Objetivo obj = new Objetivo(nombreDeObjetivo, descripcionDelObjetivo, metodo, horas);
@@ -93,7 +106,6 @@ public class Main {
 		login.arbolObjetivos.root = login.arbolObjetivos.insert(login.arbolObjetivos.root, obj.id, obj);
 		for (int i = 0; i < arregloHoras.size(); i++){
 			int hash=((diasemana(arregloDias.get(i)))*24) + arregloHoras.get(i);
-			System.out.println(hash);
 			obj.getIde().encolar(hash);
 		}
 		obj.programarBloque();

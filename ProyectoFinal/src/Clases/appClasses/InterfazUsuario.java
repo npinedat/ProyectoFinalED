@@ -143,7 +143,7 @@ public class InterfazUsuario {
             panelSur.add(botonCerrarSesion);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 800, 600);
+            setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
@@ -229,7 +229,7 @@ public class InterfazUsuario {
             panelCentro.add(botonRegistro);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 800, 600);
+            setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
@@ -383,6 +383,8 @@ public class InterfazUsuario {
             etiqueta = new JLabel("Sabado");
             panelCentro.add(etiqueta);
 
+            login.arbolObjetivos.objetivos.clear();
+
             for (int i = 0; i <= 23; i++) {
                 if (i < 12) {
                     JLabel hora = new JLabel(i + ":" + (i + 1) + " Am");
@@ -411,11 +413,8 @@ public class InterfazUsuario {
                         }
                     });
                     ArrayList<Integer> listaHash = Main.consultaHash(login);
-                    //System.out.println("Antes del for");
-                    for(int k : listaHash) {
-                        System.out.println("Entrada al for");
+                    for (int k : listaHash) {
                         if (k == ((j - 1) * 24 + i)) {
-                            System.out.println("Entrada al if ");
                             bloque.setBackground(Color.MAGENTA);
                             bloque.setEnabled(false);
                         }
@@ -435,7 +434,7 @@ public class InterfazUsuario {
             panelSur.add(botonCancelar);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 1200, 900);
+            setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
@@ -515,17 +514,19 @@ public class InterfazUsuario {
 
     public class PaginaConsulta extends JFrame implements ActionListener {
         JPanel panelNorte, panelCentro, panelOeste, panelEste, panelSur;
+        JScrollPane panelDescripcion;
         JLabel etiqueta;
         JTextField campoNombre, campoMetodologia, campoHoras;
         JButton botonVolver;
         JTextArea campoDescripcion;
+        ArrayList<JButton> bloquesSeleccionados = new ArrayList<JButton>();
 
         PaginaConsulta() {
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.BLUE);
 
             panelCentro = new JPanel();
-            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setLayout(new GridLayout(25, 8));
             panelCentro.setBackground(Color.GREEN);
 
             panelOeste = new JPanel();
@@ -550,73 +551,115 @@ public class InterfazUsuario {
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            JButton boton1 = new JButton("Objetivo 1");
-            panelEste.add(boton1);
+            login.arbolObjetivos.objetivos.clear();
+            for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+                JButton boton = new JButton(i.nombre);
+                boton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        panelCentro.removeAll();
+                        campoNombre.setText(i.nombre);
+                        campoDescripcion.setText(i.descripcion);
+                        campoHoras.setText("" + i.horasTotales);
+                        campoMetodologia.setText(i.tecnica);
 
-            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+                        etiqueta = new JLabel("Horas/Días");
+                        panelCentro.add(etiqueta);
 
-            JButton boton2 = new JButton("Objetivo 2");
-            panelEste.add(boton2);
+                        etiqueta = new JLabel("Domingo");
+                        panelCentro.add(etiqueta);
 
-            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+                        etiqueta = new JLabel("Lunes");
+                        panelCentro.add(etiqueta);
 
-            JButton boton3 = new JButton("Objetivo 3");
-            panelEste.add(boton3);
+                        etiqueta = new JLabel("Martes");
+                        panelCentro.add(etiqueta);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+                        etiqueta = new JLabel("Miercoles");
+                        panelCentro.add(etiqueta);
+
+                        etiqueta = new JLabel("Jueves");
+                        panelCentro.add(etiqueta);
+
+                        etiqueta = new JLabel("Viernes");
+                        panelCentro.add(etiqueta);
+
+                        etiqueta = new JLabel("Sabado");
+                        panelCentro.add(etiqueta);
+
+                        for (int i = 0; i <= 23; i++) {
+                            if (i < 12) {
+                                JLabel hora = new JLabel(i + ":" + (i + 1) + " Am");
+                                panelCentro.add(hora);
+                            } else {
+                                JLabel hora = new JLabel(i + ":" + (i + 1) + " Pm");
+                                panelCentro.add(hora);
+                            }
+                            for (int j = 1; j <= 7; j++) {
+                                JButton bloque = new JButton(i + "/" + j);
+                                bloque.setFont(new Font("Arial", Font.BOLD, 0));
+                                bloque.setBackground(Color.GRAY);
+                                ArrayList<Integer> listaHash = Main.consultaUnHash(login, boton.getText());
+                                for (int k : listaHash) {
+                                    if (k == ((j - 1) * 24 + i)) {
+                                        bloque.setBackground(Color.MAGENTA);
+                                        bloque.setEnabled(false);
+                                    }
+                                }
+                                panelCentro.add(bloque);
+                            }
+                        }
+                        paginaConsulta.setBounds(0, 0, 1200, 900);
+                    }
+                });
+                panelEste.add(boton);
+            }
 
             etiqueta = new JLabel("Nombre");
-            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelCentro.add(etiqueta);
+            // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelOeste.add(etiqueta);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            campoNombre = new JTextField("Nombre x");
-            campoNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
-            campoNombre.setMaximumSize(new Dimension(340, 30));
-            panelCentro.add(campoNombre);
-
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+            campoNombre = new JTextField();
+            campoNombre.setMaximumSize(new Dimension(330, 30));
+            panelOeste.add(campoNombre);
 
             etiqueta = new JLabel("Descripcion: ");
-            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelCentro.add(etiqueta);
+            // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelOeste.add(etiqueta);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            campoDescripcion = new JTextArea("Descripcion x");
-            campoDescripcion.setAlignmentX(Component.CENTER_ALIGNMENT);
-            campoDescripcion.setMaximumSize(new Dimension(340, 400));
-            panelCentro.add(campoDescripcion);
+            campoDescripcion = new JTextArea();
+            campoDescripcion.setLineWrap(true);
+            panelDescripcion = new JScrollPane(campoDescripcion);
+            panelDescripcion.setViewportView(campoDescripcion);
+            panelDescripcion.setMaximumSize(new Dimension(330, 500));
+            panelOeste.add(panelDescripcion);
 
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel("Horas a dedicar: ");
-            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelCentro.add(etiqueta);
+            // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+            panelOeste.add(etiqueta);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            campoHoras = new JTextField("x");
-            campoHoras.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoHoras = new JTextField();
+            // campoHoras.setAlignmentX(Component.CENTER_ALIGNMENT);
             campoHoras.setMaximumSize(new Dimension(340, 30));
-            panelCentro.add(campoHoras);
+            panelOeste.add(campoHoras);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel("Metodología:  ");
-            panelOeste.add(etiqueta);
+            panelEste.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            campoMetodologia = new JTextField("Pomodoro");
+            campoMetodologia = new JTextField();
             campoMetodologia.setMaximumSize(new Dimension(340, 30));
-            panelOeste.add(campoMetodologia);
-
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            etiqueta = new JLabel("Horarios: ");
-            panelOeste.add(etiqueta);
+            panelEste.add(campoMetodologia);
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -626,7 +669,7 @@ public class InterfazUsuario {
             panelSur.add(botonVolver);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 1200, 900);
+            setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
@@ -684,7 +727,7 @@ public class InterfazUsuario {
             panelSur.add(botonVolver);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 1200, 900);
+            setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
@@ -755,7 +798,7 @@ public class InterfazUsuario {
             panelCentro.add(botonVolver);
 
             setLayout(new BorderLayout());
-            setBounds(200, 200, 800, 600);
+            setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);

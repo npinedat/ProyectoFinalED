@@ -5,7 +5,7 @@ import java.io.Serializable;
 import Clases.appClasses.Objetivo;
 public class TreeNode implements Serializable{
     public int key, height;
-    TreeNode leftSubtree, rightSubtree;
+    public TreeNode leftSubtree, rightSubtree;
     public Objetivo objetivo;
     
     TreeNode(int key, Objetivo objetivo) {
