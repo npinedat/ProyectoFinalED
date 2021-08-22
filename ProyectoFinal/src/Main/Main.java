@@ -8,6 +8,7 @@ import Clases.appClasses.Usuario;
 import Clases.listClasses.Nodo;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -79,6 +80,31 @@ public class Main {
 		return 50;
 	}
 
+	public static Objetivo consultaObjCercano (Usuario login){
+		Calendar c = Calendar.getInstance();
+		Date date = new Date();
+		c.get(Calendar.HOUR_OF_DAY);
+		c.setTime(date);
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
+		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
+		int hashDiaHora = (diaAct * 24) + horaAct;
+		int hashCercano = 168;
+		Objetivo k = null;
+		if (login.objetivosVacio()) {
+			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+				Nodo i = j.getIde().getNodoRaiz();
+				while (i != null) {
+					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
+						hashCercano = i.getValor();
+						k = j;
+					}
+					i = i.getSiguiente();
+				}
+			}
+		}
+		return k;
+	}
+
 	public static ArrayList<Integer> consultaHash(Usuario login) {
 		ArrayList<Integer> listaHash = new ArrayList<Integer>();
 		if (login.objetivosVacio()) {
@@ -90,6 +116,7 @@ public class Main {
 				}
 			}
 		}
+		Collections.sort(listaHash);
 		return listaHash;
 	}
 
@@ -103,6 +130,7 @@ public class Main {
 				i = i.getSiguiente();
 			}
 		}
+		Collections.sort(listaHash);
 		return listaHash;
 	}
 
@@ -163,13 +191,18 @@ public class Main {
 		/*
 		 * do { System.out.
 		 * println("Si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 3"
-		 * ); log=sc.nextInt(); sc.nextLine(); switch(log){ case 1 : Calendar c =
-		 * Calendar.getInstance(); Date date = new Date(); c.setTime(date); //Usuario
+		 * ); log=sc.nextInt(); sc.nextLine(); switch(log){ case 1 : 
+		 * Calendar c = Calendar.getInstance(); 
+		 * Date date = new Date(); 
+		 * c.setTime(date); 
+		 * //Usuario
 		 * login = iniciarSesion(users); if (login == null){ break; } int ob2; Boolean
 		 * horaHecha = false; do { System.out.
 		 * println("Inserte: 1 si se quiere añadir objetivo, 2 para consultar objetivo, 3 Eliminar, 0 para cerrar sesión"
-		 * ); int diaAct = c.get(Calendar.DAY_OF_WEEK); int horaAct =
-		 * c.get(Calendar.HOUR_OF_DAY); int hashDiaHora = (diaAct * 24) + horaAct; if
+		 * ); int diaAct = c.get(Calendar.DAY_OF_WEEK); 
+		 * int horaAct = c.get(Calendar.HOUR_OF_DAY); 
+		 * int hashDiaHora = (diaAct * 24) + horaAct; 
+		 * if
 		 * ((horaHecha == true) && (horaPreguntada != hashDiaHora)) { horaPreguntada =
 		 * hashDiaHora; horaHecha = false; } ob2=sc.nextInt(); sc.nextLine();
 		 * switch(ob2){ case 1 : agregarObjetivo(login); //vaciarArbol(obj); break; case
