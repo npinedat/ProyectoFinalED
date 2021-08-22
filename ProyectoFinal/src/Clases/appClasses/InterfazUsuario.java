@@ -8,6 +8,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -26,6 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import Main.Main;
 
@@ -142,6 +146,11 @@ public class InterfazUsuario {
             botonCerrarSesion.addActionListener(this);
             panelSur.add(botonCerrarSesion);
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);
@@ -166,6 +175,7 @@ public class InterfazUsuario {
                 paginaEliminacion = new PaginaEliminacion();
                 paginaPrincipal.dispose();
             } else if (e.getSource() == botonCerrarSesion) {
+                Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 paginaInicioSesion = new PaginaInicioSesion();
                 paginaPrincipal.dispose();
             }
@@ -228,6 +238,11 @@ public class InterfazUsuario {
             botonRegistro.addActionListener(this);
             panelCentro.add(botonRegistro);
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);
@@ -433,6 +448,11 @@ public class InterfazUsuario {
             botonCancelar.addActionListener(this);
             panelSur.add(botonCancelar);
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
@@ -489,8 +509,7 @@ public class InterfazUsuario {
                         JOptionPane.showMessageDialog(paginaCreacion, "Por favor llene todos los campos");
                     } else {
                         Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
-                                arregloDias, arregloHoras);
-                        JOptionPane.showMessageDialog(paginaCreacion, "Objetivo creado con éxito");
+                                arregloDias, arregloHoras, paginaCreacion);
                         // Main.consultaHash(login);
                         paginaPrincipal = new PaginaPrincipal();
                         paginaCreacion.dispose();
@@ -596,6 +615,7 @@ public class InterfazUsuario {
                             }
                             for (int j = 1; j <= 7; j++) {
                                 JButton bloque = new JButton(i + "/" + j);
+                                bloque.setEnabled(false);
                                 bloque.setFont(new Font("Arial", Font.BOLD, 0));
                                 bloque.setBackground(Color.GRAY);
                                 ArrayList<Integer> listaHash = Main.consultaUnHash(login, boton.getText());
@@ -606,12 +626,14 @@ public class InterfazUsuario {
                                     }
                                 }
                                 panelCentro.add(bloque);
+
                             }
                         }
                         paginaConsulta.setBounds(0, 0, 1200, 900);
                     }
                 });
                 panelEste.add(boton);
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
             }
 
             etiqueta = new JLabel("Nombre");
@@ -622,6 +644,7 @@ public class InterfazUsuario {
 
             campoNombre = new JTextField();
             campoNombre.setMaximumSize(new Dimension(330, 30));
+            campoNombre.setEditable(false);
             panelOeste.add(campoNombre);
 
             etiqueta = new JLabel("Descripcion: ");
@@ -631,6 +654,7 @@ public class InterfazUsuario {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
+            campoDescripcion.setEditable(false);
             campoDescripcion.setLineWrap(true);
             panelDescripcion = new JScrollPane(campoDescripcion);
             panelDescripcion.setViewportView(campoDescripcion);
@@ -647,6 +671,7 @@ public class InterfazUsuario {
 
             campoHoras = new JTextField();
             // campoHoras.setAlignmentX(Component.CENTER_ALIGNMENT);
+            campoHoras.setEditable(false);
             campoHoras.setMaximumSize(new Dimension(340, 30));
             panelOeste.add(campoHoras);
 
@@ -658,6 +683,8 @@ public class InterfazUsuario {
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoMetodologia = new JTextField();
+            campoMetodologia.setEditable(false);
+            campoNombre.setEditable(false);
             campoMetodologia.setMaximumSize(new Dimension(340, 30));
             panelEste.add(campoMetodologia);
 
@@ -668,6 +695,11 @@ public class InterfazUsuario {
             botonVolver.addActionListener(this);
             panelSur.add(botonVolver);
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
@@ -686,10 +718,11 @@ public class InterfazUsuario {
         }
     }
 
-    public class PaginaEliminacion extends JFrame implements ActionListener {
+    public class PaginaEliminacion extends JFrame implements ActionListener, ChangeListener {
         JPanel panelNorte, panelCentro, panelSur;
         JLabel etiqueta;
         JButton botonVolver;
+        ArrayList<Objetivo> objetivosSeleccionados = new ArrayList<Objetivo>();
 
         PaginaEliminacion() {
             panelNorte = new JPanel();
@@ -715,17 +748,41 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            JCheckBox lunes = new JCheckBox("Objetivo 1");
-            lunes.setAlignmentX(Component.CENTER_ALIGNMENT);
-            lunes.setFont(new Font("", Font.PLAIN, 18));
-            lunes.setBackground(Color.GREEN);
-            panelCentro.add(lunes);
+            login.arbolObjetivos.objetivos.clear();
+            for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+                JCheckBox objetivo = new JCheckBox(i.nombre);
+                objetivo.addChangeListener(new ChangeListener() {
+                    public void stateChanged(ChangeEvent e) {
+                        if(objetivosSeleccionados.size() == 0) {
+                            objetivosSeleccionados.add(i);
+                        }else {
+                            for (int j = 0; j <= objetivosSeleccionados.size(); j++) {
+                                if (objetivosSeleccionados.get(j) == i && objetivosSeleccionados.get(j) != null) {
+                                    objetivosSeleccionados.remove(j);
+                                } else {
+                                    objetivosSeleccionados.add(i);
+                                }
+                            }
+                        }
+                    }
+                });
+                objetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
+                objetivo.setFont(new Font("", Font.PLAIN, 18));
+                objetivo.setBackground(Color.green);
+                panelCentro.add(objetivo);
+                panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+            }
 
             botonVolver = new JButton("Eliminar y volver");
             botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
-            botonVolver.addActionListener(this);
-            panelSur.add(botonVolver);
+            botonVolver.addActionListener(this); panelSur.add(botonVolver);
+    
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 1200, 900);
             getContentPane().setBackground(Color.CYAN);
@@ -737,6 +794,23 @@ public class InterfazUsuario {
         }
 
         public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botonVolver) {
+                if (objetivosSeleccionados.size() == 0) {
+                    JOptionPane.showMessageDialog(paginaEliminacion, "No se eliminó ningún objetivo");
+                    paginaPrincipal = new PaginaPrincipal();
+                    paginaEliminacion.dispose();
+                } else {
+                    for (Objetivo i : objetivosSeleccionados) {
+                        Main.eliminarObjetivo(login, i.nombre);
+                    }
+                    JOptionPane.showMessageDialog(paginaEliminacion, "Objetivos eliminados");
+                    paginaPrincipal = new PaginaPrincipal();
+                    paginaEliminacion.dispose();
+                }
+            }
+        }
+
+        public void stateChanged(ChangeEvent e) {
 
         }
     }
@@ -797,6 +871,11 @@ public class InterfazUsuario {
             botonVolver.addActionListener(this);
             panelCentro.add(botonVolver);
 
+            addWindowListener(new WindowAdapter(){
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
             getContentPane().setBackground(Color.CYAN);

@@ -3,6 +3,9 @@ package Clases.AVLTreesClasses;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import Clases.appClasses.Objetivo;
 
 public class AVLTree implements Serializable{
@@ -105,21 +108,23 @@ public class AVLTree implements Serializable{
         return leftSubtree;
     }
     
-    public TreeNode insert(TreeNode node, int key, Objetivo objetivo) {
+    public TreeNode insert(TreeNode node, int key, Objetivo objetivo, JFrame pagina) {
         if(node == null){
             node = new TreeNode(key, objetivo);
             return node;
         }
         if(key < node.key) {
-            node.leftSubtree = insert(node.leftSubtree, key, objetivo);
+            node.leftSubtree = insert(node.leftSubtree, key, objetivo, pagina);
         }else if(key > node.key){
-            node.rightSubtree = insert(node.rightSubtree, key, objetivo);
+            node.rightSubtree = insert(node.rightSubtree, key, objetivo, pagina);
         }else {
-            System.out.println("Ya existe un elemento con este nombre");
+            JOptionPane.showMessageDialog(pagina, "No se puede crear este objetivo, ya existe un objetivo con este nombre");
             return node;
         }
         
         node.height = Math.max(getHeight(node.leftSubtree), getHeight(node.rightSubtree));
+        
+        JOptionPane.showMessageDialog(pagina, "Objetivo creado con éxito");
 
         return balance(node, key);
     }
