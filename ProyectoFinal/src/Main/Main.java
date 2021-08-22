@@ -80,6 +80,29 @@ public class Main {
 		return 50;
 	}
 
+	public static int consultaHashCercano (Usuario login) {
+		Calendar c = Calendar.getInstance();
+		Date date = new Date();
+		c.get(Calendar.HOUR_OF_DAY);
+		c.setTime(date);
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
+		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
+		int hashDiaHora = (diaAct * 24) + horaAct;
+		int hashCercano = 168;
+		if (login.objetivosVacio()) {
+			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+				Nodo i = j.getIde().getNodoRaiz();
+				while (i != null) {
+					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
+						hashCercano = i.getValor();
+					}
+					i = i.getSiguiente();
+				}
+			}
+		}
+		return hashCercano;
+	}
+
 	public static Objetivo consultaObjCercano (Usuario login){
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
