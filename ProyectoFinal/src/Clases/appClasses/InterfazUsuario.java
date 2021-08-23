@@ -111,7 +111,7 @@ public class InterfazUsuario {
             Objetivo objetivoCercano = Main.consultaObjCercano(login);
             int hashCercano = Main.consultaHashCercano(login);
             System.out.println(hashCercano);
-            System.out.println(objetivoCercano.nombre);
+            //System.out.println(objetivoCercano.nombre);
 
             etiqueta = new JLabel("Su próxima sesión es: ");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));

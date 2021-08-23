@@ -93,6 +93,8 @@ public class Main {
 				while (i != null) {
 					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
 						hashCercano = i.getValor();
+					} else if ((i.getValor() < hashDiaHora) && (hashCercano > i.getValor())) {
+						hashCercano = i.getValor();
 					}
 					i = i.getSiguiente();
 				}
@@ -116,6 +118,9 @@ public class Main {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
 					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
+						hashCercano = i.getValor();
+						k = j;
+					} else if ((i.getValor() < hashDiaHora) && (hashCercano > i.getValor())) {
 						hashCercano = i.getValor();
 						k = j;
 					}
