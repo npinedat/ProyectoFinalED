@@ -91,7 +91,7 @@ public class Main {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
+					if ((i.getValor() >= hashDiaHora) && (i.getValor() < hashCercano)) {
 						hashCercano = i.getValor();
 					}
 					i = i.getSiguiente();
