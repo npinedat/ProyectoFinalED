@@ -8,6 +8,7 @@ import Clases.appClasses.Usuario;
 import Clases.listClasses.Nodo;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -32,12 +33,10 @@ public class Main {
 		for (Usuario i : usuarios) {
 			if (i.encontrarUsuario(id, ps)) {
 				login = i;
-				System.out.println("Iniciaste sesion");
 				return login;
 			}
 		}
 		{
-			System.out.println("Usuario no encontrado, registrese");
 			return null;
 		}
 	}
@@ -90,6 +89,7 @@ public class Main {
 				}
 			}
 		}
+		Collections.sort(listaHash);
 		return listaHash;
 	}
 
@@ -103,6 +103,7 @@ public class Main {
 				i = i.getSiguiente();
 			}
 		}
+		Collections.sort(listaHash);
 		return listaHash;
 	}
 

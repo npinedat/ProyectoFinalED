@@ -108,6 +108,8 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
+            //Objetivo objetivoCercano = Main.
+
             etiqueta = new JLabel("Su próxima sesión es: ");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -535,7 +537,7 @@ public class InterfazUsuario {
         JPanel panelNorte, panelCentro, panelOeste, panelEste, panelSur;
         JScrollPane panelDescripcion;
         JLabel etiqueta;
-        JTextField campoNombre, campoMetodologia, campoHoras;
+        JTextField campoNombre, campoMetodologia, campoHoras, campoHorasCompletadas, campoHorasRestantes;
         JButton botonVolver;
         JTextArea campoDescripcion;
         ArrayList<JButton> bloquesSeleccionados = new ArrayList<JButton>();
@@ -579,6 +581,8 @@ public class InterfazUsuario {
                         campoNombre.setText(i.nombre);
                         campoDescripcion.setText(i.descripcion);
                         campoHoras.setText("" + i.horasTotales);
+                        campoHorasCompletadas.setText("" + i.horasDedicadas);
+                        campoHorasRestantes.setText("" + i.horasaDedicar);
                         campoMetodologia.setText(i.tecnica);
 
                         etiqueta = new JLabel("Horas/Días");
@@ -658,7 +662,7 @@ public class InterfazUsuario {
             campoDescripcion.setLineWrap(true);
             panelDescripcion = new JScrollPane(campoDescripcion);
             panelDescripcion.setViewportView(campoDescripcion);
-            panelDescripcion.setMaximumSize(new Dimension(330, 500));
+            panelDescripcion.setMaximumSize(new Dimension(330, 400));
             panelOeste.add(panelDescripcion);
 
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -674,6 +678,28 @@ public class InterfazUsuario {
             campoHoras.setEditable(false);
             campoHoras.setMaximumSize(new Dimension(340, 30));
             panelOeste.add(campoHoras);
+
+            etiqueta = new JLabel("Horas completadas: ");
+            panelOeste.add(etiqueta);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoHorasCompletadas = new JTextField();
+            campoHorasCompletadas.setEditable(false);
+            campoHorasCompletadas.setMaximumSize(new Dimension(340, 30));
+            panelOeste.add(campoHorasCompletadas);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            etiqueta = new JLabel("Horas restantes: ");
+            panelOeste.add(etiqueta);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            campoHorasRestantes = new JTextField();
+            campoHorasRestantes.setEditable(false);
+            campoHorasRestantes.setMaximumSize(new Dimension(340, 30));
+            panelOeste.add(campoHorasRestantes);
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
