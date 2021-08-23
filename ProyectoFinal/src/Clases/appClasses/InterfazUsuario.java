@@ -42,6 +42,8 @@ public class InterfazUsuario {
     PaginaEliminacion paginaEliminacion;
     PaginaRegistro paginaRegistro;
 
+    //Toolkit t = Toolkit.getDefaultToolkit();
+
     Usuario login;
 
     public PaginaInicioSesion getPaginaInicioSesion() {
@@ -114,20 +116,19 @@ public class InterfazUsuario {
             // System.out.println(objetivoCercano.nombre);
 
             if (login.arbolObjetivos.empty()) {
-                etiqueta = new JLabel("No tiene objetivos creados, ingrese a crear objetivo y creé uno");
+                etiqueta = new JLabel("No tiene objetivos creados, creé uno");
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
             } else {
-                etiqueta = new JLabel("Su próxima sesión es del objetivo " + objetivoCercano + " es : ");
+                etiqueta = new JLabel("Su próxima sesión del objetivo " + objetivoCercano.nombre + " es : ");
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
-
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
                 etiqueta = new JLabel("Día: " + Math.floor(hashCercano / 24) + " Hora: "
-                        + (hashCercano - Math.floor(hashCercano / 24)));
+                        + (hashCercano - (Math.floor(hashCercano / 24) * 24)));
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
