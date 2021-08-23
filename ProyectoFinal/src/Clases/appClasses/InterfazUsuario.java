@@ -42,6 +42,8 @@ public class InterfazUsuario {
     PaginaEliminacion paginaEliminacion;
     PaginaRegistro paginaRegistro;
 
+    //Toolkit t = Toolkit.getDefaultToolkit();
+
     Usuario login;
 
     public PaginaInicioSesion getPaginaInicioSesion() {
@@ -111,14 +113,19 @@ public class InterfazUsuario {
             Objetivo objetivoCercano = Main.consultaObjCercano(login);
             int hashCercano = Main.consultaHashCercano(login);
             System.out.println(hashCercano);
-            //System.out.println(objetivoCercano.nombre);
+            // System.out.println(objetivoCercano.nombre);
 
-            etiqueta = new JLabel("Su próxima sesión es: ");
-            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
-            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelCentro.add(etiqueta);
-
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+            if (login.arbolObjetivos.empty()) {
+                etiqueta = new JLabel("No tiene objetivos creados, creé uno.");
+                etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+                etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+                panelCentro.add(etiqueta);
+            } else {
+                etiqueta = new JLabel("Su próxima sesión del objetivo " + objetivoCercano.nombre + " es : ");
+                etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+                etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+                panelCentro.add(etiqueta);
+                panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             etiqueta = new JLabel("Día: " + Math.floor(hashCercano/24) + " Hora: " + (hashCercano - Math.floor(hashCercano/24)*24));
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
@@ -151,7 +158,7 @@ public class InterfazUsuario {
             botonCerrarSesion.addActionListener(this);
             panelSur.add(botonCerrarSesion);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
@@ -243,7 +250,7 @@ public class InterfazUsuario {
             botonRegistro.addActionListener(this);
             panelCentro.add(botonRegistro);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
@@ -453,7 +460,7 @@ public class InterfazUsuario {
             botonCancelar.addActionListener(this);
             panelSur.add(botonCancelar);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
@@ -724,7 +731,7 @@ public class InterfazUsuario {
             botonVolver.addActionListener(this);
             panelSur.add(botonVolver);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
@@ -782,9 +789,9 @@ public class InterfazUsuario {
                 JCheckBox objetivo = new JCheckBox(i.nombre);
                 objetivo.addChangeListener(new ChangeListener() {
                     public void stateChanged(ChangeEvent e) {
-                        if(objetivosSeleccionados.size() == 0) {
+                        if (objetivosSeleccionados.size() == 0) {
                             objetivosSeleccionados.add(i);
-                        }else {
+                        } else {
                             for (int j = 0; j <= objetivosSeleccionados.size(); j++) {
                                 if (objetivosSeleccionados.get(j) == i && objetivosSeleccionados.get(j) != null) {
                                     objetivosSeleccionados.remove(j);
@@ -804,10 +811,10 @@ public class InterfazUsuario {
 
             botonVolver = new JButton("Eliminar y volver");
             botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
-            botonVolver.addActionListener(this); panelSur.add(botonVolver);
-    
+            botonVolver.addActionListener(this);
+            panelSur.add(botonVolver);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
@@ -900,7 +907,7 @@ public class InterfazUsuario {
             botonVolver.addActionListener(this);
             panelCentro.add(botonVolver);
 
-            addWindowListener(new WindowAdapter(){
+            addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
