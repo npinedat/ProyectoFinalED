@@ -93,7 +93,7 @@ public class Main {
 				while (i != null) {
 					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
 						hashCercano = i.getValor();
-					} else if ((i.getValor() < hashDiaHora) && (hashCercano > i.getValor())) {
+					} else if ((i.getValor() < hashDiaHora) && (hashCercano < i.getValor())) {
 						hashCercano = i.getValor();
 					}
 					i = i.getSiguiente();
