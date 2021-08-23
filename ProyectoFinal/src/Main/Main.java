@@ -78,7 +78,6 @@ public class Main {
 		return 50;
 	}
 
-	/*
 	public static int consultaHashCercano (Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
@@ -93,12 +92,7 @@ public class Main {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-<<<<<<< HEAD
-					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
-						diferencia = Math.abs(i.getValor() - hashDiaHora);
-=======
 					if (hashCercano == 168) {
->>>>>>> 54c162c23d2ca19b0d4021007439198e14a2f932
 						hashCercano = i.getValor();
 					} else if (hashDiaHora >= hashCercano) {
 						if (i.getValor() >= hashDiaHora) {
@@ -129,16 +123,12 @@ public class Main {
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
 		int diferencia = 168;
+		int hashCercano = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-<<<<<<< HEAD
-					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
-						k = j;
-						diferencia = Math.abs(i.getValor() - hashDiaHora);
-=======
 					if (hashCercano == 168) {
 						hashCercano = i.getValor();
 						k = j;
@@ -157,7 +147,6 @@ public class Main {
 							hashCercano = i.getValor();
 							k = j;
 						}
->>>>>>> 54c162c23d2ca19b0d4021007439198e14a2f932
 					}
 					i = i.getSiguiente();
 				}
@@ -165,7 +154,6 @@ public class Main {
 		}
 		return k;
 	}
-	*/
 
 	public static ArrayList<Integer> consultaHash(Usuario login) {
 		ArrayList<Integer> listaHash = new ArrayList<Integer>();

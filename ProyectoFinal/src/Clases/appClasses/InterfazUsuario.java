@@ -796,6 +796,7 @@ public class InterfazUsuario {
                                 } else {
                                     objetivosSeleccionados.add(i);
                                 }
+                                System.out.println(objetivosSeleccionados);
                             }
                         }
                     }
