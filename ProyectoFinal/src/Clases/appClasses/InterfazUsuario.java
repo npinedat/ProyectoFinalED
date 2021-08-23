@@ -120,7 +120,7 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
-            etiqueta = new JLabel("Día: " + Math.floor(hashCercano/24) + " Hora: " + (hashCercano - Math.floor(hashCercano/24)));
+            etiqueta = new JLabel("Día: " + Math.floor(hashCercano/24) + " Hora: " + (hashCercano - Math.floor(hashCercano/24)*24));
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
