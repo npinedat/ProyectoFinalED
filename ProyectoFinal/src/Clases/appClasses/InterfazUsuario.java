@@ -108,7 +108,10 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            //Objetivo objetivoCercano = Main.
+            Objetivo objetivoCercano = Main.consultaObjCercano(login);
+            int hashCercano = Main.consultaHashCercano(login);
+            System.out.println(hashCercano);
+            System.out.println(objetivoCercano.nombre);
 
             etiqueta = new JLabel("Su próxima sesión es: ");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
@@ -117,7 +120,7 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
-            etiqueta = new JLabel("Día x Mes x Hora x");
+            etiqueta = new JLabel("Día: " + Math.floor(hashCercano/24) + " Hora: " + (hashCercano - Math.floor(hashCercano/24)));
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
