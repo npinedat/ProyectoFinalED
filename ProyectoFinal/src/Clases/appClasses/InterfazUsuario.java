@@ -110,10 +110,8 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            Objetivo objetivoCercano = Main.consultaObjCercano(login);
-            int hashCercano = Main.consultaHashCercano(login);
-            System.out.println(hashCercano);
-            // System.out.println(objetivoCercano.nombre);
+            //Objetivo objetivoCercano = Main.consultaObjCercano(login);
+            //int hashCercano = Main.consultaHashCercano(login);
 
             if (login.arbolObjetivos.empty()) {
                 etiqueta = new JLabel("No tiene objetivos creados, creé uno.");
@@ -121,17 +119,18 @@ public class InterfazUsuario {
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
             } else {
-                etiqueta = new JLabel("Su próxima sesión del objetivo " + objetivoCercano.nombre + " es : ");
+                //etiqueta = new JLabel("Su próxima sesión del objetivo " + objetivoCercano.nombre + " es : ");
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
-                etiqueta = new JLabel("Día: " + Math.floor(hashCercano / 24) + " Hora: "
+                /*etiqueta = new JLabel("Día: " + Math.floor(hashCercano / 24) + " Hora: "
                         + (hashCercano - (Math.floor(hashCercano / 24) * 24)));
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
+                */
             }
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));

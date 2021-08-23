@@ -78,6 +78,7 @@ public class Main {
 		return 50;
 	}
 
+	/*
 	public static int consultaHashCercano (Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
@@ -86,14 +87,14 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
+		int diferencia = 168;
 		int hashCercano = 168;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if ((i.getValor() >= hashDiaHora) && (hashCercano >= i.getValor())) {
-						hashCercano = i.getValor();
-					} else if ((hashCercano == 168) && (i.getValor() < hashDiaHora) && (hashCercano > i.getValor())) {
+					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
+						diferencia = Math.abs(i.getValor() - hashDiaHora);
 						hashCercano = i.getValor();
 					}
 					i = i.getSiguiente();
@@ -111,18 +112,15 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int hashCercano = 168;
+		int diferencia = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if ((i.getValor() >= hashDiaHora) && (hashCercano > i.getValor())) {
-						hashCercano = i.getValor();
+					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
 						k = j;
-					} else if ((hashCercano == 168) && (i.getValor() < hashDiaHora) && (hashCercano < i.getValor())) {
-						hashCercano = i.getValor();
-						k = j;
+						diferencia = Math.abs(i.getValor() - hashDiaHora);
 					}
 					i = i.getSiguiente();
 				}
@@ -130,6 +128,7 @@ public class Main {
 		}
 		return k;
 	}
+	*/
 
 	public static ArrayList<Integer> consultaHash(Usuario login) {
 		ArrayList<Integer> listaHash = new ArrayList<Integer>();
