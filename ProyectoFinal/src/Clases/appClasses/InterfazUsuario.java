@@ -116,7 +116,7 @@ public class InterfazUsuario {
             // System.out.println(objetivoCercano.nombre);
 
             if (login.arbolObjetivos.empty()) {
-                etiqueta = new JLabel("No tiene objetivos creados, creé uno");
+                etiqueta = new JLabel("No tiene objetivos creados, creé uno.");
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
