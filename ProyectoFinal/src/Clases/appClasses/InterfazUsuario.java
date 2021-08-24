@@ -131,28 +131,6 @@ public class InterfazUsuario implements Runnable {
             etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
             panelNorte.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            /*
-             * etiqueta = new JLabel("Usuario123", SwingConstants.CENTER);
-             * etiqueta.setFont(new Font("Arial", Font.BOLD, 24)); panelOeste.add(etiqueta);
-             * 
-             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-             * 
-             * etiqueta = new JLabel("Objetivo1"); panelOeste.add(etiqueta); etiqueta = new
-             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
-             * 
-             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-             * 
-             * etiqueta = new JLabel("Objetivo2"); panelOeste.add(etiqueta); etiqueta = new
-             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
-             * 
-             * panelOeste.add(Box.createRigidArea(new Dimension(0, 60)));
-             * 
-             * etiqueta = new JLabel("Objetivo3"); panelOeste.add(etiqueta); etiqueta = new
-             * JLabel("Horas restantes: x"); panelOeste.add(etiqueta);
-             */
-
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel(login.usuario + " bienvenido a Procastinator");
@@ -714,7 +692,7 @@ public class InterfazUsuario implements Runnable {
                 panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
             }
 
-            etiqueta = new JLabel("Nombre");
+            etiqueta = new JLabel("Nombre: ");
             // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelOeste.add(etiqueta);
 
@@ -724,6 +702,8 @@ public class InterfazUsuario implements Runnable {
             campoNombre.setMaximumSize(new Dimension(330, 30));
             campoNombre.setEditable(false);
             panelOeste.add(campoNombre);
+
+            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel("Descripcion: ");
             // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -739,41 +719,41 @@ public class InterfazUsuario implements Runnable {
             panelDescripcion.setMaximumSize(new Dimension(330, 400));
             panelOeste.add(panelDescripcion);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel("Horas a dedicar: ");
             // etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelOeste.add(etiqueta);
+            panelEste.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoHoras = new JTextField();
             // campoHoras.setAlignmentX(Component.CENTER_ALIGNMENT);
             campoHoras.setEditable(false);
             campoHoras.setMaximumSize(new Dimension(340, 30));
-            panelOeste.add(campoHoras);
+            panelEste.add(campoHoras);
+
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             etiqueta = new JLabel("Horas completadas: ");
-            panelOeste.add(etiqueta);
+            panelEste.add(etiqueta);
 
-            panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoHorasCompletadas = new JTextField();
             campoHorasCompletadas.setEditable(false);
             campoHorasCompletadas.setMaximumSize(new Dimension(340, 30));
-            panelOeste.add(campoHorasCompletadas);
-
-            panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+            panelEste.add(campoHorasCompletadas);
 
             etiqueta = new JLabel("Horas restantes: ");
-            panelOeste.add(etiqueta);
+            panelEste.add(etiqueta);
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoHorasRestantes = new JTextField();
             campoHorasRestantes.setEditable(false);
             campoHorasRestantes.setMaximumSize(new Dimension(340, 30));
-            panelOeste.add(campoHorasRestantes);
+            panelEste.add(campoHorasRestantes);
 
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
@@ -802,6 +782,7 @@ public class InterfazUsuario implements Runnable {
             });
             setLayout(new BorderLayout());
             setBounds(0, 0, 1200, 900);
+            setMaximumSize(new Dimension(1200, 900));
             getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
