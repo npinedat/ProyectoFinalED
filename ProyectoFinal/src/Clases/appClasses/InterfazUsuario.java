@@ -235,7 +235,6 @@ public class InterfazUsuario implements Runnable {
                 } catch (Exception ev) {
                     System.out.println(ev);
                 }
-                login = null;
                 paginaInicioSesion = new PaginaInicioSesion();
                 paginaPrincipal.dispose();
             } else if (e.getSource() == botonPlay) {
