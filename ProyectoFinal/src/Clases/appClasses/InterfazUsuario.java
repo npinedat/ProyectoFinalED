@@ -97,7 +97,7 @@ public class InterfazUsuario implements Runnable {
         c.setTime(date);
         int minutos = c.get(Calendar.MINUTE);
         int hashCercano = Main.consultaHashCercano(login);
-        if(minutos > 5){
+        if(minutos > 5 && login.arbolObjetivos.root != null){
             login.arbolObjetivos.root.objetivo.reencolarBloque(hashCercano);
             return false;
         }else {
