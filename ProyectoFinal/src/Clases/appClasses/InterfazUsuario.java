@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,7 +35,7 @@ import javax.swing.event.ChangeListener;
 
 import Main.Main;
 
-public class InterfazUsuario {
+public class InterfazUsuario implements Runnable {
 
     PaginaPrincipal paginaPrincipal;
     PaginaInicioSesion paginaInicioSesion;
@@ -41,8 +43,13 @@ public class InterfazUsuario {
     PaginaConsulta paginaConsulta;
     PaginaEliminacion paginaEliminacion;
     PaginaRegistro paginaRegistro;
+    PaginaActividad paginaActividad;
 
-    //Toolkit t = Toolkit.getDefaultToolkit();
+    Thread hilo = new Thread(this);
+    boolean cronometroActivo = true;
+    boolean enSesion = false;
+
+    // Toolkit t = Toolkit.getDefaultToolkit();
 
     Usuario login;
 
@@ -50,13 +57,58 @@ public class InterfazUsuario {
         return paginaInicioSesion = new PaginaInicioSesion();
     }
 
+    public void run() {
+        while (cronometroActivo) {
+            try {
+                enSesion = validarPuntualidad() && validacion();
+                System.out.println(enSesion);
+                Thread.sleep(60000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public boolean validacion() {
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.get(Calendar.HOUR_OF_DAY);
+        c.setTime(date);
+        int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
+        int horaAct = c.get(Calendar.HOUR_OF_DAY);
+        int hashDiaHora = (diaAct * 24) + horaAct;
+
+        int hashCercano = Main.consultaHashCercano(login);
+        if (hashCercano == hashDiaHora) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean validarPuntualidad() {
+        Calendar c = Calendar.getInstance();
+        Date date = new Date();
+        c.get(Calendar.HOUR_OF_DAY);
+        c.setTime(date);
+        int minutos = c.get(Calendar.MINUTE);
+        int hashCercano = Main.consultaHashCercano(login);
+        if(minutos > 5){
+            login.arbolObjetivos.root.objetivo.reencolarBloque(hashCercano);
+            return false;
+        }else {
+            return true;
+        }
+    }
+
     public class PaginaPrincipal extends JFrame implements ActionListener {
         JPanel panelCentro, panelNorte, panelSur, panelOeste, panelEste;
         ImageIcon imagenPlay;
-        JButton botonPlay, botonCreacion, botonConsulta, botonEliminar, botonCerrarSesion;
+        JButton botonPlay, botonPosponer, botonCreacion, botonConsulta, botonEliminar, botonCerrarSesion;
         JLabel etiqueta;
 
         PaginaPrincipal() {
+            enSesion = validacion();
             panelNorte = new JPanel();
             panelNorte.setBackground(Color.pink);
 
@@ -103,7 +155,7 @@ public class InterfazUsuario {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            etiqueta = new JLabel("Bienvenido a Procastinator");
+            etiqueta = new JLabel(login.usuario + " bienvenido a Procastinator");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 26));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
@@ -114,7 +166,7 @@ public class InterfazUsuario {
             int hashCercano = Main.consultaHashCercano(login);
 
             if (login.arbolObjetivos.empty()) {
-                etiqueta = new JLabel("No tiene objetivos creados, creé uno.");
+                etiqueta = new JLabel("No tiene objetivos creados, puede crear uno.");
                 etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
@@ -124,21 +176,30 @@ public class InterfazUsuario {
                 etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentro.add(etiqueta);
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                etiqueta = new JLabel("El Día: " + Main.nombreDia((int) Math.floor(hashCercano / 24)) + ", " + "a las: "
+                        + (int) (hashCercano - Math.floor(hashCercano / 24) * 24) + ":00");
+                etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
+                etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+                panelCentro.add(etiqueta);
+
+                panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
+
+                botonPlay = new JButton("Iniciar rutina");
+                if (enSesion == false) {
+                    botonPlay.setEnabled(false);
+                } else {
+                    botonPlay.setEnabled(true);
+                }
+                // imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
+                // botonPlay.setIcon(imagenPlay);
+                // botonPlay.setMaximumSize(new Dimension(200, 200));
+                botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
+                botonPlay.addActionListener(this);
+                panelCentro.add(botonPlay);
+
+                panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
             }
-            etiqueta = new JLabel("Día: " + Math.floor(hashCercano/24) + " Hora: " + (hashCercano - Math.floor(hashCercano/24)*24));
-            etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
-            etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelCentro.add(etiqueta);
-
-            panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
-
-            botonPlay = new JButton("Iniciar rutina");
-            // imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
-            // botonPlay.setIcon(imagenPlay);
-            // botonPlay.setMaximumSize(new Dimension(200, 200));
-            botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
-            botonPlay.addActionListener(this);
-            panelCentro.add(botonPlay);
 
             botonCreacion = new JButton("Crear objetivo");
             botonCreacion.addActionListener(this);
@@ -187,6 +248,10 @@ public class InterfazUsuario {
             } else if (e.getSource() == botonCerrarSesion) {
                 Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 paginaInicioSesion = new PaginaInicioSesion();
+                paginaPrincipal.dispose();
+                cronometroActivo = false;
+            }else if(e.getSource() == botonPlay) {
+                paginaActividad = new PaginaActividad();
                 paginaPrincipal.dispose();
             }
         }
@@ -274,6 +339,7 @@ public class InterfazUsuario {
                         JOptionPane.showMessageDialog(paginaInicioSesion,
                                 "Los datos son incorrectos, intente de nuevo");
                     } else {
+                        hilo.start();
                         paginaPrincipal = new PaginaPrincipal();
                         paginaInicioSesion.dispose();
                     }
@@ -752,11 +818,11 @@ public class InterfazUsuario {
         }
     }
 
-    public class PaginaEliminacion extends JFrame implements ActionListener, ChangeListener {
+    public class PaginaEliminacion extends JFrame implements ActionListener {
         JPanel panelNorte, panelCentro, panelSur;
         JLabel etiqueta;
         JButton botonVolver;
-        ArrayList<Objetivo> objetivosSeleccionados = new ArrayList<Objetivo>();
+        ArrayList<JCheckBox> objetivosSeleccionados = new ArrayList<JCheckBox>();
 
         PaginaEliminacion() {
             panelNorte = new JPanel();
@@ -785,25 +851,10 @@ public class InterfazUsuario {
             login.arbolObjetivos.objetivos.clear();
             for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
                 JCheckBox objetivo = new JCheckBox(i.nombre);
-                objetivo.addChangeListener(new ChangeListener() {
-                    public void stateChanged(ChangeEvent e) {
-                        if (objetivosSeleccionados.size() == 0) {
-                            objetivosSeleccionados.add(i);
-                        } else {
-                            for (int j = 0; j <= objetivosSeleccionados.size(); j++) {
-                                if (objetivosSeleccionados.get(j) == i && objetivosSeleccionados.get(j) != null) {
-                                    objetivosSeleccionados.remove(j);
-                                } else {
-                                    objetivosSeleccionados.add(i);
-                                }
-                                System.out.println(objetivosSeleccionados);
-                            }
-                        }
-                    }
-                });
                 objetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
                 objetivo.setFont(new Font("", Font.PLAIN, 18));
                 objetivo.setBackground(Color.green);
+                objetivosSeleccionados.add(objetivo);
                 panelCentro.add(objetivo);
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
             }
@@ -835,18 +886,16 @@ public class InterfazUsuario {
                     paginaPrincipal = new PaginaPrincipal();
                     paginaEliminacion.dispose();
                 } else {
-                    for (Objetivo i : objetivosSeleccionados) {
-                        Main.eliminarObjetivo(login, i.nombre);
+                    for (JCheckBox i : objetivosSeleccionados) {
+                        if (i.isSelected()) {
+                            Main.eliminarObjetivo(login, i.getText());
+                        }
                     }
                     JOptionPane.showMessageDialog(paginaEliminacion, "Objetivos eliminados");
                     paginaPrincipal = new PaginaPrincipal();
                     paginaEliminacion.dispose();
                 }
             }
-        }
-
-        public void stateChanged(ChangeEvent e) {
-
         }
     }
 
@@ -938,6 +987,122 @@ public class InterfazUsuario {
             } else if (e.getSource() == botonVolver) {
                 paginaInicioSesion = new PaginaInicioSesion();
                 paginaRegistro.dispose();
+            }
+        }
+    }
+
+    class PaginaActividad extends JFrame implements Runnable {
+        JPanel panelNorte, panelCentro, panelSur;
+        JLabel etiquetaTitulo, etiquetaMensaje, etiquetaCronometro;
+        int minutos = 0;
+        int segundos = 0;
+        Thread hiloActividad = new Thread(this);
+        boolean actividadActiva = true;
+
+        PaginaActividad() {
+            panelNorte = new JPanel();
+            panelNorte.setBackground(Color.BLUE);
+
+            panelCentro = new JPanel();
+            panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
+            panelCentro.setBackground(Color.GREEN);
+
+            panelSur = new JPanel();
+            panelSur.setBackground(Color.PINK);
+
+            etiquetaTitulo = new JLabel("Sesión Pomodoro");
+            etiquetaTitulo.setFont(new Font("Arial", Font.PLAIN, 30));
+            panelNorte.add(etiquetaTitulo);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 100)));
+
+            etiquetaMensaje = new JLabel("Concentrese en su tarea, por favor.");
+            etiquetaMensaje.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiquetaMensaje.setFont(new Font("Arial", Font.PLAIN, 30));
+            panelCentro.add(etiquetaMensaje);
+
+            panelCentro.add(Box.createRigidArea(new Dimension(0, 100)));
+
+            etiquetaCronometro = new JLabel("0" + minutos + ":" + segundos + "0");
+            etiquetaCronometro.setAlignmentX(Component.CENTER_ALIGNMENT);
+            etiquetaCronometro.setFont(new Font("", Font.PLAIN, 40));
+            panelCentro.add(etiquetaCronometro);
+
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                }
+            });
+            setLayout(new BorderLayout());
+            setBounds(0, 0, 800, 600);
+            getContentPane().setBackground(Color.CYAN);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setVisible(true);
+            add(panelNorte, BorderLayout.NORTH);
+            add(panelCentro, BorderLayout.CENTER);
+            add(panelSur, BorderLayout.SOUTH);
+            hiloActividad.start();
+        }
+
+        public void run() {
+            int estado = 1;
+            int estados = 0;
+            while (actividadActiva) {
+                try {
+                    Thread.sleep(1000);
+                    segundos++;
+                    if (segundos >= 60) {
+                        segundos = 0;
+                        minutos++;
+                    }
+                    switch(estado) {
+                        case 1:
+                        if(minutos == 2) {
+                            JOptionPane.showMessageDialog(paginaActividad, "Tome un descanso");
+                            etiquetaMensaje.setText("Tome su descanso, por favor.");
+                            minutos = 0;
+                            segundos = 0;
+                            estado = 2;
+                            estados++;
+                        }
+                        break;
+                        case 2:
+                        if(estados == 4){
+                            JOptionPane.showMessageDialog(paginaActividad, "Ha terminado su sesión exitosamente");
+                            Objetivo objetivoCercano = Main.consultaObjCercano(login);
+                            objetivoCercano.horasDedicadas++;
+                            objetivoCercano.recalcularHorasADedicar();
+                            if(objetivoCercano.horasaDedicar == 0) {
+                                JOptionPane.showMessageDialog(paginaActividad, "Felicidades completo su objetivo");
+                                login.arbolObjetivos.root = login.arbolObjetivos.delete(login.arbolObjetivos.root, login.encontrarObjetivo(objetivoCercano.nombre).key);
+                            }
+                            actividadActiva = false;
+                            paginaPrincipal = new PaginaPrincipal();
+                            paginaActividad.dispose();
+                        }
+                        if(minutos == 1) {
+                            JOptionPane.showMessageDialog(paginaActividad, "Su descanso acabó, regrese a su actividad");
+                            etiquetaMensaje.setText("Concentrese en su tarea por favor");
+                            minutos = 0;
+                            segundos = 0;
+                            estado = 1;
+                            estados++;
+                        }
+                        break;
+                    }
+                    
+                    if(segundos < 10 && minutos < 10) {
+                        etiquetaCronometro.setText("0" + minutos + ":" + "0" +segundos);
+                    }else if(minutos < 10) {
+                        etiquetaCronometro.setText("0" + minutos + ":" + segundos);
+                    }else if(segundos < 10) {
+                        etiquetaCronometro.setText(minutos + ":" + "0" +segundos);
+                    }else {
+                        etiquetaCronometro.setText(minutos + ":" + segundos);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         }
     }

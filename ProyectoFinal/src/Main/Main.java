@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -78,6 +77,30 @@ public class Main {
 		return 50;
 	}
 
+	public static String nombreDia(int d) {
+		if (d == 1) {
+			return "Lunes";
+		}
+		if (d == 2) {
+			return "Martes";
+		}
+		if (d == 3) {
+			return "Miercoles";
+		}
+		if (d == 4) {
+			return "Jueves";
+		}
+		if (d == 5) {
+			return "Viernes";
+		}
+		if (d == 6) {
+			return "Sabado";
+		} else if (d == 0) {
+			return "Domingo";
+		}
+		return "";
+	}
+
 	public static int consultaHashCercano (Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
@@ -86,7 +109,6 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
 		int hashCercano = 168;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
@@ -238,44 +260,5 @@ public class Main {
 		}
 		InterfazUsuario interfaz = new InterfazUsuario();
 		interfaz.getPaginaInicioSesion();
-		/*
-		 * do { System.out.
-		 * println("Si ya esta registrado escriba 1, si no escriba 2, si quiere salir escriba 3"
-		 * ); log=sc.nextInt(); sc.nextLine(); switch(log){ case 1 : 
-		 * Calendar c = Calendar.getInstance(); 
-		 * Date date = new Date(); 
-		 * c.setTime(date); 
-		 * //Usuario
-		 * login = iniciarSesion(users); if (login == null){ break; } int ob2; Boolean
-		 * horaHecha = false; do { System.out.
-		 * println("Inserte: 1 si se quiere añadir objetivo, 2 para consultar objetivo, 3 Eliminar, 0 para cerrar sesión"
-		 * ); int diaAct = c.get(Calendar.DAY_OF_WEEK); 
-		 * int horaAct = c.get(Calendar.HOUR_OF_DAY); 
-		 * int hashDiaHora = (diaAct * 24) + horaAct; 
-		 * if
-		 * ((horaHecha == true) && (horaPreguntada != hashDiaHora)) { horaPreguntada =
-		 * hashDiaHora; horaHecha = false; } ob2=sc.nextInt(); sc.nextLine();
-		 * switch(ob2){ case 1 : agregarObjetivo(login); //vaciarArbol(obj); break; case
-		 * 2: consultaObjetivo(login); break; case 3: eliminarObjetivo(login); break; }
-		 * if (!login.arbolObjetivos.empty()) { for (Objetivo j :
-		 * login.arbolObjetivos.toArray(login.arbolObjetivos.root)){
-		 * if(j.encontrarBloqueTiempo(hashDiaHora) && (!horaHecha)){
-		 * System.out.println("¿Estas realizando el objetivo " + j.nombre +
-		 * "? 1 para si, 0 para no"); int reali = sc.nextInt(); sc.nextLine(); if (reali
-		 * == 1){ if(j.hs.list[hashDiaHora].getSiguiente() == null){
-		 * j.hs.list[hashDiaHora] = null; }else
-		 * if(!(j.hs.list[hashDiaHora].getSiguiente() == null)){ j.hs.list[hashDiaHora]
-		 * = j.hs.list[hashDiaHora].getSiguiente(); } horaPreguntada = hashDiaHora;
-		 * horaHecha = true; j.horasDedicadas++; j.recalcularHorasADedicar(); } break; }
-		 * } } } while (ob2 != 0); break;
-		 * 
-		 * case 2 : registrarse(users); break;
-		 * 
-		 * case 3 : FileOutputStream file; if(fileHandler.findFile("data.txt")) {
-		 * fileHandler.deleteFile("data.txt"); file =
-		 * fileHandler.createFile("data.txt"); fileHandler.writeFile(file, users);
-		 * }else{ file = fileHandler.createFile("data.txt"); fileHandler.writeFile(file,
-		 * users); } log = 0; break; } } while (log != 0); sc.close();
-		 */
 	}
 }
