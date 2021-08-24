@@ -2,14 +2,16 @@
 package Clases.listClasses;
 
 import java.io.Serializable;
-public class Cola implements Serializable{  
+
+public class Cola implements Serializable {
     private Nodo cabeza, cola;
+
     public Cola() {
         cabeza = null;
         cola = null;
     }
 
-    public boolean colaVacia(){
+    public boolean colaVacia() {
         if (cabeza == null)
             return true;
         else
@@ -18,8 +20,8 @@ public class Cola implements Serializable{
 
     public void encolar(int info) {
         Nodo nuevo;
-        nuevo = new Nodo ();
-        nuevo.setValor(info) ;
+        nuevo = new Nodo();
+        nuevo.setValor(info);
         nuevo.setSiguiente(null);
         if (colaVacia()) {
             cabeza = nuevo;
@@ -31,9 +33,9 @@ public class Cola implements Serializable{
     }
 
     public int desencolar() {
-        if (!colaVacia()){
+        if (!colaVacia()) {
             int informacion = cabeza.getValor();
-            if (cabeza == cola){
+            if (cabeza == cola) {
                 cabeza = null;
                 cola = null;
             } else {

@@ -5,15 +5,10 @@ import java.io.Serializable;
 import Clases.AVLTreesClasses.*;
 import Clases.listClasses.*;
 
-
 public class Objetivo implements Serializable {
     public int id;
-    public String nombre;
-    public String descripcion;
-    public String tecnica;
-    public int horasTotales;
-    public int horasDedicadas;
-    public int horasaDedicar;
+    public String nombre, descripcion, tecnica;
+    public int horasTotales, horasDedicadas, horasaDedicar;
     public Pila bloquesRestantes;
     public AVLTree bloquesProgramados;
     Cola ide;
@@ -30,8 +25,8 @@ public class Objetivo implements Serializable {
         this.ide = new Cola();
         this.hs = new Hash();
         recalcularHorasADedicar();
-        for(char i: nombre.toCharArray()){
-            id+=(int)i;
+        for (char i : nombre.toCharArray()) {
+            id += (int) i;
         }
     }
 
@@ -43,21 +38,21 @@ public class Objetivo implements Serializable {
         return ide;
     }
 
-    public void recalcularHorasADedicar(){
+    public void recalcularHorasADedicar() {
         this.horasaDedicar = horasTotales - horasDedicadas;
 
     }
-    
-    public Boolean encontrarObjetivo(String user){
-        if(nombre == user){ 
+
+    public Boolean encontrarObjetivo(String user) {
+        if (nombre == user) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     public Boolean encontrarBloqueTiempo(int us) {
-        if (hs.list[us] != null){
+        if (hs.list[us] != null) {
             return true;
         } else {
             return false;
@@ -66,17 +61,16 @@ public class Objetivo implements Serializable {
 
     public void llenarBloquesRestantes() {
         int i = 0;
-        while( i <= horasTotales) {
+        while (i <= horasTotales) {
             bloquesRestantes.apilar(i);
             i++;
         }
     }
 
- 
     public void programarBloque() {
-        while(bloquesRestantes.tamanio > 0) {
+        while (bloquesRestantes.tamanio > 0) {
             int c = ide.desencolar();
-            if(hs.list[c] == null){
+            if (hs.list[c] == null) {
                 hs.list[c] = bloquesRestantes.cima();
             } else {
                 Nodo aux = hs.list[c];
@@ -86,7 +80,7 @@ public class Objetivo implements Serializable {
             ide.encolar(c);
             bloquesRestantes.retirar();
         }
- }
+    }
 
     public void reencolarBloque(int key) {
         ide.encolar(key);

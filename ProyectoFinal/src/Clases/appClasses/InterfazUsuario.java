@@ -1,5 +1,7 @@
 package Clases.appClasses;
 
+import java.awt.Toolkit;
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.BorderLayout;
@@ -30,8 +32,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import Main.Main;
 
@@ -49,6 +49,13 @@ public class InterfazUsuario implements Runnable {
     boolean cronometroActivo = true;
     boolean enSesion = false;
 
+    Color colorFondo = new Color(237, 187, 153);
+    Color colorBloqueado = new Color(236, 112, 99);
+    Color colorSeleccionado = new Color(46, 204, 113);
+    Color colorSeleccionar = new Color(171, 178, 185);
+    Color colorBotones = new Color(165, 105, 189);
+    Color colorDeshabilitado = new Color(232, 218, 239);
+
     // Toolkit t = Toolkit.getDefaultToolkit();
 
     Usuario login;
@@ -61,7 +68,6 @@ public class InterfazUsuario implements Runnable {
         while (cronometroActivo) {
             try {
                 enSesion = validarPuntualidad() && validacion();
-                System.out.println(enSesion);
                 Thread.sleep(60000);
             } catch (Exception e) {
                 System.out.println(e);
@@ -110,22 +116,22 @@ public class InterfazUsuario implements Runnable {
         PaginaPrincipal() {
             enSesion = validacion();
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.pink);
+            panelNorte.setBackground(colorFondo);
 
             panelSur = new JPanel();
-            panelSur.setBackground(Color.BLUE);
+            panelSur.setBackground(colorFondo);
 
             panelOeste = new JPanel();
             panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
-            panelOeste.setBackground(Color.CYAN);
+            panelOeste.setBackground(colorFondo);
 
             panelEste = new JPanel();
             panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
-            panelEste.setBackground(Color.MAGENTA);
+            panelEste.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
-            panelCentro.setBackground(Color.ORANGE);
+            panelCentro.setBackground(colorFondo);
 
             etiqueta = new JLabel("Procastinator", SwingConstants.CENTER);
             etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
@@ -165,13 +171,12 @@ public class InterfazUsuario implements Runnable {
 
                 botonPlay = new JButton("Iniciar rutina");
                 if (enSesion == false) {
+                    botonPlay.setBackground(colorBotones);
                     botonPlay.setEnabled(false);
                 } else {
+                    botonPlay.setBackground(colorDeshabilitado);
                     botonPlay.setEnabled(true);
                 }
-                // imagenPlay = new ImageIcon("ProyectoFinal/src/Img/play.png");
-                // botonPlay.setIcon(imagenPlay);
-                // botonPlay.setMaximumSize(new Dimension(200, 200));
                 botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
                 botonPlay.addActionListener(this);
                 panelCentro.add(botonPlay);
@@ -180,18 +185,22 @@ public class InterfazUsuario implements Runnable {
             }
 
             botonCreacion = new JButton("Crear objetivo");
+            botonCreacion.setBackground(colorBotones);
             botonCreacion.addActionListener(this);
             panelSur.add(botonCreacion);
 
             botonConsulta = new JButton("Consultar objetivo");
+            botonConsulta.setBackground(colorBotones);
             botonConsulta.addActionListener(this);
             panelSur.add(botonConsulta);
 
             botonEliminar = new JButton("Eliminar objetivos");
+            botonEliminar.setBackground(colorBotones);
             botonEliminar.addActionListener(this);
             panelSur.add(botonEliminar);
 
             botonCerrarSesion = new JButton("Cerrar sesión");
+            botonEliminar.setBackground(colorBotones);
             botonCerrarSesion.addActionListener(this);
             panelSur.add(botonCerrarSesion);
 
@@ -202,8 +211,9 @@ public class InterfazUsuario implements Runnable {
             });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
-            getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
+            Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Img/icon.jpeg"));
+            setIconImage(iconoPropio);
             setVisible(true);
             add(panelCentro, BorderLayout.CENTER);
             add(panelNorte, BorderLayout.NORTH);
@@ -244,12 +254,12 @@ public class InterfazUsuario implements Runnable {
 
         PaginaInicioSesion() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.BLUE);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setFont(new Font("Arial", Font.PLAIN, 12));
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             etiqueta = new JLabel("Inicio sesion Procastinator");
             etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -280,6 +290,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonIngreso = new JButton("Ingresar");
+            botonIngreso.setBackground(colorBotones);
             botonIngreso.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonIngreso.addActionListener(this);
             panelCentro.add(botonIngreso);
@@ -287,6 +298,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonRegistro = new JButton("Registrarse");
+            botonRegistro.setBackground(colorBotones);
             botonRegistro.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonRegistro.addActionListener(this);
             panelCentro.add(botonRegistro);
@@ -296,9 +308,15 @@ public class InterfazUsuario implements Runnable {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
             });
+            try{
+                Image icon = new ImageIcon(getClass().getResource("play.png")).getImage();
+                setIconImage(icon);
+            }catch(Exception e) {
+                System.out.println(e);
+            }
+            
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
-            getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -343,22 +361,22 @@ public class InterfazUsuario implements Runnable {
 
         PaginaCreacion() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.BLUE);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setLayout(new GridLayout(25, 8));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             panelOeste = new JPanel();
             panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
-            panelOeste.setBackground(Color.MAGENTA);
+            panelOeste.setBackground(colorFondo);
 
             panelEste = new JPanel();
             panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
-            panelEste.setBackground(Color.ORANGE);
+            panelEste.setBackground(colorFondo);
 
             panelSur = new JPanel();
-            panelSur.setBackground(Color.RED);
+            panelSur.setBackground(colorFondo);
 
             etiqueta = new JLabel("Creación de objetivo", SwingConstants.CENTER);
             etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -401,12 +419,15 @@ public class InterfazUsuario implements Runnable {
             metodologias = new ButtonGroup();
 
             pomodoro = new JRadioButton("Pomodoro");
-            pomodoro.setBackground(Color.ORANGE);
+            //pomodoro.addChangeListener(this);
+            pomodoro.setBackground(colorFondo);
             pomodoro.setSelected(true);
             posec = new JRadioButton("POSEC");
-            posec.setBackground(Color.ORANGE);
+            //posec.addChangeListener(this);
+            posec.setBackground(colorFondo);
             eissenhower = new JRadioButton("Eissenhower");
-            eissenhower.setBackground(Color.ORANGE);
+            //eissenhower.addChangeListener(this);
+            eissenhower.setBackground(colorFondo);
             metodologias.add(pomodoro);
             panelEste.add(pomodoro);
             metodologias.add(posec);
@@ -465,7 +486,7 @@ public class InterfazUsuario implements Runnable {
                 for (int j = 1; j <= 7; j++) {
                     JButton bloque = new JButton(i + "/" + j);
                     bloque.setFont(new Font("Arial", Font.BOLD, 0));
-                    bloque.setBackground(Color.GRAY);
+                    bloque.setBackground(colorSeleccionar);
                     bloque.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             if (bloque.getBackground() == Color.RED) {
@@ -476,7 +497,7 @@ public class InterfazUsuario implements Runnable {
                                     bloquesSeleccionados.remove(e.getSource());
                                 }
                             } else {
-                                bloque.setBackground(Color.RED);
+                                bloque.setBackground(colorSeleccionado);
                                 bloquesSeleccionados.add((JButton) e.getSource());
                             }
                         }
@@ -484,7 +505,7 @@ public class InterfazUsuario implements Runnable {
                     ArrayList<Integer> listaHash = Main.consultaHash(login);
                     for (int k : listaHash) {
                         if (k == ((j - 1) * 24 + i)) {
-                            bloque.setBackground(Color.MAGENTA);
+                            bloque.setBackground(colorBloqueado);
                             bloque.setEnabled(false);
                         }
                     }
@@ -493,12 +514,14 @@ public class InterfazUsuario implements Runnable {
             }
 
             botonAceptar = new JButton("Aceptar");
+            botonAceptar.setBackground(colorBotones);
             botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonAceptar.addActionListener(this);
             panelSur.add(botonAceptar);
 
             botonCancelar = new JButton("Cancelar");
-            botonAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            botonCancelar.setBackground(colorBotones);
+            botonCancelar.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonCancelar.addActionListener(this);
             panelSur.add(botonCancelar);
 
@@ -508,8 +531,7 @@ public class InterfazUsuario implements Runnable {
                 }
             });
             setLayout(new BorderLayout());
-            setBounds(0, 0, 1200, 900);
-            getContentPane().setBackground(Color.CYAN);
+            setBounds(0, 0, 900, 900);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -583,6 +605,58 @@ public class InterfazUsuario implements Runnable {
             }
             return 170;
         }
+
+        /*
+        public void stateChanged(ChangeEvent e) {
+            if(e.getSource() == pomodoro) {
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+                JTextArea campoPomodoro = new JTextArea("La técnica pomodoro separa su sesión de trabajo en bloques de 25 minutos con descansos de 5 minutos.");
+                campoPomodoro.setLineWrap(true);
+                campoPomodoro.setEditable(false);
+                JScrollPane panelPomodoro = new JScrollPane(campoPomodoro);
+                panelPomodoro.setViewportView(campoPomodoro);
+                panelPomodoro.setMaximumSize(new Dimension(330, 200));
+                panelOeste.add(panelPomodoro);
+            }else if(e.getSource() == posec) {
+                panelEste.removeAll();
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+                JLabel etiqueta = new JLabel("Escriba aquí las tareas pequeñas: ");
+                panelEste.add(etiqueta);
+
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+                JTextArea campo1 = new JTextArea();
+                campo1.setLineWrap(true);
+
+                JScrollPane panel1 = new JScrollPane(campo1);
+                panel1.setViewportView(campo1);
+                panel1.setMaximumSize(new Dimension(330, 200));
+                panelOeste.add(panel1);
+
+                etiqueta = new JLabel("Escriba aquí las tareas medianas: ");
+                panelEste.add(etiqueta);
+
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+
+                JTextArea campo2 = new JTextArea();
+                campo2.setLineWrap(true);
+                JScrollPane panel2 = new JScrollPane(campo2);
+                panel2.setViewportView(campo2);
+                panel2.setMaximumSize(new Dimension(330, 200));
+                panel2.add(panel2);
+
+                etiqueta = new JLabel("Escriba aquí las tareas grandes: ");
+                panelEste.add(etiqueta);
+
+                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+            }else if(e.getSource() == eissenhower) {
+
+            }else {
+
+            }
+        }*/
     }
 
     public class PaginaConsulta extends JFrame implements ActionListener {
@@ -596,22 +670,22 @@ public class InterfazUsuario implements Runnable {
 
         PaginaConsulta() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.BLUE);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setLayout(new GridLayout(25, 8));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             panelOeste = new JPanel();
             panelOeste.setLayout(new BoxLayout(panelOeste, BoxLayout.Y_AXIS));
-            panelOeste.setBackground(Color.PINK);
+            panelOeste.setBackground(colorFondo);
 
             panelEste = new JPanel();
             panelEste.setLayout(new BoxLayout(panelEste, BoxLayout.Y_AXIS));
-            panelEste.setBackground(Color.CYAN);
+            panelEste.setBackground(colorFondo);
 
             panelSur = new JPanel();
-            panelSur.setBackground(Color.MAGENTA);
+            panelSur.setBackground(colorFondo);
 
             etiqueta = new JLabel("Consulta de objetivo");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
@@ -673,11 +747,11 @@ public class InterfazUsuario implements Runnable {
                                 JButton bloque = new JButton(i + "/" + j);
                                 bloque.setEnabled(false);
                                 bloque.setFont(new Font("Arial", Font.BOLD, 0));
-                                bloque.setBackground(Color.GRAY);
+                                bloque.setBackground(colorSeleccionar);
                                 ArrayList<Integer> listaHash = Main.consultaUnHash(login, boton.getText());
                                 for (int k : listaHash) {
                                     if (k == ((j - 1) * 24 + i)) {
-                                        bloque.setBackground(Color.MAGENTA);
+                                        bloque.setBackground(colorBloqueado);
                                         bloque.setEnabled(false);
                                     }
                                 }
@@ -771,6 +845,7 @@ public class InterfazUsuario implements Runnable {
             panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             botonVolver = new JButton("Volver");
+            botonVolver.setBackground(colorBotones);
             botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonVolver.addActionListener(this);
             panelSur.add(botonVolver);
@@ -781,9 +856,7 @@ public class InterfazUsuario implements Runnable {
                 }
             });
             setLayout(new BorderLayout());
-            setBounds(0, 0, 1200, 900);
-            setMaximumSize(new Dimension(1200, 900));
-            getContentPane().setBackground(Color.CYAN);
+            setBounds(0, 0, 900, 900);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -807,14 +880,14 @@ public class InterfazUsuario implements Runnable {
 
         PaginaEliminacion() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.CYAN);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             panelSur = new JPanel();
-            panelSur.setBackground(Color.MAGENTA);
+            panelSur.setBackground(colorFondo);
 
             etiqueta = new JLabel("Eliminar objetivos");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
@@ -834,13 +907,14 @@ public class InterfazUsuario implements Runnable {
                 JCheckBox objetivo = new JCheckBox(i.nombre);
                 objetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
                 objetivo.setFont(new Font("", Font.PLAIN, 18));
-                objetivo.setBackground(Color.green);
+                objetivo.setBackground(colorFondo);
                 objetivosSeleccionados.add(objetivo);
                 panelCentro.add(objetivo);
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
             }
 
             botonVolver = new JButton("Eliminar y volver");
+            botonVolver.setBackground(colorBotones);
             botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonVolver.addActionListener(this);
             panelSur.add(botonVolver);
@@ -851,8 +925,7 @@ public class InterfazUsuario implements Runnable {
                 }
             });
             setLayout(new BorderLayout());
-            setBounds(0, 0, 1200, 900);
-            getContentPane().setBackground(Color.CYAN);
+            setBounds(0, 0, 800, 600);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -889,12 +962,12 @@ public class InterfazUsuario implements Runnable {
 
         PaginaRegistro() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.BLUE);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setFont(new Font("Arial", Font.PLAIN, 12));
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             etiqueta = new JLabel("Registro Procastinator");
             etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -932,6 +1005,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonVolver = new JButton("Vover");
+            botonVolver.setBackground(colorBotones);
             botonVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonVolver.addActionListener(this);
             panelCentro.add(botonVolver);
@@ -943,7 +1017,6 @@ public class InterfazUsuario implements Runnable {
             });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
-            getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -982,16 +1055,16 @@ public class InterfazUsuario implements Runnable {
 
         PaginaActividad() {
             panelNorte = new JPanel();
-            panelNorte.setBackground(Color.BLUE);
+            panelNorte.setBackground(colorFondo);
 
             panelCentro = new JPanel();
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
-            panelCentro.setBackground(Color.GREEN);
+            panelCentro.setBackground(colorFondo);
 
             panelSur = new JPanel();
-            panelSur.setBackground(Color.PINK);
+            panelSur.setBackground(colorFondo);
 
-            etiquetaTitulo = new JLabel("Sesión Pomodoro");
+            etiquetaTitulo = new JLabel("Sesión iniciada");
             etiquetaTitulo.setFont(new Font("Arial", Font.PLAIN, 30));
             panelNorte.add(etiquetaTitulo);
 
@@ -1016,7 +1089,6 @@ public class InterfazUsuario implements Runnable {
             });
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
-            getContentPane().setBackground(Color.CYAN);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);

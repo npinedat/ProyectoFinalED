@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.Date;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 @SuppressWarnings("unchecked")
 
@@ -22,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 
 public class Main {
-	public static ArrayList<Usuario> usuarios = new ArrayList <Usuario>();
+	public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	public static FileHandler fileHandler;
 
 	public static Usuario iniciarSesion(String usuario, String contrasena) {
@@ -101,13 +100,13 @@ public class Main {
 		return "";
 	}
 
-	public static int consultaHashCercano (Usuario login) {
+	public static int consultaHashCercano(Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
 		c.get(Calendar.HOUR_OF_DAY);
 		c.setTime(date);
-		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
-		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
+		int horaAct = c.get(Calendar.HOUR_OF_DAY);
 		int hashDiaHora = (diaAct * 24) + horaAct;
 		int hashCercano = 168;
 		if (login.objetivosVacio()) {
@@ -136,15 +135,14 @@ public class Main {
 		return hashCercano;
 	}
 
-	public static Objetivo consultaObjCercano (Usuario login){
+	public static Objetivo consultaObjCercano(Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
 		c.get(Calendar.HOUR_OF_DAY);
 		c.setTime(date);
-		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
-		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
+		int horaAct = c.get(Calendar.HOUR_OF_DAY);
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
 		int hashCercano = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
@@ -218,7 +216,7 @@ public class Main {
 		obj.programarBloque();
 	}
 
-	public static void guardarDatos(FileHandler fileHandler, ArrayList <Usuario> users) {
+	public static void guardarDatos(FileHandler fileHandler, ArrayList<Usuario> users) {
 		FileOutputStream file;
 		if (fileHandler.findFile("data.txt")) {
 			fileHandler.deleteFile("data.txt");
