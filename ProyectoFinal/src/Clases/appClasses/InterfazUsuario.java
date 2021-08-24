@@ -54,8 +54,6 @@ public class InterfazUsuario implements Runnable {
     Color colorBotones = new Color(165, 105, 189);
     Color colorDeshabilitado = new Color(232, 218, 239);
 
-    // Toolkit t = Toolkit.getDefaultToolkit();
-
     Usuario login;
 
     public PaginaInicioSesion getPaginaInicioSesion() {
@@ -79,10 +77,11 @@ public class InterfazUsuario implements Runnable {
         c.get(Calendar.HOUR_OF_DAY);
         c.setTime(date);
         int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
-        int horaAct = c.get(Calendar.HOUR_OF_DAY) - 1;
+        int horaAct = c.get(Calendar.HOUR_OF_DAY);
         int hashDiaHora = (diaAct * 24) + horaAct;
 
         int hashCercano = Main.consultaHashCercano(login);
+
         if (hashCercano == hashDiaHora) {
             return true;
         } else {
@@ -97,7 +96,7 @@ public class InterfazUsuario implements Runnable {
         c.setTime(date);
         int minutos = c.get(Calendar.MINUTE);
         int hashCercano = Main.consultaHashCercano(login);
-        if (minutos > 5 && login.arbolObjetivos.root != null) {
+        if (minutos > 10 && login.arbolObjetivos.root != null) {
             login.arbolObjetivos.root.objetivo.reencolarBloque(hashCercano);
             return false;
         } else {
@@ -493,7 +492,7 @@ public class InterfazUsuario implements Runnable {
                     bloque.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             if (bloque.getBackground() == colorSeleccionado) {
-                                bloque.setBackground(colorSeleccionado);
+                                bloque.setBackground(colorSeleccionar);
                                 if (duplicado((JButton) e.getSource()) == 170) {
                                     // Nada
                                 } else {

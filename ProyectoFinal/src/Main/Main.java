@@ -100,33 +100,23 @@ public class Main {
 		return "";
 	}
 
-	public static int consultaHashCercano(Usuario login) {
+	public static int consultaHashCercano (Usuario login) {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
 		c.get(Calendar.HOUR_OF_DAY);
 		c.setTime(date);
-		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
-		int horaAct = c.get(Calendar.HOUR_OF_DAY);
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
+		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
+		int diferencia = 168;
 		int hashCercano = 168;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if (hashCercano == 168) {
+					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
+						diferencia = Math.abs(i.getValor() - hashDiaHora);
 						hashCercano = i.getValor();
-					} else if (hashDiaHora >= hashCercano) {
-						if (i.getValor() >= hashDiaHora) {
-							hashCercano = i.getValor();
-						} else if (i.getValor() < hashDiaHora) {
-							if (i.getValor() < hashCercano) {
-								hashCercano = i.getValor();
-							}
-						}
-					} else if (hashDiaHora < hashCercano) {
-						if (i.getValor() < hashCercano) {
-							hashCercano = i.getValor();
-						}
 					}
 					i = i.getSiguiente();
 				}
@@ -135,38 +125,23 @@ public class Main {
 		return hashCercano;
 	}
 
-	public static Objetivo consultaObjCercano(Usuario login) {
+	public static Objetivo consultaObjCercano (Usuario login){
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
 		c.get(Calendar.HOUR_OF_DAY);
 		c.setTime(date);
-		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
-		int horaAct = c.get(Calendar.HOUR_OF_DAY);
+		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
+		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int hashCercano = 168;
+		int diferencia = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if (hashCercano == 168) {
-						hashCercano = i.getValor();
+					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
 						k = j;
-					} else if (hashDiaHora >= hashCercano) {
-						if (i.getValor() >= hashDiaHora) {
-							hashCercano = i.getValor();
-							k = j;
-						} else if (i.getValor() < hashDiaHora) {
-							if (i.getValor() < hashCercano) {
-								hashCercano = i.getValor();
-								k = j;
-							}
-						}
-					} else if (hashDiaHora < hashCercano) {
-						if (i.getValor() < hashCercano) {
-							hashCercano = i.getValor();
-							k = j;
-						}
+						diferencia = Math.abs(i.getValor() - hashDiaHora);
 					}
 					i = i.getSiguiente();
 				}
