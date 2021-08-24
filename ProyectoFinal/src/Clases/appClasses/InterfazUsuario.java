@@ -131,7 +131,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(colorFondo);
 
-            etiqueta = new JLabel("Procastinator", SwingConstants.CENTER);
+            etiqueta = new JLabel("Procrastinator", SwingConstants.CENTER);
             etiqueta.setFont(new Font("Arial", Font.BOLD, 30));
             panelNorte.add(etiqueta);
 
@@ -404,6 +404,7 @@ public class InterfazUsuario implements Runnable {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
+            campoDescripcion.setWrapStyleWord(true);
             campoDescripcion.setLineWrap(true);
             panelDescripcion = new JScrollPane(campoDescripcion);
             panelDescripcion.setViewportView(campoDescripcion);
@@ -782,6 +783,7 @@ public class InterfazUsuario implements Runnable {
             panelOeste.add(Box.createRigidArea(new Dimension(0, 10)));
 
             campoDescripcion = new JTextArea();
+            campoDescripcion.setWrapStyleWord(true);
             campoDescripcion.setEditable(false);
             campoDescripcion.setLineWrap(true);
             panelDescripcion = new JScrollPane(campoDescripcion);
