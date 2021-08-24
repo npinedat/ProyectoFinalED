@@ -45,7 +45,7 @@ public class InterfazUsuario implements Runnable {
 
     Thread hilo = new Thread(this);
     boolean cronometroActivo = true;
-    boolean enSesion = false;
+    boolean enSesion;
 
     Color colorFondo = new Color(237, 187, 153);
     Color colorBloqueado = new Color(236, 112, 99);
@@ -79,7 +79,7 @@ public class InterfazUsuario implements Runnable {
         c.get(Calendar.HOUR_OF_DAY);
         c.setTime(date);
         int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
-        int horaAct = c.get(Calendar.HOUR_OF_DAY);
+        int horaAct = c.get(Calendar.HOUR_OF_DAY) - 1;
         int hashDiaHora = (diaAct * 24) + horaAct;
 
         int hashCercano = Main.consultaHashCercano(login);
@@ -168,10 +168,11 @@ public class InterfazUsuario implements Runnable {
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
                 botonPlay = new JButton("Iniciar rutina");
+                System.out.println(enSesion);
                 if (enSesion == false) {
                     botonPlay.setBackground(colorDeshabilitado);
                     botonPlay.setEnabled(false);
-                } else {
+                } else if(enSesion == true) {
                     botonPlay.setBackground(colorBotones);
                     botonPlay.setEnabled(true);
                 }
