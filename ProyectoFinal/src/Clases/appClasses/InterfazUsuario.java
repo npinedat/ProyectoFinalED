@@ -97,10 +97,10 @@ public class InterfazUsuario implements Runnable {
         c.setTime(date);
         int minutos = c.get(Calendar.MINUTE);
         int hashCercano = Main.consultaHashCercano(login);
-        if(minutos > 5 && login.arbolObjetivos.root != null){
+        if (minutos > 5 && login.arbolObjetivos.root != null) {
             login.arbolObjetivos.root.objetivo.reencolarBloque(hashCercano);
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -230,11 +230,15 @@ public class InterfazUsuario implements Runnable {
                 paginaEliminacion = new PaginaEliminacion();
                 paginaPrincipal.dispose();
             } else if (e.getSource() == botonCerrarSesion) {
-                Main.guardarDatos(Main.fileHandler, Main.usuarios);
+                try {
+                    cronometroActivo = false;
+                } catch (Exception ev) {
+                    System.out.println(ev);
+                }
+                login = null;
                 paginaInicioSesion = new PaginaInicioSesion();
                 paginaPrincipal.dispose();
-                cronometroActivo = false;
-            }else if(e.getSource() == botonPlay) {
+            } else if (e.getSource() == botonPlay) {
                 paginaActividad = new PaginaActividad();
                 paginaPrincipal.dispose();
             }
@@ -304,7 +308,7 @@ public class InterfazUsuario implements Runnable {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
             });
-            
+
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -325,7 +329,16 @@ public class InterfazUsuario implements Runnable {
                         JOptionPane.showMessageDialog(paginaInicioSesion,
                                 "Los datos son incorrectos, intente de nuevo");
                     } else {
-                        hilo.start();
+                        try {
+                            if(hilo.isAlive()){
+
+                            }else{
+                                hilo.start();
+                            }
+                            cronometroActivo = true;
+                        } catch (Exception ev) {
+                            System.out.println(ev);
+                        }
                         paginaPrincipal = new PaginaPrincipal();
                         paginaInicioSesion.dispose();
                     }
@@ -409,14 +422,14 @@ public class InterfazUsuario implements Runnable {
             metodologias = new ButtonGroup();
 
             pomodoro = new JRadioButton("Pomodoro");
-            //pomodoro.addChangeListener(this);
+            // pomodoro.addChangeListener(this);
             pomodoro.setBackground(colorFondo);
             pomodoro.setSelected(true);
             posec = new JRadioButton("POSEC");
-            //posec.addChangeListener(this);
+            // posec.addChangeListener(this);
             posec.setBackground(colorFondo);
             eissenhower = new JRadioButton("Eissenhower");
-            //eissenhower.addChangeListener(this);
+            // eissenhower.addChangeListener(this);
             eissenhower.setBackground(colorFondo);
             metodologias.add(pomodoro);
             panelEste.add(pomodoro);
@@ -597,56 +610,48 @@ public class InterfazUsuario implements Runnable {
         }
 
         /*
-        public void stateChanged(ChangeEvent e) {
-            if(e.getSource() == pomodoro) {
-                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                JTextArea campoPomodoro = new JTextArea("La técnica pomodoro separa su sesión de trabajo en bloques de 25 minutos con descansos de 5 minutos.");
-                campoPomodoro.setLineWrap(true);
-                campoPomodoro.setEditable(false);
-                JScrollPane panelPomodoro = new JScrollPane(campoPomodoro);
-                panelPomodoro.setViewportView(campoPomodoro);
-                panelPomodoro.setMaximumSize(new Dimension(330, 200));
-                panelOeste.add(panelPomodoro);
-            }else if(e.getSource() == posec) {
-                panelEste.removeAll();
-                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                JLabel etiqueta = new JLabel("Escriba aquí las tareas pequeñas: ");
-                panelEste.add(etiqueta);
-
-                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                JTextArea campo1 = new JTextArea();
-                campo1.setLineWrap(true);
-
-                JScrollPane panel1 = new JScrollPane(campo1);
-                panel1.setViewportView(campo1);
-                panel1.setMaximumSize(new Dimension(330, 200));
-                panelOeste.add(panel1);
-
-                etiqueta = new JLabel("Escriba aquí las tareas medianas: ");
-                panelEste.add(etiqueta);
-
-                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                JTextArea campo2 = new JTextArea();
-                campo2.setLineWrap(true);
-                JScrollPane panel2 = new JScrollPane(campo2);
-                panel2.setViewportView(campo2);
-                panel2.setMaximumSize(new Dimension(330, 200));
-                panel2.add(panel2);
-
-                etiqueta = new JLabel("Escriba aquí las tareas grandes: ");
-                panelEste.add(etiqueta);
-
-                panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
-            }else if(e.getSource() == eissenhower) {
-
-            }else {
-
-            }
-        }*/
+         * public void stateChanged(ChangeEvent e) { if(e.getSource() == pomodoro) {
+         * panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+         * 
+         * JTextArea campoPomodoro = new
+         * JTextArea("La técnica pomodoro separa su sesión de trabajo en bloques de 25 minutos con descansos de 5 minutos."
+         * ); campoPomodoro.setLineWrap(true); campoPomodoro.setEditable(false);
+         * JScrollPane panelPomodoro = new JScrollPane(campoPomodoro);
+         * panelPomodoro.setViewportView(campoPomodoro);
+         * panelPomodoro.setMaximumSize(new Dimension(330, 200));
+         * panelOeste.add(panelPomodoro); }else if(e.getSource() == posec) {
+         * panelEste.removeAll(); panelEste.add(Box.createRigidArea(new Dimension(0,
+         * 10)));
+         * 
+         * JLabel etiqueta = new JLabel("Escriba aquí las tareas pequeñas: ");
+         * panelEste.add(etiqueta);
+         * 
+         * panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+         * 
+         * JTextArea campo1 = new JTextArea(); campo1.setLineWrap(true);
+         * 
+         * JScrollPane panel1 = new JScrollPane(campo1); panel1.setViewportView(campo1);
+         * panel1.setMaximumSize(new Dimension(330, 200)); panelOeste.add(panel1);
+         * 
+         * etiqueta = new JLabel("Escriba aquí las tareas medianas: ");
+         * panelEste.add(etiqueta);
+         * 
+         * panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
+         * 
+         * JTextArea campo2 = new JTextArea(); campo2.setLineWrap(true); JScrollPane
+         * panel2 = new JScrollPane(campo2); panel2.setViewportView(campo2);
+         * panel2.setMaximumSize(new Dimension(330, 200)); panel2.add(panel2);
+         * 
+         * etiqueta = new JLabel("Escriba aquí las tareas grandes: ");
+         * panelEste.add(etiqueta);
+         * 
+         * panelEste.add(Box.createRigidArea(new Dimension(0, 10))); }else
+         * if(e.getSource() == eissenhower) {
+         * 
+         * }else {
+         * 
+         * } }
+         */
     }
 
     public class PaginaConsulta extends JFrame implements ActionListener {
@@ -1099,49 +1104,51 @@ public class InterfazUsuario implements Runnable {
                         segundos = 0;
                         minutos++;
                     }
-                    switch(estado) {
+                    switch (estado) {
                         case 1:
-                        if(minutos == 25) {
-                            JOptionPane.showMessageDialog(paginaActividad, "Tome un descanso");
-                            etiquetaMensaje.setText("Tome su descanso, por favor.");
-                            minutos = 0;
-                            segundos = 0;
-                            estado = 2;
-                            estados++;
-                        }
-                        break;
-                        case 2:
-                        if(estados == 4){
-                            JOptionPane.showMessageDialog(paginaActividad, "Ha terminado su sesión exitosamente");
-                            Objetivo objetivoCercano = Main.consultaObjCercano(login);
-                            objetivoCercano.horasDedicadas++;
-                            objetivoCercano.recalcularHorasADedicar();
-                            if(objetivoCercano.horasaDedicar == 0) {
-                                JOptionPane.showMessageDialog(paginaActividad, "Felicidades completo su objetivo");
-                                login.arbolObjetivos.root = login.arbolObjetivos.delete(login.arbolObjetivos.root, login.encontrarObjetivo(objetivoCercano.nombre).key);
+                            if (minutos == 25) {
+                                JOptionPane.showMessageDialog(paginaActividad, "Tome un descanso");
+                                etiquetaMensaje.setText("Tome su descanso, por favor.");
+                                minutos = 0;
+                                segundos = 0;
+                                estado = 2;
+                                estados++;
                             }
-                            actividadActiva = false;
-                            paginaPrincipal = new PaginaPrincipal();
-                            paginaActividad.dispose();
-                        }
-                        if(minutos == 5) {
-                            JOptionPane.showMessageDialog(paginaActividad, "Su descanso acabó, regrese a su actividad");
-                            etiquetaMensaje.setText("Concentrese en su tarea por favor");
-                            minutos = 0;
-                            segundos = 0;
-                            estado = 1;
-                            estados++;
-                        }
-                        break;
+                            break;
+                        case 2:
+                            if (estados == 4) {
+                                JOptionPane.showMessageDialog(paginaActividad, "Ha terminado su sesión exitosamente");
+                                Objetivo objetivoCercano = Main.consultaObjCercano(login);
+                                objetivoCercano.horasDedicadas++;
+                                objetivoCercano.recalcularHorasADedicar();
+                                if (objetivoCercano.horasaDedicar == 0) {
+                                    JOptionPane.showMessageDialog(paginaActividad, "Felicidades completo su objetivo");
+                                    login.arbolObjetivos.root = login.arbolObjetivos.delete(login.arbolObjetivos.root,
+                                            login.encontrarObjetivo(objetivoCercano.nombre).key);
+                                }
+                                actividadActiva = false;
+                                paginaPrincipal = new PaginaPrincipal();
+                                paginaActividad.dispose();
+                            }
+                            if (minutos == 5) {
+                                JOptionPane.showMessageDialog(paginaActividad,
+                                        "Su descanso acabó, regrese a su actividad");
+                                etiquetaMensaje.setText("Concentrese en su tarea por favor");
+                                minutos = 0;
+                                segundos = 0;
+                                estado = 1;
+                                estados++;
+                            }
+                            break;
                     }
-                    
-                    if(segundos < 10 && minutos < 10) {
-                        etiquetaCronometro.setText("0" + minutos + ":" + "0" +segundos);
-                    }else if(minutos < 10) {
+
+                    if (segundos < 10 && minutos < 10) {
+                        etiquetaCronometro.setText("0" + minutos + ":" + "0" + segundos);
+                    } else if (minutos < 10) {
                         etiquetaCronometro.setText("0" + minutos + ":" + segundos);
-                    }else if(segundos < 10) {
-                        etiquetaCronometro.setText(minutos + ":" + "0" +segundos);
-                    }else {
+                    } else if (segundos < 10) {
+                        etiquetaCronometro.setText(minutos + ":" + "0" + segundos);
+                    } else {
                         etiquetaCronometro.setText(minutos + ":" + segundos);
                     }
                 } catch (Exception e) {
