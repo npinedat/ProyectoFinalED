@@ -129,6 +129,7 @@ public class Main {
 							hashCercano = i.getValor();
 						}
 					}
+					
 					i = i.getSiguiente();
 				}
 			}
@@ -169,6 +170,7 @@ public class Main {
 							k = j;
 						}
 					}
+					
 					i = i.getSiguiente();
 				}
 			}
