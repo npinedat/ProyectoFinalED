@@ -493,8 +493,8 @@ public class InterfazUsuario implements Runnable {
                     bloque.setBackground(colorSeleccionar);
                     bloque.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            if (bloque.getBackground() == Color.RED) {
-                                bloque.setBackground(Color.GRAY);
+                            if (bloque.getBackground() == colorSeleccionado) {
+                                bloque.setBackground(colorSeleccionar);
                                 if (duplicado((JButton) e.getSource()) == 170) {
                                     // Nada
                                 } else {
