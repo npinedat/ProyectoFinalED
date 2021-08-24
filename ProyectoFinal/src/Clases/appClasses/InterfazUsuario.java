@@ -168,7 +168,6 @@ public class InterfazUsuario implements Runnable {
                 panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
                 botonPlay = new JButton("Iniciar rutina");
-                System.out.println(enSesion);
                 if (enSesion == false) {
                     botonPlay.setBackground(colorDeshabilitado);
                     botonPlay.setEnabled(false);
