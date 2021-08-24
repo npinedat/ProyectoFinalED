@@ -137,7 +137,7 @@ public class InterfazUsuario implements Runnable {
 
             panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            etiqueta = new JLabel(login.usuario + " bienvenido a Procastinator");
+            etiqueta = new JLabel(login.usuario + " bienvenido a Procrastinator");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 26));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
             panelCentro.add(etiqueta);
@@ -261,7 +261,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(colorFondo);
 
-            etiqueta = new JLabel("Inicio sesion Procastinator");
+            etiqueta = new JLabel("Inicio sesión Procrastinator");
             etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
             panelNorte.add(etiqueta);
 
@@ -696,6 +696,7 @@ public class InterfazUsuario implements Runnable {
             login.arbolObjetivos.objetivos.clear();
             for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
                 JButton boton = new JButton(i.nombre);
+                boton.setBackground(colorBotones);
                 boton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         panelCentro.removeAll();
@@ -964,7 +965,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
             panelCentro.setBackground(colorFondo);
 
-            etiqueta = new JLabel("Registro Procastinator");
+            etiqueta = new JLabel("Registro Procrastinator");
             etiqueta.setFont(new Font("Arial", Font.PLAIN, 30));
             panelNorte.add(etiqueta);
 
