@@ -94,10 +94,14 @@ public class InterfazUsuario implements Runnable {
         Date date = new Date();
         c.get(Calendar.HOUR_OF_DAY);
         c.setTime(date);
+        int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1);
+        int horaAct = c.get(Calendar.HOUR_OF_DAY);
         int minutos = c.get(Calendar.MINUTE);
+        int hashDiaHora = (diaAct * 24) + horaAct;
         int hashCercano = Main.consultaHashCercano(login);
-        if (minutos > 10 && login.arbolObjetivos.root != null) {
-            login.arbolObjetivos.root.objetivo.reencolarBloque(hashCercano);
+        if ((minutos > 10) && (login.arbolObjetivos.root != null) && (hashDiaHora == hashCercano) ) {
+            Objetivo cercano = Main.consultaObjCercano(login);
+            cercano.reencolarBloque(hashCercano);
             return false;
         } else {
             return true;
@@ -476,7 +480,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.add(etiqueta);
 
             login.arbolObjetivos.objetivos.clear();
-
+            ArrayList<Integer> listaHash = Main.consultaHash(login);
             for (int i = 0; i <= 23; i++) {
                 if (i < 12) {
                     JLabel hora = new JLabel(i + ":" + (i + 1) + " Am");
@@ -485,6 +489,7 @@ public class InterfazUsuario implements Runnable {
                     JLabel hora = new JLabel(i + ":" + (i + 1) + " Pm");
                     panelCentro.add(hora);
                 }
+                
                 for (int j = 1; j <= 7; j++) {
                     JButton bloque = new JButton(i + "/" + j);
                     bloque.setFont(new Font("Arial", Font.BOLD, 0));
@@ -504,7 +509,7 @@ public class InterfazUsuario implements Runnable {
                             }
                         }
                     });
-                    ArrayList<Integer> listaHash = Main.consultaHash(login);
+                    
                     for (int k : listaHash) {
                         if (k == ((j - 1) * 24 + i)) {
                             bloque.setBackground(colorBloqueado);
