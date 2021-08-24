@@ -1,7 +1,5 @@
 package Clases.appClasses;
 
-import java.awt.Toolkit;
-import java.awt.Image;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.BorderLayout;
@@ -171,10 +169,10 @@ public class InterfazUsuario implements Runnable {
 
                 botonPlay = new JButton("Iniciar rutina");
                 if (enSesion == false) {
-                    botonPlay.setBackground(colorBotones);
+                    botonPlay.setBackground(colorDeshabilitado);
                     botonPlay.setEnabled(false);
                 } else {
-                    botonPlay.setBackground(colorDeshabilitado);
+                    botonPlay.setBackground(colorBotones);
                     botonPlay.setEnabled(true);
                 }
                 botonPlay.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -200,7 +198,7 @@ public class InterfazUsuario implements Runnable {
             panelSur.add(botonEliminar);
 
             botonCerrarSesion = new JButton("Cerrar sesión");
-            botonEliminar.setBackground(colorBotones);
+            botonCerrarSesion.setBackground(colorBotones);
             botonCerrarSesion.addActionListener(this);
             panelSur.add(botonCerrarSesion);
 
@@ -212,8 +210,6 @@ public class InterfazUsuario implements Runnable {
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
-            Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Img/icon.jpeg"));
-            setIconImage(iconoPropio);
             setVisible(true);
             add(panelCentro, BorderLayout.CENTER);
             add(panelNorte, BorderLayout.NORTH);
@@ -308,12 +304,6 @@ public class InterfazUsuario implements Runnable {
                     Main.guardarDatos(Main.fileHandler, Main.usuarios);
                 }
             });
-            try{
-                Image icon = new ImageIcon(getClass().getResource("play.png")).getImage();
-                setIconImage(icon);
-            }catch(Exception e) {
-                System.out.println(e);
-            }
             
             setLayout(new BorderLayout());
             setBounds(0, 0, 800, 600);
@@ -531,7 +521,7 @@ public class InterfazUsuario implements Runnable {
                 }
             });
             setLayout(new BorderLayout());
-            setBounds(0, 0, 900, 900);
+            setBounds(0, 0, 900, 800);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -856,7 +846,7 @@ public class InterfazUsuario implements Runnable {
                 }
             });
             setLayout(new BorderLayout());
-            setBounds(0, 0, 900, 900);
+            setBounds(0, 0, 900, 800);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setVisible(true);
             add(panelNorte, BorderLayout.NORTH);
@@ -998,6 +988,7 @@ public class InterfazUsuario implements Runnable {
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonIngreso = new JButton("Registrarse");
+            botonIngreso.setBackground(colorBotones);
             botonIngreso.setAlignmentX(Component.CENTER_ALIGNMENT);
             botonIngreso.addActionListener(this);
             panelCentro.add(botonIngreso);
@@ -1110,7 +1101,7 @@ public class InterfazUsuario implements Runnable {
                     }
                     switch(estado) {
                         case 1:
-                        if(minutos == 2) {
+                        if(minutos == 25) {
                             JOptionPane.showMessageDialog(paginaActividad, "Tome un descanso");
                             etiquetaMensaje.setText("Tome su descanso, por favor.");
                             minutos = 0;
@@ -1133,7 +1124,7 @@ public class InterfazUsuario implements Runnable {
                             paginaPrincipal = new PaginaPrincipal();
                             paginaActividad.dispose();
                         }
-                        if(minutos == 1) {
+                        if(minutos == 5) {
                             JOptionPane.showMessageDialog(paginaActividad, "Su descanso acabó, regrese a su actividad");
                             etiquetaMensaje.setText("Concentrese en su tarea por favor");
                             minutos = 0;
