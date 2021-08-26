@@ -82,8 +82,11 @@ public class Objetivo implements Serializable {
         }
     }
 
+    //El método duplica los bloques de tiempo
+    /*
     public void reencolarBloque(int key) {
         ide.encolar(key);
         bloquesProgramados.root = bloquesProgramados.delete(bloquesProgramados.root, key);
     }
+    */
 }
