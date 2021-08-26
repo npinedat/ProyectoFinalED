@@ -108,20 +108,24 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
+		//int diferencia = 168;
 		int hashCercano = 168;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if(i.getValor() >= hashDiaHora) {
-						if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
-							diferencia = Math.abs(i.getValor() - hashDiaHora);
+					if (hashCercano == 168) {
+						hashCercano = i.getValor();
+					} else if (hashDiaHora >= hashCercano) {
+						if (i.getValor() >= hashDiaHora) {
 							hashCercano = i.getValor();
+						} else if (i.getValor() < hashDiaHora) {
+							if (i.getValor() < hashCercano) {
+								hashCercano = i.getValor();
+							}
 						}
-					}else {
-						if(Math.abs(i.getValor() + hashDiaHora) == 0 || Math.abs(i.getValor() + hashDiaHora) < diferencia) {
-							diferencia = Math.abs(i.getValor() + hashDiaHora);
+					} else if (hashDiaHora < hashCercano) {
+						if (i.getValor() < hashCercano) {
 							hashCercano = i.getValor();
 						}
 					}
@@ -141,21 +145,29 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
+		int hashCercano = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if(i.getValor() >= hashDiaHora) {
-						if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
+					if (hashCercano == 168) {
+						hashCercano = i.getValor();
+						k = j;
+					} else if (hashDiaHora >= hashCercano) {
+						if (i.getValor() >= hashDiaHora) {
+							hashCercano = i.getValor();
 							k = j;
-							diferencia = Math.abs(i.getValor() - hashDiaHora);
+						} else if (i.getValor() < hashDiaHora) {
+							if (i.getValor() < hashCercano) {
+								hashCercano = i.getValor();
+								k = j;
+							}
 						}
-					}else {
-						if(Math.abs(i.getValor() + hashDiaHora) == 0 || Math.abs(i.getValor() + hashDiaHora) < diferencia) {
+					} else if (hashDiaHora < hashCercano) {
+						if (i.getValor() < hashCercano) {
+							hashCercano = i.getValor();
 							k = j;
-							diferencia = Math.abs(i.getValor() + hashDiaHora);
 						}
 					}
 					
@@ -177,6 +189,7 @@ public class Main {
 				}
 			}
 		}
+		System.out.println(listaHash);
 		Collections.sort(listaHash);
 		return listaHash;
 	}
@@ -191,6 +204,7 @@ public class Main {
 				i = i.getSiguiente();
 			}
 		}
+		System.out.println(listaHash);
 		Collections.sort(listaHash);
 		return listaHash;
 	}
@@ -247,6 +261,7 @@ public class Main {
 		} else {
 			usuarios = new ArrayList<Usuario>();
 		}
+
 		InterfazUsuario interfaz = new InterfazUsuario();
 		interfaz.getPaginaInicioSesion();
 	}
