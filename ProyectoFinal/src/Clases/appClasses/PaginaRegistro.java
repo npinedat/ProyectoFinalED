@@ -97,19 +97,19 @@ public class PaginaRegistro extends InterfazUsuario implements ActionListener {
             String usuario = campoUsuario.getText();
             String contrasena = new String(campoContrasena.getPassword());
             if (usuario.equals("") || contrasena.equals("")) {
-                JOptionPane.showMessageDialog(paginaRegistro, "Por favor ingrese todos los campos");
+                JOptionPane.showMessageDialog(this, "Por favor ingrese todos los campos");
             } else {
                 if (Main.registrarse(usuario, contrasena)) {
-                    JOptionPane.showMessageDialog(paginaRegistro, "Usuario registrado con éxito");
-                    paginaInicioSesion = new PaginaInicioSesion();
-                    paginaRegistro.dispose();
+                    JOptionPane.showMessageDialog(this, "Usuario registrado con éxito");
+                    PaginaInicioSesion paginaInicioSesion = new PaginaInicioSesion();
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(paginaRegistro, "Este nombre de usuario ya está registrado");
+                    JOptionPane.showMessageDialog(this, "Este nombre de usuario ya está registrado");
                 }
             }
         } else if (e.getSource() == botonVolver) {
-            paginaInicioSesion = new PaginaInicioSesion();
-            paginaRegistro.dispose();
+            PaginaInicioSesion paginaInicioSesion = new PaginaInicioSesion();
+            this.dispose();
         }
     }
 }

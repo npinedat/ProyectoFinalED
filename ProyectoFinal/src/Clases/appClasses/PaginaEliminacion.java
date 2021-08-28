@@ -50,8 +50,8 @@ public class PaginaEliminacion extends InterfazUsuario implements ActionListener
 
         panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        login.arbolObjetivos.objetivos.clear();
-        for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+        Main.login.arbolObjetivos.objetivos.clear();
+        for (Objetivo i : Main.login.arbolObjetivos.toArray(Main.login.arbolObjetivos.root)) {
             JCheckBox objetivo = new JCheckBox(i.nombre);
             objetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
             objetivo.setFont(new Font("", Font.PLAIN, 18));
@@ -84,18 +84,18 @@ public class PaginaEliminacion extends InterfazUsuario implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botonVolver) {
             if (objetivosSeleccionados.size() == 0) {
-                JOptionPane.showMessageDialog(paginaEliminacion, "No se eliminó ningún objetivo");
-                paginaPrincipal = new PaginaPrincipal();
-                paginaEliminacion.dispose();
+                JOptionPane.showMessageDialog(this, "No se eliminó ningún objetivo");
+                PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                this.dispose();
             } else {
                 for (JCheckBox i : objetivosSeleccionados) {
                     if (i.isSelected()) {
-                        Main.eliminarObjetivo(login, i.getText());
+                        Main.eliminarObjetivo(Main.login, i.getText());
                     }
                 }
-                JOptionPane.showMessageDialog(paginaEliminacion, "Objetivos eliminados");
-                paginaPrincipal = new PaginaPrincipal();
-                paginaEliminacion.dispose();
+                JOptionPane.showMessageDialog(this, "Objetivos eliminados");
+                PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                this.dispose();
             }
         }
     }

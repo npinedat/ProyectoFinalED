@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import Clases.Main.Main;
 
-class PaginaActividad extends InterfazUsuario implements Runnable {
+class PaginaActividad extends InterfazUsuario {
     JPanel panelNorte, panelCentro, panelSur;
     JLabel etiquetaTitulo, etiquetaMensaje, etiquetaCronometro;
     int minutos = 0;
@@ -81,7 +81,7 @@ class PaginaActividad extends InterfazUsuario implements Runnable {
                 switch (estado) {
                     case 1:
                         if (minutos == 25) {
-                            JOptionPane.showMessageDialog(paginaActividad, "Tome un descanso");
+                            JOptionPane.showMessageDialog(this, "Tome un descanso");
                             etiquetaMensaje.setText("Tome su descanso, por favor.");
                             minutos = 0;
                             segundos = 0;
@@ -91,21 +91,21 @@ class PaginaActividad extends InterfazUsuario implements Runnable {
                         break;
                     case 2:
                         if (estados == 4) {
-                            JOptionPane.showMessageDialog(paginaActividad, "Ha terminado su sesión exitosamente");
-                            Objetivo objetivoCercano = Main.consultaObjCercano(login);
+                            JOptionPane.showMessageDialog(this, "Ha terminado su sesión exitosamente");
+                            Objetivo objetivoCercano = Main.consultaObjCercano(Main.login);
                             objetivoCercano.horasDedicadas++;
                             objetivoCercano.recalcularHorasADedicar();
                             if (objetivoCercano.horasaDedicar == 0) {
-                                JOptionPane.showMessageDialog(paginaActividad, "Felicidades completo su objetivo");
-                                login.arbolObjetivos.root = login.arbolObjetivos.delete(login.arbolObjetivos.root,
-                                        login.encontrarObjetivo(objetivoCercano.nombre).key);
+                                JOptionPane.showMessageDialog(this, "Felicidades completo su objetivo");
+                                Main.login.arbolObjetivos.root = Main.login.arbolObjetivos.delete(Main.login.arbolObjetivos.root,
+                                        Main.login.encontrarObjetivo(objetivoCercano.nombre).key);
                             }
                             actividadActiva = false;
-                            paginaPrincipal = new PaginaPrincipal();
-                            paginaActividad.dispose();
+                            PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                            this.dispose();
                         }
                         if (minutos == 5) {
-                            JOptionPane.showMessageDialog(paginaActividad,
+                            JOptionPane.showMessageDialog(this,
                                     "Su descanso acabó, regrese a su actividad");
                             etiquetaMensaje.setText("Concentrese en su tarea por favor");
                             minutos = 0;

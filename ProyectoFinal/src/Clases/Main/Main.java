@@ -24,6 +24,10 @@ public class Main {
 	public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	public static FileHandler fileHandler;
 
+	static public boolean cronometroActivo = true;
+    static public boolean enSesion;
+	static public Usuario login;
+
 	public static Usuario iniciarSesion(String usuario, String contrasena) {
 		String id = usuario;
 		String ps = contrasena;
@@ -100,7 +104,7 @@ public class Main {
 		return "";
 	}
 
-	public static int consultaHashCercano (Usuario login) {
+	public static int consultaHashCercano() {
 		Calendar c = Calendar.getInstance();
 		Date date = new Date();
 		c.get(Calendar.HOUR_OF_DAY);
@@ -110,7 +114,7 @@ public class Main {
 		int hashDiaHora = (diaAct * 24) + horaAct;
 		int diferencia = 168;
 		int hashCercano = 168;
-		if (login.objetivosVacio()) {
+		if (login.objetivosVacio() && login.arbolObjetivos != null) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
@@ -233,7 +237,7 @@ public class Main {
 			usuarios = new ArrayList<Usuario>();
 		}
 
-		InterfazUsuario interfaz = new InterfazUsuario();
-		interfaz.getPaginaInicioSesion();
+		InterfazUsuario interfazUsuario = new InterfazUsuario();
+		interfazUsuario.getPaginaInicioSesion();
 	}
 }

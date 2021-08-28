@@ -153,8 +153,8 @@ public class PaginaCreacion extends InterfazUsuario implements ActionListener {
         etiqueta = new JLabel("Sabado");
         panelCentro.add(etiqueta);
 
-        login.arbolObjetivos.objetivos.clear();
-        ArrayList<Integer> listaHash = Main.consultaHash(login);
+        Main.login.arbolObjetivos.objetivos.clear();
+        ArrayList<Integer> listaHash = Main.consultaHash(Main.login);
         for (int i = 0; i <= 23; i++) {
             if (i < 12) {
                 JLabel hora = new JLabel(i + ":" + (i + 1) + " Am");
@@ -224,8 +224,8 @@ public class PaginaCreacion extends InterfazUsuario implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botonCancelar) {
-            paginaPrincipal = new PaginaPrincipal();
-            paginaCreacion.dispose();
+            PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+            this.dispose();
         } else if (e.getSource() == botonAceptar) {
             int horas;
             String nombreObjetivo = campoNombre.getText();
@@ -263,16 +263,16 @@ public class PaginaCreacion extends InterfazUsuario implements ActionListener {
                 }
                 if (nombreObjetivo.equals("") || descripcionObjetivo.equals("") || horas == 0
                         || bloquesSeleccionados.size() == 0) {
-                    JOptionPane.showMessageDialog(paginaCreacion, "Por favor llene todos los campos");
+                    JOptionPane.showMessageDialog(this, "Por favor llene todos los campos");
                 } else {
-                    Main.agregarObjetivo(login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
-                            arregloDias, arregloHoras, paginaCreacion);
+                    Main.agregarObjetivo(Main.login, nombreObjetivo, descripcionObjetivo, metodologia, horas,
+                            arregloDias, arregloHoras, this);
                     // Main.consultaHash(login);
-                    paginaPrincipal = new PaginaPrincipal();
-                    paginaCreacion.dispose();
+                    PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                    this.dispose();
                 }
             } else {
-                JOptionPane.showMessageDialog(paginaCreacion,
+                JOptionPane.showMessageDialog(this,
                         "Datos no validos, el campo de horas debe tener un número entero y no puede ser 0");
             }
         }

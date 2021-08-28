@@ -9,18 +9,8 @@ import javax.swing.JFrame;
 import Clases.Main.Main;
 
 public class InterfazUsuario extends JFrame implements Runnable {
-
-    PaginaPrincipal paginaPrincipal;
-    PaginaInicioSesion paginaInicioSesion;
-    PaginaCreacion paginaCreacion;
-    PaginaConsulta paginaConsulta;
-    PaginaEliminacion paginaEliminacion;
-    PaginaRegistro paginaRegistro;
-    PaginaActividad paginaActividad;
-
     Thread hilo = new Thread(this);
-    boolean cronometroActivo = true;
-    boolean enSesion;
+    
 
     Color colorFondo = new Color(237, 187, 153);
     Color colorBloqueado = new Color(236, 112, 99);
@@ -29,16 +19,15 @@ public class InterfazUsuario extends JFrame implements Runnable {
     Color colorBotones = new Color(165, 105, 189);
     Color colorDeshabilitado = new Color(232, 218, 239);
 
-    Usuario login;
-
     public PaginaInicioSesion getPaginaInicioSesion() {
-        return paginaInicioSesion = new PaginaInicioSesion();
+        PaginaInicioSesion paginaInicioSesion = new PaginaInicioSesion();
+        return paginaInicioSesion;
     }
 
     public void run() {
-        while (cronometroActivo) {
+        while (Main.cronometroActivo) {
             try {
-                enSesion = validarPuntualidad() && validacion();
+                Main.enSesion = validarPuntualidad() && validacion();
                 Thread.sleep(60000);
             } catch (Exception e) {
                 System.out.println(e);
@@ -55,7 +44,7 @@ public class InterfazUsuario extends JFrame implements Runnable {
         int horaAct = c.get(Calendar.HOUR_OF_DAY);
         int hashDiaHora = (diaAct * 24) + horaAct;
 
-        int hashCercano = Main.consultaHashCercano(login);
+        int hashCercano = Main.consultaHashCercano();
 
         if (hashCercano == hashDiaHora) {
             return true;
@@ -73,8 +62,8 @@ public class InterfazUsuario extends JFrame implements Runnable {
         int horaAct = c.get(Calendar.HOUR_OF_DAY);
         int minutos = c.get(Calendar.MINUTE);
         int hashDiaHora = (diaAct * 24) + horaAct;
-        int hashCercano = Main.consultaHashCercano(login);
-        if ((minutos > 10) && (login.arbolObjetivos.root != null) && (hashDiaHora == hashCercano) ) {
+        int hashCercano = Main.consultaHashCercano();
+        if ((minutos > 10) && (Main.login.arbolObjetivos.root != null) && (hashDiaHora == hashCercano) ) {
             //Objetivo cercano = Main.consultaObjCercano(login);
             //cercano.reencolarBloque(hashCercano);
             return false;

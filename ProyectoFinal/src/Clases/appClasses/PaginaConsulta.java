@@ -61,8 +61,8 @@ public class PaginaConsulta extends InterfazUsuario implements ActionListener {
 
         panelEste.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        login.arbolObjetivos.objetivos.clear();
-        for (Objetivo i : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
+        Main.login.arbolObjetivos.objetivos.clear();
+        for (Objetivo i : Main.login.arbolObjetivos.toArray(Main.login.arbolObjetivos.root)) {
             JButton boton = new JButton(i.nombre);
             boton.setBackground(colorBotones);
             boton.addActionListener(new ActionListener() {
@@ -112,7 +112,7 @@ public class PaginaConsulta extends InterfazUsuario implements ActionListener {
                             bloque.setEnabled(false);
                             bloque.setFont(new Font("Arial", Font.BOLD, 0));
                             bloque.setBackground(colorSeleccionar);
-                            ArrayList<Integer> listaHash = Main.consultaUnHash(login, boton.getText());
+                            ArrayList<Integer> listaHash = Main.consultaUnHash(Main.login, boton.getText());
                             for (int k : listaHash) {
                                 if (k == ((j - 1) * 24 + i)) {
                                     bloque.setBackground(colorBloqueado);
@@ -123,7 +123,7 @@ public class PaginaConsulta extends InterfazUsuario implements ActionListener {
 
                         }
                     }
-                    paginaConsulta.setBounds(0, 0, 1200, 900);
+                    setBounds(0, 0, 1200, 900);
                 }
             });
             panelEste.add(boton);
@@ -232,7 +232,7 @@ public class PaginaConsulta extends InterfazUsuario implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        paginaPrincipal = new PaginaPrincipal();
-        paginaConsulta.dispose();
+        PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+        this.dispose();
     }
 }

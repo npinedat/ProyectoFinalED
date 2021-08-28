@@ -28,7 +28,7 @@ public class PaginaPrincipal extends InterfazUsuario implements ActionListener {
     JLabel etiqueta;
 
     PaginaPrincipal() {
-        enSesion = validacion();
+        Main.enSesion = validacion();
         panelNorte = new JPanel();
         panelNorte.setBackground(colorFondo);
 
@@ -53,17 +53,17 @@ public class PaginaPrincipal extends InterfazUsuario implements ActionListener {
 
         panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        etiqueta = new JLabel(login.usuario + " bienvenido a Procrastinator");
+        etiqueta = new JLabel(Main.login.usuario + " bienvenido a Procrastinator");
         etiqueta.setFont(new Font("Arial", Font.BOLD, 26));
         etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelCentro.add(etiqueta);
 
         panelCentro.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        Objetivo objetivoCercano = Main.consultaObjCercano(login);
-        int hashCercano = Main.consultaHashCercano(login);
+        Objetivo objetivoCercano = Main.consultaObjCercano(Main.login);
+        int hashCercano = Main.consultaHashCercano();
 
-        if (login.arbolObjetivos.empty()) {
+        if (Main.login.arbolObjetivos.empty()) {
             etiqueta = new JLabel("No tiene objetivos creados, puede crear uno.");
             etiqueta.setFont(new Font("Arial", Font.BOLD, 24));
             etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -84,10 +84,10 @@ public class PaginaPrincipal extends InterfazUsuario implements ActionListener {
             panelCentro.add(Box.createRigidArea(new Dimension(0, 20)));
 
             botonPlay = new JButton("Iniciar rutina");
-            if (enSesion == false) {
+            if (Main.enSesion == false) {
                 botonPlay.setBackground(colorDeshabilitado);
                 botonPlay.setEnabled(false);
-            } else if(enSesion == true) {
+            } else if(Main.enSesion == true) {
                 botonPlay.setBackground(colorBotones);
                 botonPlay.setEnabled(true);
             }
@@ -137,25 +137,25 @@ public class PaginaPrincipal extends InterfazUsuario implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == botonCreacion) {
-            paginaCreacion = new PaginaCreacion();
-            paginaPrincipal.dispose();
+            PaginaCreacion paginaCreacion = new PaginaCreacion();
+            this.dispose();
         } else if (e.getSource() == botonConsulta) {
-            paginaConsulta = new PaginaConsulta();
-            paginaPrincipal.dispose();
+            PaginaConsulta paginaConsulta = new PaginaConsulta();
+            this.dispose();
         } else if (e.getSource() == botonEliminar) {
-            paginaEliminacion = new PaginaEliminacion();
-            paginaPrincipal.dispose();
+            PaginaEliminacion paginaEliminacion = new PaginaEliminacion();
+            this.dispose();
         } else if (e.getSource() == botonCerrarSesion) {
             try {
-                cronometroActivo = false;
+                Main.cronometroActivo = false;
             } catch (Exception ev) {
                 System.out.println(ev);
             }
-            paginaInicioSesion = new PaginaInicioSesion();
-            paginaPrincipal.dispose();
+            PaginaInicioSesion paginaInicioSesion = new PaginaInicioSesion();
+            this.dispose();
         } else if (e.getSource() == botonPlay) {
-            paginaActividad = new PaginaActividad();
-            paginaPrincipal.dispose();
+            PaginaActividad paginaActividad = new PaginaActividad();
+            this.dispose();
         }
     }
 }

@@ -28,7 +28,7 @@ public class PaginaInicioSesion extends InterfazUsuario implements ActionListene
     JPasswordField campoContrasena;
     JButton botonIngreso, botonRegistro;
 
-    PaginaInicioSesion() {
+    public PaginaInicioSesion() {
         panelNorte = new JPanel();
         panelNorte.setBackground(colorFondo);
 
@@ -98,11 +98,11 @@ public class PaginaInicioSesion extends InterfazUsuario implements ActionListene
             String usuario = campoUsuario.getText();
             String contrasena = new String(campoContrasena.getPassword());
             if (usuario.equals("") || contrasena.equals("")) {
-                JOptionPane.showMessageDialog(paginaInicioSesion, "Debe ingresar todos los campos");
+                JOptionPane.showMessageDialog(this, "Debe ingresar todos los campos");
             } else {
-                login = Main.iniciarSesion(usuario, contrasena);
-                if (login == null) {
-                    JOptionPane.showMessageDialog(paginaInicioSesion,
+                Main.login = Main.iniciarSesion(usuario, contrasena);
+                if (Main.login == null) {
+                    JOptionPane.showMessageDialog(this,
                             "Los datos son incorrectos, intente de nuevo");
                 } else {
                     try {
@@ -111,17 +111,22 @@ public class PaginaInicioSesion extends InterfazUsuario implements ActionListene
                         }else{
                             hilo.start();
                         }
-                        cronometroActivo = true;
+                        Main.cronometroActivo = true;
                     } catch (Exception ev) {
                         System.out.println(ev);
                     }
-                    paginaPrincipal = new PaginaPrincipal();
-                    paginaInicioSesion.dispose();
+                    PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+                    this.dispose();
                 }
             }
         } else if (e.getSource() == botonRegistro) {
-            paginaRegistro = new PaginaRegistro();
-            paginaInicioSesion.dispose();
+            PaginaRegistro paginaRegistro = new PaginaRegistro();
+            try {
+                this.dispose();
+            }catch(Exception ev) {
+                System.out.println(ev);
+            } 
+            
         }
     }
 }
