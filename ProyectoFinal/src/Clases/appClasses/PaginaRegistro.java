@@ -98,7 +98,9 @@ public class PaginaRegistro extends InterfazUsuario implements ActionListener {
             String contrasena = new String(campoContrasena.getPassword());
             if (usuario.equals("") || contrasena.equals("")) {
                 JOptionPane.showMessageDialog(this, "Por favor ingrese todos los campos");
-            } else {
+            }else if(contrasena.length() < 5) {
+                JOptionPane.showMessageDialog(this, "La contraseña debe tener mínimo 5 caracteres");
+            }else {
                 if (Main.registrarse(usuario, contrasena)) {
                     JOptionPane.showMessageDialog(this, "Usuario registrado con éxito");
                     PaginaInicioSesion paginaInicioSesion = new PaginaInicioSesion();
