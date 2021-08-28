@@ -112,20 +112,27 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
 		int hashCercano = 168;
 		if (login.objetivosVacio() && login.arbolObjetivos != null) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
-						diferencia = Math.abs(i.getValor() - hashDiaHora);
-						hashCercano = i.getValor();
+					if (hashDiaHora <= i.getValor()) {
+						if (i.getValor() < hashCercano) {
+							hashCercano = i.getValor();
+						} else if ((i.getValor() > hashCercano) && (hashCercano < hashDiaHora)) {
+							hashCercano = i.getValor();
+						}
+					} else if (hashDiaHora > i.getValor()) {
+						if ((i.getValor() < hashCercano) && (hashCercano < hashDiaHora)) {
+							hashCercano = i.getValor();
+						}
 					}
 					i = i.getSiguiente();
 				}
 			}
 		}
+		System.out.println(hashCercano + " final");
 		return hashCercano;
 	}
 
@@ -137,15 +144,22 @@ public class Main {
 		int diaAct = (c.get(Calendar.DAY_OF_WEEK) - 1); 
 		int horaAct = c.get(Calendar.HOUR_OF_DAY); 
 		int hashDiaHora = (diaAct * 24) + horaAct;
-		int diferencia = 168;
+		int hashCercano = 168;
 		Objetivo k = null;
 		if (login.objetivosVacio()) {
 			for (Objetivo j : login.arbolObjetivos.toArray(login.arbolObjetivos.root)) {
 				Nodo i = j.getIde().getNodoRaiz();
 				while (i != null) {
-					if(Math.abs(i.getValor() - hashDiaHora) == 0 || Math.abs(i.getValor() - hashDiaHora) < diferencia) {
-						k = j;
-						diferencia = Math.abs(i.getValor() - hashDiaHora);
+					if (hashDiaHora <= i.getValor()) {
+						if (i.getValor() < hashCercano) {
+							k = j;
+						} else if ((i.getValor() > hashCercano) && (hashCercano < hashDiaHora)) {
+							k = j;
+						}
+					} else if (hashDiaHora > i.getValor()) {
+						if ((i.getValor() < hashCercano) && (hashCercano < hashDiaHora)) {
+							k = j;
+						}
 					}
 					i = i.getSiguiente();
 				}
